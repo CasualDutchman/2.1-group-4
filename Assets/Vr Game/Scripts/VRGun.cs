@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VRGun : MonoBehaviour {
 
+    public GameObject BulletPrefab;
     private Vector3 VRGunRotation;
 
 	// Use this for initialization
@@ -16,7 +17,7 @@ public class VRGun : MonoBehaviour {
 	void Update ()
     {
         MoveGun();
-        if(Input.GetButtonDown("15"))
+        if(Input.GetKeyDown("15"))
         {
             FireGun();
         }
@@ -33,5 +34,6 @@ public class VRGun : MonoBehaviour {
     {
         //Fire the gun
         Debug.Log("Gun Fired");
+        GameObject Bullet = Instantiate(BulletPrefab, transform.position, transform.rotation);
     }
 }
