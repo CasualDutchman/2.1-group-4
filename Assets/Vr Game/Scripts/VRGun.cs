@@ -15,7 +15,23 @@ public class VRGun : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        MoveGun();
+        if(Input.GetButtonDown("15"))
+        {
+            FireGun();
+        }
+    }
+
+    //Move the gun with the VR Controller
+    private void MoveGun()
+    {
         transform.position = GameObject.Find("VRControllerRight").GetComponent<Transform>().position;
         transform.rotation = GameObject.Find("VRControllerRight").GetComponent<Transform>().rotation;
+    }
+
+    private void FireGun()
+    {
+        //Fire the gun
+        Debug.Log("Gun Fired");
     }
 }
