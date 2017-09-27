@@ -5,7 +5,8 @@ using UnityEngine.VR;
 
 public class VRControllerScript : MonoBehaviour {
 
-    public Vector3 HandPosition;
+    Vector3 HandPosition;
+    public string Hand = null;
     // Use this for initialization
     void Start () {
 
@@ -13,7 +14,16 @@ public class VRControllerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        HandPosition = InputTracking.GetLocalPosition(VRNode.RightHand);
+        if(Hand == "Right")
+        {
+            HandPosition = InputTracking.GetLocalPosition(VRNode.RightHand);
+            transform.position = HandPosition;
+        }
 
+        if (Hand == "Left")
+        {
+            HandPosition = InputTracking.GetLocalPosition(VRNode.LeftHand);
+            transform.position = HandPosition;
+        }
     }
 }
