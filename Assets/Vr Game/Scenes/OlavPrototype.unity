@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -320,15 +320,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4069789737479838, guid: 2464e5cc59cc4ba4899e9ea44f3d9fcb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.87
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4069789737479838, guid: 2464e5cc59cc4ba4899e9ea44f3d9fcb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.47
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4069789737479838, guid: 2464e5cc59cc4ba4899e9ea44f3d9fcb, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 12.76
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4069789737479838, guid: 2464e5cc59cc4ba4899e9ea44f3d9fcb, type: 2}
       propertyPath: m_LocalRotation.x
@@ -387,11 +387,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1734179927}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d41d9535e402d1749b4e920a4ee314bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BulletPrefab: {fileID: 0}
 --- !u!23 &1734179929
 MeshRenderer:
   m_ObjectHideFlags: 0
