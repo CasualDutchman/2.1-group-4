@@ -38,6 +38,7 @@ public class VRControllerScript : MonoBehaviour {
             HandRotation = InputTracking.GetLocalRotation(VRNode.LeftHand);
             transform.rotation = HandRotation;
         }
+        Debug.Log(transform.rotation);
         
     }
 }
