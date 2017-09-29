@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VRGun : MonoBehaviour {
-
+public class VRGun : MonoBehaviour
+{
     public GameObject BulletPrefab;
     private Vector3 VRGunRotation;
 
@@ -17,7 +17,7 @@ public class VRGun : MonoBehaviour {
 	void Update ()
     {
         MoveGun();
-        if(Input.GetKeyDown("15"))
+        if(Input.GetButtonDown("trigger")
         {
             FireGun();
         }

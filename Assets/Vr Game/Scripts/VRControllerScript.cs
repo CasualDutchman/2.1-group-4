@@ -10,6 +10,9 @@ public class VRControllerScript : MonoBehaviour {
     Vector3 HandPosition;
     Quaternion HandRotation;
 
+    
+
+
     public string Hand = null;
     // Use this for initialization
     void Start () {
