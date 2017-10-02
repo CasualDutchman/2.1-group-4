@@ -184,8 +184,6 @@
     <Compile Include="Assets\Vr Game\Scripts\CameraMouseController.cs" />
     <Compile Include="Assets\Vr Game\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Vr Game\Scripts\PortalManager.cs" />
-    <Compile Include="Assets\Vr Game\Scripts\VRControllerScript.cs" />
-    <Compile Include="Assets\Vr Game\Scripts\VRGun.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
