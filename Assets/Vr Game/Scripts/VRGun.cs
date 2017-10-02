@@ -17,7 +17,7 @@ public class VRGun : MonoBehaviour
 	void Update ()
     {
         MoveGun();
-        if(Input.GetButtonDown("trigger")
+        if(Input.GetButtonDown("trigger"))
         {
             FireGun();
         }

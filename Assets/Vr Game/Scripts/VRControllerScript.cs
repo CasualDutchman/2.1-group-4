@@ -23,7 +23,6 @@ public class VRControllerScript : MonoBehaviour {
 	void Update () {
         PlayerPosition = gameObject.GetComponentInParent<Transform>().position;
 
-
         if (Hand == "Right")
         {
             HandPosition = InputTracking.GetLocalPosition(VRNode.RightHand);

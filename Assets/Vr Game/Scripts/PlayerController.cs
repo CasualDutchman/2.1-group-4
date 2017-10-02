@@ -12,6 +12,6 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once every fixed amount of time
 	void FixedUpdate ()
     {
-        //transform.Translate(0.1f, 0f, 0f);
+        transform.Translate(0.1f, 0f, 0f);
 	}
 }
