@@ -7,6 +7,9 @@ TagManager:
   - PortalFrame
   - Deletable
   - VRController
+  - FxTemporaire
+  - projectile
+  - Weapon
   layers:
   - Default
   - TransparentFX
