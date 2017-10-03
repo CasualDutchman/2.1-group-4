@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SteamVR_TrackedObject))]
-public class PickupParent : MonoBehaviour {
+public class SteamVRController : MonoBehaviour {
 
+    SteamVR_Controller.Device Device;
     SteamVR_TrackedObject trackedObj;
 
 	void Awake ()
@@ -14,10 +15,10 @@ public class PickupParent : MonoBehaviour {
 	
 	void Update ()
     {
-        SteamVR_Controller.Device device = SteamVR_Controller.Input((int)trackedObj.index);
+        Device = SteamVR_Controller.Input((int)trackedObj.index);
 
 
-        if(device.GetHairTriggerDown())
+        if(Device.GetHairTriggerDown())
         {
             Debug.Log("Trigger was pulled");
         }

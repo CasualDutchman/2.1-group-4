@@ -182,9 +182,9 @@
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_Utils.cs" />
     <Compile Include="Assets\Vr Game\Scripts\CameraLooker.cs" />
     <Compile Include="Assets\Vr Game\Scripts\CameraMouseController.cs" />
-    <Compile Include="Assets\Vr Game\Scripts\PickupParent.cs" />
     <Compile Include="Assets\Vr Game\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Vr Game\Scripts\PortalManager.cs" />
+    <Compile Include="Assets\Vr Game\Scripts\SteamVRController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
