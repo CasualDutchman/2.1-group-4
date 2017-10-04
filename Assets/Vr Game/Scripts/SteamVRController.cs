@@ -5,9 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(SteamVR_TrackedObject))]
 public class SteamVRController : MonoBehaviour {
 
-    public GameObject BulletPreFab;
-    GameObject Bullet;
-
     //Create variables for tracking the device and manipulation
     SteamVR_Controller.Device Device;
     SteamVR_TrackedObject trackedObj;
@@ -64,7 +61,13 @@ public class SteamVRController : MonoBehaviour {
     {
         //TODO implement gun firing
         Debug.Log("Gun is fired");
-
-        Bullet = Instantiate(BulletPreFab, trackedObj.transform.position, trackedObj.transform.rotation);
+        Debug.DrawRay(trackedObj.transform.position, trackedObj.transform.forward);
+        RaycastHit hit;
+        if(Physics.Raycast(trackedObj.transform.position, trackedObj.transform.forward, out hit) && hit.collider.tag != "Player")
+        {
+            Debug.Log("Something hit");
+            Destroy(hit.transform.gameObject);
+        }
+        
     }
 }
