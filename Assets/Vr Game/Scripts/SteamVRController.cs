@@ -18,8 +18,7 @@ public class SteamVRController : MonoBehaviour {
     {
         //assign the device for input
         Device = SteamVR_Controller.Input((int)trackedObj.index);
-
-	}
+    }
 
     private void OnTriggerStay(Collider Col)
     {
@@ -61,8 +60,14 @@ public class SteamVRController : MonoBehaviour {
     {
         //TODO implement gun firing
         Debug.Log("Gun is fired");
-        Debug.DrawRay(trackedObj.transform.position, trackedObj.transform.forward);
+
+        //does not work for some reason
+        Debug.DrawRay(trackedObj.transform.position, trackedObj.transform.forward, Color.red, 1f);
+        
+        //variable to get hit info
         RaycastHit hit;
+
+        //actually firing of the "gun"
         if(Physics.Raycast(trackedObj.transform.position, trackedObj.transform.forward, out hit) && hit.collider.tag != "Player")
         {
             Debug.Log("Something hit");
