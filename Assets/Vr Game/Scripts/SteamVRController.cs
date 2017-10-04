@@ -68,7 +68,7 @@ public class SteamVRController : MonoBehaviour {
         RaycastHit hit;
 
         //actually firing of the "gun"
-        if(Physics.Raycast(trackedObj.transform.position, trackedObj.transform.forward, out hit) && hit.collider.tag != "Player")
+        if(Physics.Raycast(trackedObj.transform.position, trackedObj.transform.forward, out hit) && hit.collider.tag == "Enemies")
         {
             Debug.Log("Something hit");
             Destroy(hit.transform.gameObject);

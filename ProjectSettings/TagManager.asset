@@ -10,6 +10,7 @@ TagManager:
   - FxTemporaire
   - projectile
   - Weapon
+  - Enemies
   layers:
   - Default
   - TransparentFX
