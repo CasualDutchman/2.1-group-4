@@ -10,7 +10,7 @@ public class CameraMouseController : MonoBehaviour {
     private float yaw = 0.0f;
     private float pitch = 0.0f;
 
-    public Transform parent;
+    Transform parent;
 
     float speed;
 
@@ -18,10 +18,12 @@ public class CameraMouseController : MonoBehaviour {
         if (VRSettings.enabled) {
             this.enabled = false;
         }else {
-            //GameObject go = new GameObject("CameraRig");
-            //parent = go.transform;
-            //parent.position = transform.position;
-            //transform.SetParent(parent);
+            GameObject go = new GameObject("CameraRig");
+            if (transform.parent != null)
+                go.transform.SetParent(transform.parent);
+            parent = go.transform;
+            parent.position = transform.position;
+            transform.SetParent(parent);
         }
 	}
 	
