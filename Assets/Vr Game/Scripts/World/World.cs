@@ -114,6 +114,8 @@ public class World {
                 }
             }
         }
+
+        manager.SetGameModespanels(activepanels, this);
     }
 
     public void SpawnPortal() {

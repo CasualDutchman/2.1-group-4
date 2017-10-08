@@ -34,6 +34,7 @@ public class WorldManager : MonoBehaviour {
 	void Start () {
         SetWorlds();
 
+
         currentWorld = worldList[startWorld].Copy();
         traveledWorlds.Add(startWorld);
         currentWorld.SetupWorld(this, 11, Vector3.zero, Vector3.zero);
@@ -82,6 +83,11 @@ public class WorldManager : MonoBehaviour {
         for(int i = 0; i < currentWorld.worldObject.transform.childCount; i++) {
             Transform child = currentWorld.worldObject.transform.GetChild(i);
             child.gameObject.layer = LayerMask.NameToLayer("Portal");
+
+            foreach (Transform c in child)
+                if(c.childCount > 0)
+                    c.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Portal");
+
             if (i > currentWorld.portalindex)
                 child.gameObject.SetActive(false);
         }
@@ -131,6 +137,10 @@ public class WorldManager : MonoBehaviour {
         nextWorld.SetupWorld(this, 8, pos, euler);
         portalLight.color = nextWorld.sunColor;
         worldIndex++;
+    }
+
+    public void SetGameModespanels(List<GameObject> panels, World w) {
+        currentGameMode.SetPanels(panels, w);
     }
 
     //when a player dies
@@ -264,9 +274,16 @@ public class GameMode {
     protected bool active = true;
     protected bool started = false;
     protected WorldManager manager;
+    protected List<GameObject> worldsactivepanels;
+    protected World world;
 
     public virtual void SetupGame(WorldManager wm) { manager = wm; }
     public virtual void UpdateGame() { }
+
+    public void SetPanels(List<GameObject> panels, World w) {
+        worldsactivepanels = panels;
+        world = w;
+    }
 
     public bool isActive() { return active; }
 }
