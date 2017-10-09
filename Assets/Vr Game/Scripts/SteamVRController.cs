@@ -9,6 +9,11 @@ public class SteamVRController : MonoBehaviour {
     SteamVR_Controller.Device Device;
     SteamVR_TrackedObject trackedObj;
 
+    public Transform Muzzle;
+    public GameObject Bullet;
+
+    float timer;
+
 	void Awake ()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
@@ -58,21 +63,11 @@ public class SteamVRController : MonoBehaviour {
 
     private void FireGun()
     {
-        //TODO implement gun firing
-        Debug.Log("Gun is fired");
-
-        //does not work for some reason
-        Debug.DrawRay(trackedObj.transform.position, trackedObj.transform.forward, Color.red, 1f);
-        
-        //variable to get hit info
-        RaycastHit hit;
-
-        //actually firing of the "gun"
-        if(Physics.Raycast(trackedObj.transform.position, trackedObj.transform.forward, out hit) && hit.collider.tag == "Enemies")
-        {
-            Debug.Log("Something hit");
-            Destroy(hit.transform.gameObject);
-        }
+        //Fire ze Gun!
+        GameObject FiredBullet = Instantiate(Bullet);
+        FiredBullet.transform.position = Muzzle.position;
+        FiredBullet.transform.rotation = Muzzle.rotation;
+        FiredBullet.GetComponent<Rigidbody>().velocity = Muzzle.forward * 50;
         
     }
 }
