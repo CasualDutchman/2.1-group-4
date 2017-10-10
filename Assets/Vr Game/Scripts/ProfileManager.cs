@@ -18,3 +18,9 @@ public class ProfileManager : MonoBehaviour {
 
     enum handDominance { Left, Right}
 }
+
+[System.Serializable]
+public class SaveData
+{
+
+}
