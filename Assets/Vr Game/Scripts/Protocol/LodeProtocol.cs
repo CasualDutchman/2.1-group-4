@@ -49,8 +49,6 @@ public class LodeProtocol : MonoBehaviour
 	private SerialPort serialPort = null;
 	private int machineID = -1;
 
-
-
 	public void Connect()
 	{
 		if (serialPort != null && serialPort.IsOpen) return;

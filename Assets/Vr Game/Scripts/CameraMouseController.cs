@@ -6,6 +6,7 @@ using UnityEngine.VR;
 public class CameraMouseController : MonoBehaviour {
 
     public float mouseSpeed = 5;
+    public bool wKeyDisabled;
 
     private float yaw = 0.0f;
     private float pitch = 0.0f;
@@ -36,12 +37,14 @@ public class CameraMouseController : MonoBehaviour {
             parent.localEulerAngles = new Vector3(0, yaw, 0);
         }
 
-        parent.Translate(Vector3.forward * Time.deltaTime * speed, Space.World);
+        if (!wKeyDisabled) {
+            parent.Translate(Vector3.forward * Time.deltaTime * speed, Space.World);
 
-        if (Input.GetKey(KeyCode.W)) {
-            speed = Mathf.Clamp(speed + (1 * Time.deltaTime), 0, 10);
-        }else {
-            speed = Mathf.Clamp(speed - (1 * Time.deltaTime), 0, 10);
+            if (Input.GetKey(KeyCode.W)) {
+                speed = Mathf.Clamp(speed + (1 * Time.deltaTime), 0, 10);
+            } else {
+                speed = Mathf.Clamp(speed - (1 * Time.deltaTime), 0, 10);
+            }
         }
     }
 }

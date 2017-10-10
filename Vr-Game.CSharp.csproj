@@ -87,6 +87,7 @@
     <Compile Include="Assets\Vr Game\Scripts\gunproto\Enemy.cs" />
     <Compile Include="Assets\Vr Game\Scripts\gunproto\EnemySpawners.cs" />
     <Compile Include="Assets\Vr Game\Scripts\gunproto\Shooter.cs" />
+    <Compile Include="Assets\Vr Game\Scripts\MusicVisualizer.cs" />
     <Compile Include="Assets\Vr Game\Scripts\PortalManager.cs" />
     <Compile Include="Assets\Vr Game\Scripts\Protocol\LodeProtocol.cs" />
     <Compile Include="Assets\Vr Game\Scripts\Protocol\PlayerVehicle.cs" />
@@ -95,6 +96,9 @@
     <Compile Include="Assets\Vr Game\Scripts\World\WorldManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Vr Game\Shader\InPortalShader.shader" />
+    <None Include="Assets\Vr Game\Shader\OutPortalShader.shader" />
+    <None Include="Assets\Vr Game\Shader\PortalShader.shader" />
     <None Include="Assets\Vr Game\Shader\WorldUv.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

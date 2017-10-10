@@ -11,6 +11,11 @@ public class SimpleBikeController : MonoBehaviour {
     bool alive = true;
     float timer;
 
+    //true when portal trigger is hit, false at default
+    //this bool prevents a very annoying bug
+    bool hitPortal;
+    float hitPortalTimer;
+
 	void Start () {
 		
 	}
@@ -27,6 +32,12 @@ public class SimpleBikeController : MonoBehaviour {
             }
         }
 
+        if (Input.GetKey(KeyCode.Space)) {
+            manager.speed = 26;
+        } else {
+            manager.speed = 10;
+        }
+
         if (!alive) {
             timer += Time.deltaTime;
             if (timer >= 2) {
@@ -36,6 +47,14 @@ public class SimpleBikeController : MonoBehaviour {
         }else {
             timer = 0;
         }
+
+        if (hitPortal) {
+            hitPortalTimer += Time.deltaTime;
+            if (hitPortalTimer >= 2) {
+                hitPortal = false;
+                hitPortalTimer = 0;
+            }
+        }
 	}
 
     void OnTriggerStay(Collider other) {
@@ -44,8 +63,9 @@ public class SimpleBikeController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         alive = true;
-        if (other.tag == "Portal") {
+        if (other.tag == "Portal" && !hitPortal) {
             manager.ChangeWorlds();
+            hitPortal = true;
         }
     }
 

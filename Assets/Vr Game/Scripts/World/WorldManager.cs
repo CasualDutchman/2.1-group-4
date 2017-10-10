@@ -5,17 +5,19 @@ using UnityEngine;
 public class WorldManager : MonoBehaviour {
 
     //holds the default material for the combined mesh, only accesable in debugmode
-    public Material defaultMaterial;
+    public Material defaultMaterial, portalMaterial;
     public GameObject portalObject;
     public GameObject normalCamera, portalCamera;
     public Light normalLight, portalLight;
+
+    public GameObject currentSkybox, otherSkybox;
 
     //list of all possible worlds and worldtype
     public List<WorldType> worldTypes = new List<WorldType>();
     public List<World> worldList = new List<World>();
 
     public int worldIndex = 0;
-    World currentWorld;
+    public World currentWorld;
     World nextWorld = null;
     public World prevWorld = null;
     GameMode currentGameMode;
@@ -33,7 +35,6 @@ public class WorldManager : MonoBehaviour {
 
 	void Start () {
         SetWorlds();
-
 
         currentWorld = worldList[startWorld].Copy();
         traveledWorlds.Add(startWorld);
@@ -80,21 +81,40 @@ public class WorldManager : MonoBehaviour {
 
     //function what happens when the player goes through the portal
     public void ChangeWorlds() {
-        for(int i = 0; i < currentWorld.worldObject.transform.childCount; i++) {
-            Transform child = currentWorld.worldObject.transform.GetChild(i);
-            child.gameObject.layer = LayerMask.NameToLayer("Portal");
-
-            foreach (Transform c in child)
-                if(c.childCount > 0)
-                    c.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Portal");
-
-            if (i > currentWorld.portalindex)
-                child.gameObject.SetActive(false);
-        }
-
         foreach (Transform child in nextWorld.worldObject.transform) {
             child.gameObject.layer = LayerMask.NameToLayer("Ground");
             child.gameObject.SetActive(true);
+
+            MeshRenderer mr = child.GetComponent<MeshRenderer>();
+            if (mr != null) {
+                mr.material = defaultMaterial;
+                mr.material.SetTexture("_MainTex", nextWorld.texturemap);
+            }
+        }
+
+        for (int i = 0; i < currentWorld.worldObject.transform.childCount; i++) {
+            Transform child = currentWorld.worldObject.transform.GetChild(i);
+            child.gameObject.layer = LayerMask.NameToLayer("Portal");
+
+            MeshRenderer mr = child.GetComponent<MeshRenderer>();
+            if (mr != null) {
+                mr.material = portalMaterial;
+                mr.material.SetTexture("_MainTex", currentWorld.texturemap);
+            }
+
+            foreach (Transform c in child) {
+                if (c.childCount > 0) {
+                    c.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Portal");
+                    MeshRenderer mrc = c.GetChild(0).GetComponent<MeshRenderer>();
+                    if (mrc != null) {
+                        mrc.material = portalMaterial;
+                        mrc.material.SetTexture("_MainTex", currentWorld.texturemap);
+                    }
+                }
+            }
+
+            if (i > currentWorld.portalindex)
+                child.gameObject.SetActive(false);
         }
 
         normalLight.color = nextWorld.sunColor;
@@ -139,8 +159,8 @@ public class WorldManager : MonoBehaviour {
         worldIndex++;
     }
 
-    public void SetGameModespanels(List<GameObject> panels, World w) {
-        currentGameMode.SetPanels(panels, w);
+    public void SetGameModespanels( World w) {
+        currentGameMode.SetPanels(w);
     }
 
     //when a player dies
@@ -272,18 +292,79 @@ public class WorldType {
 public class GameMode {
 
     protected bool active = true;
-    protected bool started = false;
+    protected bool started = false;//true when gamemode is starting up
+    protected bool playing = false;//true when gamemode is playing
+    protected bool ending = false;//true when gamemode is ending
+
+    protected float startTime; //second of starting
+    protected float endTime; //seconds of ending
+    protected float tooLongTime; // seconds when the game ends, even when the goal is not met
+
     protected WorldManager manager;
-    protected List<GameObject> worldsactivepanels;
     protected World world;
 
-    public virtual void SetupGame(WorldManager wm) { manager = wm; }
-    public virtual void UpdateGame() { }
+    protected float timer;
 
-    public void SetPanels(List<GameObject> panels, World w) {
-        worldsactivepanels = panels;
+    public virtual void SetupGame(WorldManager wm) {
+        manager = wm;
+    }
+
+    public virtual void UpdateGame() {
+        if (active) {
+            timer += Time.deltaTime;
+
+            if (started) {
+                OnStart();
+                if (timer >= startTime) {
+                    started = false;
+                    playing = true;
+                    timer = 0;
+                }
+            }
+
+            if (playing) {
+                OnPlay();
+                if (timer >= tooLongTime) {
+                    EndGame();
+                }
+            }
+
+            if (ending) {
+                OnEnd();
+                if (timer >= endTime) {
+                    active = false;
+                    timer = 0;
+                }
+            }
+        }
+    }
+
+    protected void EndGame() {
+        playing = false;
+        ending = true;
+        timer = 0;
+    }
+
+    /// <summary>
+    /// This is called every frame the gamemode is starting. Useful for playing audio to indicate it has finished.
+    /// </summary>
+    public virtual void OnStart() { }
+
+    /// <summary>
+    /// This is called every frame the gamemode is playing
+    /// </summary>
+    public virtual void OnPlay() { }
+
+    /// <summary>
+    /// This is called every frame the gamemode is ending. Useful for playing audio to indicate it has finished.
+    /// </summary>
+    public virtual void OnEnd() { }
+
+    public void SetPanels(World w) {
         world = w;
     }
+
+    public virtual void OnHitTaggedItem(string hittedTag) { }
 
     public bool isActive() { return active; }
 }

@@ -8,6 +8,8 @@ TagManager:
   - Deletable
   - Bullet
   - bounds
+  - Bike
+  - Rock
   layers:
   - Default
   - TransparentFX

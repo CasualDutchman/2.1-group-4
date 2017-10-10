@@ -11,7 +11,7 @@ public class World {
     public GameObject portalObject;
 
     //all active panels
-    List<GameObject> activepanels = new List<GameObject>();
+    public List<GameObject> activepanels = new List<GameObject>();
     //spawnpoint for new panels
     public GameObject nextSpawnLoc;
     //get the length of all active panels (divided by 2 is roughly the middle)
@@ -30,7 +30,7 @@ public class World {
     public LayerMask portalMask;
     public int portalindex;
 
-    float timer;
+    float timer, timer2;
 
     int needsGenerationIndex;
     Vector3 changedPos, changedRot;
@@ -56,8 +56,10 @@ public class World {
         //set the skybox and sun color to the color specified by the world
         if (portalMask == LayerMask.NameToLayer("Portal")) {
             manager.portalCamera.GetComponent<Skybox>().material = skyboxMaterial;
+            manager.otherSkybox.GetComponent<MeshRenderer>().material.SetColor("_Color", sunColor);
         } else {
             manager.normalCamera.GetComponent<Skybox>().material = skyboxMaterial;
+            manager.currentSkybox.GetComponent<MeshRenderer>().material.SetColor("_Color", sunColor);
         }
     }
 
@@ -100,11 +102,17 @@ public class World {
                 if (portalObject != null)
                     portalindex--;
             }
+
+            if (portalObject != null && Vector3.Distance(bike.position, portalObject.transform.position) <= 100) {
+                timer2 += Time.deltaTime;
+                if(timer2 < 4)
+                    portalObject.transform.GetChild(0).localScale = new Vector3(Mathf.Clamp(timer2 / 2, 0, 2), 1, 1);
+            }
         } else {
             timer += Time.deltaTime;
 
             if(timer >= 3) {
-                portalObject.transform.GetChild(0).localScale = new Vector3(Mathf.Clamp(5 - timer, 0, 1), 1, 1);
+                portalObject.transform.GetChild(0).localScale = new Vector3(Mathf.Clamp(5 - timer, 0, 2), 1, 1);
 
                 if (timer >= 6) {
                     GameObject.Destroy(portalObject);
@@ -115,7 +123,8 @@ public class World {
             }
         }
 
-        manager.SetGameModespanels(activepanels, this);
+        if(this == manager.currentWorld)
+            manager.SetGameModespanels(this);
     }
 
     public void SpawnPortal() {
@@ -253,7 +262,7 @@ public class World {
         mf.mesh.name = "Mesh";
         mf.mesh.CombineMeshes(combine.ToArray());
 
-        mr.material = manager.defaultMaterial;
+        mr.material = portalMask == LayerMask.NameToLayer("Portal") ? manager.portalMaterial : manager.defaultMaterial;
         mr.material.SetTexture("_MainTex", texturemap);
     }
 

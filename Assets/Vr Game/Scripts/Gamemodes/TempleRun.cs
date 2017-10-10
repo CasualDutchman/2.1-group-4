@@ -4,60 +4,144 @@ using UnityEngine;
 
 public class TempleRun : GameMode {
 
-    float timer;
-
     bool didSpawn;
 
     GameObject lastSpawned;
 
+    bool onEnd;
+
+    float score;
+
+
+
     public override void SetupGame(WorldManager wm) {
         base.SetupGame(wm);
         Debug.Log("Temple Run");
+
+        started = true;
+        startTime = 10;
+        endTime = 10;
+
+        tooLongTime = 5;
     }
 
+    public override void OnStart() {
+        base.OnStart();
+    }
+
+    public override void OnPlay() {
+        base.OnPlay();
+        if (!didSpawn) {
+            for (int i = world.activepanels.Count - 3; i < world.activepanels.Count; i++) {
+                SpawnObjects(world.activepanels[i]);
+                lastSpawned = world.activepanels[i];
+            }
+            didSpawn = true;
+        }
+
+        if (lastSpawned != world.activepanels[world.activepanels.Count - 1]) {
+            SpawnObjects(world.activepanels[world.activepanels.Count - 1]);
+            lastSpawned = world.activepanels[world.activepanels.Count - 1];
+        }
+    }
+
+    public override void OnEnd() {
+        base.OnEnd();
+    }
+
+    /*
     public override void UpdateGame() {
         if (active) {
             timer += Time.deltaTime;
-            if (!started && timer >= 2) {
-                started = true;
-                timer = 0;
-            }
 
             if (started) {
-                Debug.Log("I am playing: Temple Run");
+                Debug.Log("starting");
+                if (timer >= startTime) {
+                    started = false;
+                    playing = true;
+                    timer = 0;
+                }
+            }
+
+            if (playing) {
+                Debug.Log("playing");
                 if (!didSpawn) {
-                    for (int i = Mathf.FloorToInt(manager.amountOfPanels / 2); i < worldsactivepanels.Count; i++) {
-                        SpawnObjects(worldsactivepanels[i]);
-                        lastSpawned = worldsactivepanels[i];
+                    for (int i = 9; i < world.activepanels.Count; i++) {
+                        SpawnObjects(world.activepanels[i]);
+                        lastSpawned = world.activepanels[i];
                     }
                     didSpawn = true;
                 }
 
-                if(lastSpawned != worldsactivepanels[worldsactivepanels.Count - 1]) {
-                    Debug.Log("new");
-                    SpawnObjects(worldsactivepanels[worldsactivepanels.Count - 1]);
-                    lastSpawned = worldsactivepanels[worldsactivepanels.Count - 1];
+                if (lastSpawned != world.activepanels[world.activepanels.Count - 1]) {
+                    SpawnObjects(world.activepanels[world.activepanels.Count - 1]);
+                    lastSpawned = world.activepanels[world.activepanels.Count - 1];
+                }
+
+                if (score >= 100 || timer >= tooLongTime) {
+                    playing = false;
+                    ending = true;
+                    timer = 0;
+                }
+            }
+
+            if (ending) {
+                Debug.Log("ending");
+                if (timer >= endTime) {
+                    active = false;
+                    timer = 0;
+                }
+            }
+
+            /*
+            if (started && !onEnd) {
+                Debug.Log("I am playing: Temple Run");
+                if (!didSpawn) {
+                    for (int i = 9; i < world.activepanels.Count; i++) {
+                        SpawnObjects(world.activepanels[i]);
+                        lastSpawned = world.activepanels[i];
+                    }
+                    didSpawn = true;
+                }
+
+                if(lastSpawned != world.activepanels[world.activepanels.Count - 1]) {
+                    SpawnObjects(world.activepanels[world.activepanels.Count - 1]);
+                    lastSpawned = world.activepanels[world.activepanels.Count - 1];
                 }
 
                 if (timer >= 7) {
-                    active = false;
+                    onEnd = true;
+                    timer = 0;
                 }
             }
+
+            if (onEnd) {
+                if (timer >= 7) {
+                    active = false;
+                    timer = 0;
+                }
+            } 
         }
     }
+*/
 
     void SpawnObjects(GameObject go) {
         BoxCollider boxcol = go.transform.GetChild(0).GetComponent<BoxCollider>();
+        int random = Random.Range(0, 7);
 
-        for (int i = 0; i < 10; i++) {
-            Vector3 randominbounds = new Vector3(Random.Range(-boxcol.bounds.extents.x, boxcol.bounds.extents.x), 0, Random.Range(-boxcol.bounds.extents.z, boxcol.bounds.extents.z));
-
-            Ray ray = new Ray(boxcol.bounds.center + randominbounds + Vector3.up * 5, Vector3.down);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 30, LayerMask.GetMask("Ground"))) {
-                GameObject lol = GameObject.Instantiate(world.worldType.GetRock(), go.transform);
-                lol.transform.position = hit.point;
-                lol.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", world.texturemap);
+        for (int j = 0; j < 2; j++) {
+            for (int i = 0; i < 7; i++) {
+                if (i != random) {
+                    Vector3 rayorigin = go.transform.TransformPoint(boxcol.center + (new Vector3(-6 + (i * 2), 0, -5 + (j * 15))));
+                    Ray ray = new Ray(rayorigin + Vector3.up * 5, Vector3.down);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, 30, LayerMask.GetMask("Ground"))) {
+                        GameObject lol = GameObject.Instantiate(world.worldType.GetRock(), go.transform);
+                        lol.transform.position = hit.point;
+                        lol.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+                        lol.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", world.texturemap);
+                    }
+                }
             }
         }
     }
