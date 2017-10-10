@@ -1,24 +1,15 @@
 fileFormatVersion: 2
-guid: aa70a495abb21304480ab61e98e04905
-timeCreated: 1507075022
+guid: f7e6f61f4c39bea48b5d9257f1715c0c
+timeCreated: 1507653056
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
     100000: //RootNode
-    100002: tree01
-    100004: tree02
     400000: //RootNode
-    400002: tree01
-    400004: tree02
-    2300000: tree01
-    2300002: tree02
-    3300000: tree01
-    3300002: tree02
-    4300000: tree02
-    4300002: tree01
-    7400000: Default Take
-    9500000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Icosphere
   materials:
     importMaterials: 1
     materialName: 0
@@ -88,7 +79,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

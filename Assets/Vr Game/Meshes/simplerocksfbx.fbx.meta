@@ -1,54 +1,32 @@
 fileFormatVersion: 2
-guid: 39be62606b1ae5044b86720f8b84bf17
-timeCreated: 1507073177
+guid: b20b16c72568cfb49a7c0e3da2da5b2b
+timeCreated: 1507653025
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: next
-    100004: Plane
-    100006: next_001
-    100008: next_002
-    100010: y-10
-    100012: y0
-    100014: y10
-    100016: y0_001
-    100018: next_003
-    100020: y0_002
-    400000: //RootNode
-    400002: next
-    400004: Plane
-    400006: next_001
-    400008: next_002
-    400010: y-10
-    400012: y0
-    400014: y10
-    400016: y0_001
-    400018: next_003
-    400020: y0_002
-    2300000: //RootNode
-    2300002: Plane
-    2300004: y-10
-    2300006: y0
-    2300008: y10
-    2300010: y0_001
-    2300012: y0_002
-    3300000: //RootNode
-    3300002: Plane
-    3300004: y-10
-    3300006: y0
-    3300008: y10
-    3300010: y0_001
-    3300012: y0_002
-    4300000: Plane
-    4300002: y-10
-    4300004: y0
-    4300006: y10
-    4300008: y0_001
-    4300010: y0_002
-    7400000: Default Take
-    9500000: //RootNode
+    100000: Cube
+    100002: Cube.001
+    100004: Cube.002
+    100006: Cube.003
+    100008: //RootNode
+    400000: Cube
+    400002: Cube.001
+    400004: Cube.002
+    400006: Cube.003
+    400008: //RootNode
+    2300000: Cube
+    2300002: Cube.001
+    2300004: Cube.002
+    2300006: Cube.003
+    3300000: Cube
+    3300002: Cube.001
+    3300004: Cube.002
+    3300006: Cube.003
+    4300000: Cube.003
+    4300002: Cube.002
+    4300004: Cube.001
+    4300006: Cube
   materials:
     importMaterials: 1
     materialName: 0
@@ -118,7 +96,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
