@@ -480,5 +480,4 @@ public class PlayerVehicle : MonoBehaviour
 		obj.transform.localRotation = Quaternion.Euler(local);
 
 	}
-}
-*/
+} */

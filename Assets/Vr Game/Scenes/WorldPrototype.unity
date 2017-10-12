@@ -183,6 +183,8 @@ GameObject:
   m_Component:
   - component: {fileID: 292550721}
   - component: {fileID: 292550720}
+  - component: {fileID: 292550723}
+  - component: {fileID: 292550722}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -451,6 +453,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &292550722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 292550719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5681b3f1a2519d343a157803dab07a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PortBaudRate: 9600
+  PortParity: 0
+  PortDataBits: 8
+  PortStopBits: 1
+  PortHandshake: 0
+  PortRequestTimeout: 100
+--- !u!114 &292550723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 292550719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abe0622ba639b24b9b8a71e438efcb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useProtocol: 0
 --- !u!1 &301954436
 GameObject:
   m_ObjectHideFlags: 0
