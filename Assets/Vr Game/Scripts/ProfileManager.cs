@@ -2,7 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProfileManager : MonoBehaviour {
+public class ProfileManager : MonoBehaviour
+{
+    public string playerName;
+
+    //0 = easy, 1 = medium, 2 = hard
+    public int gameDifficulty;
+    public int bikingDifficulty;
+
+    //0 = left, 1 = right
+    public int handDominance;
 
 	// Use this for initialization
 	void Start ()
@@ -15,10 +24,31 @@ public class ProfileManager : MonoBehaviour {
     {
 		
 	}
+    
+    //Save the player settings
+    void SavePlayerSettings()
+    {
+        //TODO Write code to save the player settings
 
-    enum difficulty {Easy, Medium, Hard}
+        //Saves the player settings
+        PlayerPrefs.SetString(playerName + "Name", playerName);
+        PlayerPrefs.SetInt(playerName + "gameDifficulty", gameDifficulty);
+        PlayerPrefs.SetInt(playerName + "bikingDificulty", bikingDifficulty);
+        PlayerPrefs.SetInt(playerName + "handDominance", handDominance);
 
-    enum handDominance { Left, Right}
+    }
+
+    //Get the player settings
+    void GetPlayerSettings()
+    {
+        //TODO Write code to get the player settings
+
+        //Gets the player settings
+        PlayerPrefs.GetString(playerName + "Name", playerName);
+        PlayerPrefs.GetInt(playerName + "gameDifficulty", gameDifficulty);
+        PlayerPrefs.GetInt(playerName + "bikingDificulty", bikingDifficulty);
+        PlayerPrefs.GetInt(playerName + "handDominance", handDominance);
+    }
 }
 
 [System.Serializable]
