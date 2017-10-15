@@ -40,6 +40,11 @@ public class ProfileManager : MonoBehaviour
     public void SavePlayerSettings()
     {
         //TODO Write code to save the player settings
+        UpdateName();
+        UpdateGameDifficulty();
+        UpdateBikingDifficulty();
+        UpdateAttentionSpan();
+        UpdateHandDominance();
 
         //Saves the player settings
         PlayerPrefs.SetString(profileNumber + "Name", playerName);
@@ -55,11 +60,18 @@ public class ProfileManager : MonoBehaviour
         //TODO Write code to get the player settings
 
         //Gets the player settings
-        PlayerPrefs.GetString(profileNumber + "Name", playerName);
-        PlayerPrefs.GetInt(profileNumber + "gameDifficulty", gameDifficulty);
-        PlayerPrefs.GetInt(profileNumber + "bikingDificulty", bikingDifficulty);
-        PlayerPrefs.GetInt(profileNumber + "handDominance", handDominance);
-        PlayerPrefs.GetInt(profileNumber + "attentionSpan", attentionSpan);
+        playerName = PlayerPrefs.GetString(profileNumber + "Name");
+        gameDifficulty = PlayerPrefs.GetInt(profileNumber + "gameDifficulty");
+        bikingDifficulty = PlayerPrefs.GetInt(profileNumber + "bikingDificulty");
+        handDominance = PlayerPrefs.GetInt(profileNumber + "handDominance");
+        attentionSpan = PlayerPrefs.GetInt(profileNumber + "attentionSpan");
+
+        print(playerName);
+        print(gameDifficulty);
+        print(bikingDifficulty);
+        print(handDominance);
+        print(attentionSpan);
+
     }
 
     public void UpdateName()
