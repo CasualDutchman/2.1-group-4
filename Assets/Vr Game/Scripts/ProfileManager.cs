@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class ProfileManager : MonoBehaviour
 {
+
+    public InputField nameInputField;
+
     //Buttons for the different profiles
     public Button profile1, profile2, profile3, profile4, profile5, profile6;
 
@@ -27,7 +30,7 @@ public class ProfileManager : MonoBehaviour
     public int gameDifficulty;
     public int bikingDifficulty;
 
-    //0 = left, 1 = right
+    //0 = right, 1 = left
     public int handDominance;
 
     //0 = little, 1 = medium, 2 = a lot
@@ -61,25 +64,27 @@ public class ProfileManager : MonoBehaviour
 
     public void UpdateName()
     {
+        playerName = nameInputField.text;
     }
 
     public void UpdateGameDifficulty()
     {
-
+        //gameDifficulty = bikeDifficultySlider.value;
     }
 
     public void UpdateBikingDifficulty()
     {
-
+        //bikingDifficulty = bikeDifficultySlider.value;
     }
 
     public void UpdateHandDominance()
     {
-
+        handDominance = handDominanceMenu.value;
     }
 
     public void UpdateAttentionSpan()
     {
+        //attentionSpan = attentionSpanSlider.value;
     }
 
 }
