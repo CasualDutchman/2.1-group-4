@@ -1,9 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProfileManager : MonoBehaviour
 {
+    //Buttons for the different profiles
+    public Button profile1, profile2, profile3, profile4, profile5, profile6;
+
+    //Buttons for loading and saving the data
+    public Button save, load;
+
+    //Sliders for the difficulties and the attention span
+    public Slider bikeDifficultySlider, gameDifficultySlider, attentionSpanSlider;
+
+    //Dropdown menu for the hand dominance
+    public Dropdown handDominanceMenu;
+
     //Number of the save profile
     public int profileNumber;
 
@@ -21,7 +34,7 @@ public class ProfileManager : MonoBehaviour
     public int attentionSpan;
 
     //Save the player settings
-    void SavePlayerSettings()
+    public void SavePlayerSettings()
     {
         //TODO Write code to save the player settings
 
@@ -34,7 +47,7 @@ public class ProfileManager : MonoBehaviour
     }
 
     //Get the player settings
-    void GetPlayerSettings()
+    public void GetPlayerSettings()
     {
         //TODO Write code to get the player settings
 
@@ -45,4 +58,28 @@ public class ProfileManager : MonoBehaviour
         PlayerPrefs.GetInt(profileNumber + "handDominance", handDominance);
         PlayerPrefs.GetInt(profileNumber + "attentionSpan", attentionSpan);
     }
+
+    public void UpdateName()
+    {
+    }
+
+    public void UpdateGameDifficulty()
+    {
+
+    }
+
+    public void UpdateBikingDifficulty()
+    {
+
+    }
+
+    public void UpdateHandDominance()
+    {
+
+    }
+
+    public void UpdateAttentionSpan()
+    {
+    }
+
 }
