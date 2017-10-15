@@ -2114,10 +2114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ea21eb7cbf08f4fae4c2882f4820ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profileNumberDropdown: {fileID: 0}
+  profileNumberDropdown: {fileID: 1734538082}
   nameInputField: {fileID: 720342865}
   save: {fileID: 554904870}
-  load: {fileID: 0}
+  load: {fileID: 1625505464}
   bikeDifficultySlider: {fileID: 1704552824}
   gameDifficultySlider: {fileID: 688243719}
   attentionSpanSlider: {fileID: 782020966}
@@ -3773,7 +3773,18 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 883919755}
+        m_MethodName: UpdateProfileNumber
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Dropdown+DropdownEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1734538083
