@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class ProfileManager : MonoBehaviour
 {
 
-    public InputField nameInputField;
+    //UI Elements
+    //drop down for the profile number
+    public Dropdown profileNumberDropdown;
 
-    //Buttons for the different profiles
-    public Button profile1, profile2, profile3, profile4, profile5, profile6;
+    //input field for the name
+    public InputField nameInputField;
 
     //Buttons for loading and saving the data
     public Button save, load;
@@ -20,6 +22,8 @@ public class ProfileManager : MonoBehaviour
     //Dropdown menu for the hand dominance
     public Dropdown handDominanceMenu;
 
+
+    //Values for the actual storing of the data
     //Number of the save profile
     public int profileNumber;
 
@@ -57,8 +61,6 @@ public class ProfileManager : MonoBehaviour
     //Get the player settings
     public void GetPlayerSettings()
     {
-        //TODO Write code to get the player settings
-
         //Gets the player settings
         playerName = PlayerPrefs.GetString(profileNumber + "Name");
         gameDifficulty = PlayerPrefs.GetInt(profileNumber + "gameDifficulty");
