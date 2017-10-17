@@ -9,6 +9,8 @@ public class ProfileManager : MonoBehaviour
     public static ProfileManager profileManager;
 
     //UI Elements
+    public Canvas profileCanvas = null;
+
     //drop down for the profile number
     public Dropdown profileNumberDropdown;
 
@@ -53,6 +55,7 @@ public class ProfileManager : MonoBehaviour
         if(profileManager == null)
         {
             DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(profileCanvas);
             profileManager = this;
         }
         else if (profileManager != this)
@@ -125,28 +128,13 @@ public class ProfileManager : MonoBehaviour
         profileNumber = profileNumberDropdown.value;
     }
     
-    /*
-    private void OnGUI()
+    public void ExitProfileEditor()
     {
-        
-
-        //Load Button
-        if (GUI.Button(new Rect(620, 400, 100, 50), "Load"))
-        {
-            GetPlayerSettings();
-            print("You clicked the load button!");
-            
-        }
-
-        //Save Button
-        if (GUI.Button(new Rect(420, 400, 100, 50), "Save"))
-        {
-            SavePlayerSettings();
-            print("You clicked the save button!");
-        }
-            
+        profileCanvas.enabled = false;
     }
-    //TODO Write load profile screen
-    //TODO write save profile screen
-    */
+
+    public void EnterProfileEditor()
+    {
+        profileCanvas.enabled = true;
+    }
 }
