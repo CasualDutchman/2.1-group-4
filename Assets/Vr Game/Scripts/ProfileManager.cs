@@ -124,7 +124,29 @@ public class ProfileManager : MonoBehaviour
     {
         profileNumber = profileNumberDropdown.value;
     }
+    
+    /*
+    private void OnGUI()
+    {
+        
 
+        //Load Button
+        if (GUI.Button(new Rect(620, 400, 100, 50), "Load"))
+        {
+            GetPlayerSettings();
+            print("You clicked the load button!");
+            
+        }
+
+        //Save Button
+        if (GUI.Button(new Rect(420, 400, 100, 50), "Save"))
+        {
+            SavePlayerSettings();
+            print("You clicked the save button!");
+        }
+            
+    }
     //TODO Write load profile screen
     //TODO write save profile screen
+    */
 }
