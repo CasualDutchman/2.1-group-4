@@ -114,7 +114,7 @@ public class ProfileManager : MonoBehaviour
             nameInputField.text = playerName;
             gameDifficultySlider.value = gameDifficulty;
             bikeDifficultySlider.value = bikingDifficulty;
-            handDominance = handDominanceMenu.value;
+            handDominanceMenu.value = handDominance;
             attentionSpanSlider.value= attentionSpan;
         }
 
