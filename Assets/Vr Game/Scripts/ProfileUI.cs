@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProfileUI : MonoBehaviour {
     //UI Elements
@@ -31,4 +32,34 @@ public class ProfileUI : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    //Updates the data in the variables and the UI elements
+    public void UpdatePreferences(bool saving)
+    {
+        if (saving)
+        {
+            //assign all of the variables from the UI
+            ProfileManager.playerName = nameInputField.text;
+            ProfileManager.gameDifficulty = Mathf.RoundToInt(gameDifficultySlider.value);
+            ProfileManager.bikingDifficulty = Mathf.RoundToInt(bikeDifficultySlider.value);
+            ProfileManager.handDominance = handDominanceMenu.value;
+            ProfileManager.attentionSpan = Mathf.RoundToInt(attentionSpanSlider.value);
+        }
+
+        if (!saving)
+        {
+            //TODO Write code to update the UI elements
+            nameInputField.text = ProfileManager.playerName;
+            gameDifficultySlider.value = ProfileManager.gameDifficulty;
+            bikeDifficultySlider.value = ProfileManager.bikingDifficulty;
+            handDominanceMenu.value = ProfileManager.handDominance;
+            attentionSpanSlider.value = ProfileManager.attentionSpan;
+        }
+
+    }
+
+    public void UpdateProfileNumber()
+    {
+        ProfileManager.profileNumber = profileNumberDropdown.value;
+    }
 }

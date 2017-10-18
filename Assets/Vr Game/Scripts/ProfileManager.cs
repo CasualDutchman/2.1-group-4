@@ -8,54 +8,34 @@ public class ProfileManager : MonoBehaviour
 
     public static ProfileManager profileManager;
 
-    //UI Elements
-    public Canvas profileCanvas = null;
-
-    //drop down for the profile number
-    public Dropdown profileNumberDropdown;
-
-    //input field for the name
-    public InputField nameInputField;
-
-    //Buttons for loading and saving the data
-    public Button save, load;
-
-    //Sliders for the difficulties and the attention span
-    public Slider bikeDifficultySlider, gameDifficultySlider, attentionSpanSlider;
-
-    //Dropdown menu for the hand dominance
-    public Dropdown handDominanceMenu;
-
-
     //Values for the actual storing of the data
     //Number of the save profile
     [HideInInspector]
-    public int profileNumber;
+    public static int profileNumber;
 
     //Name of the player
     [HideInInspector]
-    public string playerName;
+    public static string playerName;
 
     //0 = easy, 1 = medium, 2 = hard
     [HideInInspector]
-    public int gameDifficulty;
+    public static int gameDifficulty;
     [HideInInspector]
-    public int bikingDifficulty;
+    public static int bikingDifficulty;
 
     //0 = right, 1 = left
     [HideInInspector]
-    public int handDominance;
+    public static int handDominance;
 
     //0 = little, 1 = medium, 2 = a lot
     [HideInInspector]
-    public int attentionSpan;
+    public static int attentionSpan;
 
     private void Awake()
     {
         if(profileManager == null)
         {
             DontDestroyOnLoad(gameObject);
-            DontDestroyOnLoad(profileCanvas);
             profileManager = this;
         }
         else if (profileManager != this)
@@ -68,7 +48,7 @@ public class ProfileManager : MonoBehaviour
     public void SavePlayerSettings()
     {
         //TODO Write code to save the player settings
-        UpdatePreferences(true);
+        //UpdatePreferences(true);
 
         //Saves the player settings
         PlayerPrefs.SetString(profileNumber + "Name", playerName);
@@ -88,7 +68,7 @@ public class ProfileManager : MonoBehaviour
         handDominance = PlayerPrefs.GetInt(profileNumber + "handDominance");
         attentionSpan = PlayerPrefs.GetInt(profileNumber + "attentionSpan");
 
-        UpdatePreferences(false);
+        //UpdatePreferences(false);
 
         print(playerName);
         print(gameDifficulty);
@@ -98,43 +78,6 @@ public class ProfileManager : MonoBehaviour
 
     }
 
-    //Updates the data in the variables and the UI elements
-    public void UpdatePreferences(bool saving)
-    {
-        if(saving)
-        {
-            //assign all of the variables from the UI
-            playerName = nameInputField.text;
-            gameDifficulty = Mathf.RoundToInt(gameDifficultySlider.value);
-            bikingDifficulty = Mathf.RoundToInt(bikeDifficultySlider.value);
-            handDominance = handDominanceMenu.value;
-            attentionSpan = Mathf.RoundToInt(attentionSpanSlider.value);
-        }
-
-        if (!saving)
-        {
-            //TODO Write code to update the UI elements
-            nameInputField.text = playerName;
-            gameDifficultySlider.value = gameDifficulty;
-            bikeDifficultySlider.value = bikingDifficulty;
-            handDominanceMenu.value = handDominance;
-            attentionSpanSlider.value= attentionSpan;
-        }
-
-    }
-
-    public void UpdateProfileNumber()
-    {
-        profileNumber = profileNumberDropdown.value;
-    }
     
-    public void ExitProfileEditor()
-    {
-        profileCanvas.enabled = false;
-    }
-
-    public void EnterProfileEditor()
-    {
-        profileCanvas.enabled = true;
-    }
+    
 }
