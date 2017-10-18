@@ -38,16 +38,22 @@ public class ProfileUI : MonoBehaviour {
     {
         if (saving)
         {
+            
+
             //assign all of the variables from the UI
             ProfileManager.playerName = nameInputField.text;
             ProfileManager.gameDifficulty = Mathf.RoundToInt(gameDifficultySlider.value);
             ProfileManager.bikingDifficulty = Mathf.RoundToInt(bikeDifficultySlider.value);
             ProfileManager.handDominance = handDominanceMenu.value;
             ProfileManager.attentionSpan = Mathf.RoundToInt(attentionSpanSlider.value);
+
+            ProfileManager.SavePlayerSettings();
         }
 
         if (!saving)
         {
+            ProfileManager.GetPlayerSettings();
+
             //TODO Write code to update the UI elements
             nameInputField.text = ProfileManager.playerName;
             gameDifficultySlider.value = ProfileManager.gameDifficulty;

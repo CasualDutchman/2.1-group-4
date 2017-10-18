@@ -45,7 +45,7 @@ public class ProfileManager : MonoBehaviour
     }
 
     //Save the player settings
-    public void SavePlayerSettings()
+    public static void SavePlayerSettings()
     {
         //TODO Write code to save the player settings
         //UpdatePreferences(true);
@@ -59,7 +59,7 @@ public class ProfileManager : MonoBehaviour
     }
 
     //Get the player settings
-    public void GetPlayerSettings()
+    public static void GetPlayerSettings()
     {
         //Gets the player settings
         playerName = PlayerPrefs.GetString(profileNumber + "Name");
