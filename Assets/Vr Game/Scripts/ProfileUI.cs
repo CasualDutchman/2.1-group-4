@@ -28,31 +28,31 @@ public class ProfileUI : MonoBehaviour {
         if (saving)
         {
             //assign all of the variables from the UI
-            ProfileManager.SetPlayerName(nameInputField.text);
-            ProfileManager.SetGameDifficulty(Mathf.RoundToInt(gameDifficultySlider.value));
-            ProfileManager.SetBikingDifficulty(Mathf.RoundToInt(bikeDifficultySlider.value));
-            ProfileManager.SetHandDominance(handDominanceMenu.value);
-            ProfileManager.SetAttentionSpan(Mathf.RoundToInt(attentionSpanSlider.value));
+            ProfileManager.profileManager.SetPlayerName(nameInputField.text);
+            ProfileManager.profileManager.SetGameDifficulty(Mathf.RoundToInt(gameDifficultySlider.value));
+            ProfileManager.profileManager.SetBikingDifficulty(Mathf.RoundToInt(bikeDifficultySlider.value));
+            ProfileManager.profileManager.SetHandDominance(handDominanceMenu.value);
+            ProfileManager.profileManager.SetAttentionSpan(Mathf.RoundToInt(attentionSpanSlider.value));
 
-            ProfileManager.SavePlayerSettings();
+            ProfileManager.profileManager.SavePlayerSettings();
         }
 
         if (!saving)
         {
-            ProfileManager.GetPlayerSettings();
+            ProfileManager.profileManager.GetPlayerSettings();
 
             //TODO Write code to update the UI elements
-            nameInputField.text = ProfileManager.GetPlayerName();
-            gameDifficultySlider.value = ProfileManager.GetGameDifficulty();
-            bikeDifficultySlider.value = ProfileManager.GetBikingDifficulty();
-            handDominanceMenu.value = ProfileManager.GetHandDominance();
-            attentionSpanSlider.value = ProfileManager.GetAttentionSpan();
+            nameInputField.text = ProfileManager.profileManager.GetPlayerName();
+            gameDifficultySlider.value = ProfileManager.profileManager.GetGameDifficulty();
+            bikeDifficultySlider.value = ProfileManager.profileManager.GetBikingDifficulty();
+            handDominanceMenu.value = ProfileManager.profileManager.GetHandDominance();
+            attentionSpanSlider.value = ProfileManager.profileManager.GetAttentionSpan();
         }
 
     }
 
     public void UpdateProfileNumber()
     {
-        ProfileManager.SetProfileNumber(profileNumberDropdown.value);
+        ProfileManager.profileManager.SetProfileNumber(profileNumberDropdown.value);
     }
 }

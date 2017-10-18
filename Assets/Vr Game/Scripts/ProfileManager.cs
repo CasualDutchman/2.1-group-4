@@ -11,22 +11,20 @@ public class ProfileManager : MonoBehaviour
     //Values for the actual storing of the data
     //Number of the save profile
    
-    static int profileNumber;
+    int profileNumber;
 
     //Name of the player
-    static string playerName;
+    string playerName;
 
     //0 = easy, 1 = medium, 2 = hard
-   
-    static int gameDifficulty;
-    
-    static int bikingDifficulty;
+    int gameDifficulty;
+    int bikingDifficulty;
 
     //0 = right, 1 = left
-    static int handDominance;
+    int handDominance;
 
     //0 = little, 1 = medium, 2 = a lot
-    static int attentionSpan;
+    int attentionSpan;
 
     private void Awake()
     {
@@ -42,7 +40,7 @@ public class ProfileManager : MonoBehaviour
     }
 
     //Save the player settings
-    public static void SavePlayerSettings()
+    public void SavePlayerSettings()
     {
         //TODO Write code to save the player settings
 
@@ -57,7 +55,7 @@ public class ProfileManager : MonoBehaviour
     }
 
     //Get the player settings
-    public static void GetPlayerSettings()
+    public void GetPlayerSettings()
     {
         //Gets the player settings
         playerName = PlayerPrefs.GetString(profileNumber + "Name");
@@ -68,19 +66,19 @@ public class ProfileManager : MonoBehaviour
     }
 
     //Getters for some of the values
-    public static int GetProfileNumber() {return profileNumber;}
-    public static string GetPlayerName(){return playerName;}
-    public static int GetGameDifficulty(){return gameDifficulty;}
-    public static int GetBikingDifficulty(){return bikingDifficulty;}
-    public static int GetHandDominance(){return handDominance;}
-    public static int GetAttentionSpan(){return attentionSpan;}
+    public int GetProfileNumber() {return profileNumber;}
+    public string GetPlayerName(){return playerName;}
+    public int GetGameDifficulty(){return gameDifficulty;}
+    public int GetBikingDifficulty(){return bikingDifficulty;}
+    public int GetHandDominance(){return handDominance;}
+    public int GetAttentionSpan(){return attentionSpan;}
 
     //setters for the variables used
-    public static void SetProfileNumber(int profileNo) {profileNumber = profileNo;}
-    public static void SetPlayerName(string name) {playerName = name; }
-    public static void SetGameDifficulty(int gamingDifficulty) {gameDifficulty = gamingDifficulty; }
-    public static void SetBikingDifficulty(int bikeDifficulty) {bikingDifficulty = bikeDifficulty; }
-    public static void SetHandDominance(int dominantHand) {handDominance = dominantHand; }
-    public static void SetAttentionSpan(int attention) {attentionSpan = attention; }
+    public void SetProfileNumber(int profileNo) {profileNumber = profileNo;}
+    public void SetPlayerName(string name) {playerName = name; }
+    public void SetGameDifficulty(int gamingDifficulty) {gameDifficulty = gamingDifficulty; }
+    public void SetBikingDifficulty(int bikeDifficulty) {bikingDifficulty = bikeDifficulty; }
+    public void SetHandDominance(int dominantHand) {handDominance = dominantHand; }
+    public void SetAttentionSpan(int attention) {attentionSpan = attention; }
 
 }
