@@ -10,25 +10,22 @@ public class ProfileManager : MonoBehaviour
 
     //Values for the actual storing of the data
     //Number of the save profile
-    [HideInInspector]
+   
     public static int profileNumber;
 
     //Name of the player
-    [HideInInspector]
     public static string playerName;
 
     //0 = easy, 1 = medium, 2 = hard
-    [HideInInspector]
+   
     public static int gameDifficulty;
-    [HideInInspector]
+    
     public static int bikingDifficulty;
 
     //0 = right, 1 = left
-    [HideInInspector]
     public static int handDominance;
 
     //0 = little, 1 = medium, 2 = a lot
-    [HideInInspector]
     public static int attentionSpan;
 
     private void Awake()
@@ -56,6 +53,10 @@ public class ProfileManager : MonoBehaviour
         PlayerPrefs.SetInt(profileNumber + "bikingDificulty", bikingDifficulty);
         PlayerPrefs.SetInt(profileNumber + "handDominance", handDominance);
         PlayerPrefs.SetInt(profileNumber + "attentionSpan", attentionSpan);
+
+        PlayerPrefs.Save();
+
+        print("saving");
     }
 
     //Get the player settings
