@@ -46,7 +46,7 @@ public class WorldManager : MonoBehaviour {
 
         currentWorld = worldList[startWorld].Copy();
         traveledWorlds.Add(startWorld);
-        currentWorld.SetupWorld(this, 11, Vector3.zero, Vector3.zero);
+        currentWorld.SetupWorld(this, LayerMask.NameToLayer("Ground"), Vector3.zero, Vector3.zero);
         normalLight.color = currentWorld.sunColor;
 
         //this long line will look at the string of the world's possible gamemodes and converts it to a useable compiled piece (e.g. "TempleRun" can be used as the GameMode TempleRun instead of as a string)
@@ -162,7 +162,7 @@ public class WorldManager : MonoBehaviour {
         traveledWorlds.Add(nextWorldIndex);
 
         nextWorld = worldList[nextWorldIndex].Copy();
-        nextWorld.SetupWorld(this, 8, pos, euler);
+        nextWorld.SetupWorld(this, LayerMask.NameToLayer("Portal"), pos, euler);
         portalLight.color = nextWorld.sunColor;
         worldIndex++;
     }

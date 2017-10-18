@@ -4,20 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Portal
-  - Deletable
-<<<<<<< HEAD
-  - Bullet
-  - bounds
-  - Bike
   - Rock
-=======
-  - VRController
-  - FxTemporaire
-  - projectile
+  - Portal
   - Weapon
-  - Enemies
->>>>>>> f00b3d26a796148356ce21f67d2f3b241d7ccc8f
+  - bounds
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -27,10 +18,10 @@ TagManager:
   - UI
   - 
   - 
-  - Portal
-  - Hitter
-  - Bike
   - Ground
+  - Portal
+  - 
+  - 
   - 
   - 
   - 
