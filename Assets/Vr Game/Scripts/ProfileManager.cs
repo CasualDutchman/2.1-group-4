@@ -79,6 +79,18 @@ public class ProfileManager : MonoBehaviour
 
     }
 
-    
-    
+    //Getters for some of the values
+    public string GetPlayerName(){return playerName;}
+    public int GetGameDifficulty(){return gameDifficulty;}
+    public int GetBikingDifficulty(){return bikingDifficulty;}
+    public int GetHandDominance(){return handDominance;}
+    public int GetAttentionSpan(){return attentionSpan;}
+
+    //setters for the variables used
+    public void SetPlayerName(string name) {playerName = name; }
+    public void SetGameDifficulty(int gamingDifficulty) {gameDifficulty = gamingDifficulty; }
+    public void SetBikingDifficulty(int bikeDifficulty) {bikingDifficulty = bikeDifficulty; }
+    public void SetHandDominance(int dominantHand) {handDominance = dominantHand; }
+    public void SetAttentionSpan(int attention) {attentionSpan = attention; }
+
 }
