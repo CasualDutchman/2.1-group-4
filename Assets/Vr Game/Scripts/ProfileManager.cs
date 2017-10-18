@@ -65,7 +65,7 @@ public class ProfileManager : MonoBehaviour
         attentionSpan = PlayerPrefs.GetInt(profileNumber + "attentionSpan");
     }
 
-    //Getters for some of the values
+    //Getters for the variables used
     public int GetProfileNumber() {return profileNumber;}
     public string GetPlayerName(){return playerName;}
     public int GetGameDifficulty(){return gameDifficulty;}
