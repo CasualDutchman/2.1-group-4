@@ -11,22 +11,22 @@ public class ProfileManager : MonoBehaviour
     //Values for the actual storing of the data
     //Number of the save profile
    
-    public static int profileNumber;
+    static int profileNumber;
 
     //Name of the player
-    public static string playerName;
+    static string playerName;
 
     //0 = easy, 1 = medium, 2 = hard
    
-    public static int gameDifficulty;
+    static int gameDifficulty;
     
-    public static int bikingDifficulty;
+    static int bikingDifficulty;
 
     //0 = right, 1 = left
-    public static int handDominance;
+    static int handDominance;
 
     //0 = little, 1 = medium, 2 = a lot
-    public static int attentionSpan;
+    static int attentionSpan;
 
     private void Awake()
     {
@@ -80,17 +80,19 @@ public class ProfileManager : MonoBehaviour
     }
 
     //Getters for some of the values
-    public string GetPlayerName(){return playerName;}
-    public int GetGameDifficulty(){return gameDifficulty;}
-    public int GetBikingDifficulty(){return bikingDifficulty;}
-    public int GetHandDominance(){return handDominance;}
-    public int GetAttentionSpan(){return attentionSpan;}
+    public static int GetProfileNumber() {return profileNumber;}
+    public static string GetPlayerName(){return playerName;}
+    public static int GetGameDifficulty(){return gameDifficulty;}
+    public static int GetBikingDifficulty(){return bikingDifficulty;}
+    public static int GetHandDominance(){return handDominance;}
+    public static int GetAttentionSpan(){return attentionSpan;}
 
     //setters for the variables used
-    public void SetPlayerName(string name) {playerName = name; }
-    public void SetGameDifficulty(int gamingDifficulty) {gameDifficulty = gamingDifficulty; }
-    public void SetBikingDifficulty(int bikeDifficulty) {bikingDifficulty = bikeDifficulty; }
-    public void SetHandDominance(int dominantHand) {handDominance = dominantHand; }
-    public void SetAttentionSpan(int attention) {attentionSpan = attention; }
+    public static void SetProfileNumber(int profileNo) {profileNumber = profileNo;}
+    public static void SetPlayerName(string name) {playerName = name; }
+    public static void SetGameDifficulty(int gamingDifficulty) {gameDifficulty = gamingDifficulty; }
+    public static void SetBikingDifficulty(int bikeDifficulty) {bikingDifficulty = bikeDifficulty; }
+    public static void SetHandDominance(int dominantHand) {handDominance = dominantHand; }
+    public static void SetAttentionSpan(int attention) {attentionSpan = attention; }
 
 }

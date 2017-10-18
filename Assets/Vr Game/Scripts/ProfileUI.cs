@@ -22,30 +22,17 @@ public class ProfileUI : MonoBehaviour {
     //Dropdown menu for the hand dominance
     public Dropdown handDominanceMenu;
 
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     //Updates the data in the variables and the UI elements
     public void UpdatePreferences(bool saving)
     {
         if (saving)
         {
-            
-
             //assign all of the variables from the UI
-            ProfileManager.playerName = nameInputField.text;
-            ProfileManager.gameDifficulty = Mathf.RoundToInt(gameDifficultySlider.value);
-            ProfileManager.bikingDifficulty = Mathf.RoundToInt(bikeDifficultySlider.value);
-            ProfileManager.handDominance = handDominanceMenu.value;
-            ProfileManager.attentionSpan = Mathf.RoundToInt(attentionSpanSlider.value);
+            ProfileManager.SetPlayerName(nameInputField.text);
+            ProfileManager.SetGameDifficulty(Mathf.RoundToInt(gameDifficultySlider.value));
+            ProfileManager.SetBikingDifficulty(Mathf.RoundToInt(bikeDifficultySlider.value));
+            ProfileManager.SetHandDominance(handDominanceMenu.value);
+            ProfileManager.SetAttentionSpan(Mathf.RoundToInt(attentionSpanSlider.value));
 
             ProfileManager.SavePlayerSettings();
         }
@@ -55,17 +42,17 @@ public class ProfileUI : MonoBehaviour {
             ProfileManager.GetPlayerSettings();
 
             //TODO Write code to update the UI elements
-            nameInputField.text = ProfileManager.playerName;
-            gameDifficultySlider.value = ProfileManager.gameDifficulty;
-            bikeDifficultySlider.value = ProfileManager.bikingDifficulty;
-            handDominanceMenu.value = ProfileManager.handDominance;
-            attentionSpanSlider.value = ProfileManager.attentionSpan;
+            nameInputField.text = ProfileManager.GetPlayerName();
+            gameDifficultySlider.value = ProfileManager.GetGameDifficulty();
+            bikeDifficultySlider.value = ProfileManager.GetBikingDifficulty();
+            handDominanceMenu.value = ProfileManager.GetHandDominance();
+            attentionSpanSlider.value = ProfileManager.GetAttentionSpan();
         }
 
     }
 
     public void UpdateProfileNumber()
     {
-        ProfileManager.profileNumber = profileNumberDropdown.value;
+        ProfileManager.SetProfileNumber(profileNumberDropdown.value);
     }
 }
