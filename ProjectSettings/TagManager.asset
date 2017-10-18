@@ -6,10 +6,18 @@ TagManager:
   tags:
   - Portal
   - Deletable
+<<<<<<< HEAD
   - Bullet
   - bounds
   - Bike
   - Rock
+=======
+  - VRController
+  - FxTemporaire
+  - projectile
+  - Weapon
+  - Enemies
+>>>>>>> f00b3d26a796148356ce21f67d2f3b241d7ccc8f
   layers:
   - Default
   - TransparentFX

@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Vr Game/Scenes/ProfileSystem.unity
+    guid: 1d8b83a35424a6e49a0f8c351fd4ce42
+  - enabled: 1
+    path: Assets/Vr Game/Scenes/OlavPrototype.unity
+    guid: ec073bdd612550d40bfe232a75a61b22
