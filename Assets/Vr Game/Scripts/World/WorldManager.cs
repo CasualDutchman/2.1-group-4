@@ -33,7 +33,15 @@ public class WorldManager : MonoBehaviour {
     public float speed = 5;
     public int amountOfPanels = 10;
 
-	void Start () {
+    float percentagespawn = 1f;
+
+    public float percentageSpawn {
+        get {
+            return percentagespawn;
+        }
+    }
+
+    void Start () {
         SetWorlds();
 
         currentWorld = worldList[startWorld].Copy();

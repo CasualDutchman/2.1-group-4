@@ -33,9 +33,9 @@ public class SimpleBikeController : MonoBehaviour {
         }
 
         if (Input.GetKey(KeyCode.Space)) {
-            manager.speed = 26;
+            manager.speed = 50;
         } else {
-            manager.speed = 10;
+            manager.speed = 25;
         }
 
         if (!alive) {

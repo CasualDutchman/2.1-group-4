@@ -149,6 +149,8 @@ public class World {
             go.transform.eulerAngles = nextSpawnLoc.transform.eulerAngles;
         }
 
+        go.transform.localScale = Vector3.one * 3f;
+
         float thislength = go.transform.Find("next").localPosition.z;
         activelength += thislength;
 
@@ -173,23 +175,58 @@ public class World {
         //add trees to spawnlocation specified by the prefab groundpanel
         //this is the same for the rocks and buildings, so no comments there
         if (go.transform.Find("trees") != null && (worldType.hasTrees || worldType.treeSpawnAsRock)) {
+
+            List<int> randomList = new List<int>();
+            float tempCount = go.transform.Find("trees").childCount;
+            int afterPercentage = Mathf.FloorToInt(tempCount * manager.percentageSpawn);
+
+            int i = 0;
             foreach (Transform child in go.transform.Find("trees")) {
-                //add tree to the world;
-                GameObject childgo = GameObject.Instantiate(worldType.hasTrees ? worldType.GetTree() : worldType.GetRock(), child);
-                childgo.transform.position = child.position;
-                childgo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+                randomList.Add(i);
+                i++;
+            }
 
-                //copy mesh to the combine list
-                Mesh mesh = childgo.transform.GetChild(0).GetComponent<MeshFilter>().mesh;
-                if (Random.Range(0, 2) == 1)
-                    mesh.uv = mesh.uv2;
+            for(int k = 0; k < tempCount - afterPercentage; k++) {
+                randomList.RemoveAt(Random.Range(0, randomList.Count - 1));
+            }
 
-                comb.mesh = mesh;
-                comb.transform = Matrix4x4.TRS(child.transform.localPosition, childgo.transform.rotation, childgo.transform.localScale);
-                combine.Add(comb);
+            i = 0;
+            foreach (Transform child in go.transform.Find("trees")) {
+                if (randomList.Contains(i)) {
+                    //old system, performed badly because of instatiation
+                    /*
+                    //add tree to the world;
+                    GameObject childgo = GameObject.Instantiate(worldType.hasTrees ? worldType.GetTree() : worldType.GetRock(), child);
+                    childgo.transform.position = child.position;
+                    childgo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
 
-                //destroy the individual mesh
-                GameObject.Destroy(childgo);
+                    //copy mesh to the combine list
+                    Mesh mesh = childgo.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh;
+                    if (Random.Range(0, 2) == 1)
+                        mesh.uv = mesh.uv2;
+
+                    comb.mesh = mesh;
+                    //comb.transform = Matrix4x4.TRS(child.transform.localPosition, childgo.transform.rotation, childgo.transform.localScale);
+                    comb.transform = Matrix4x4.TRS(child.transform.localPosition, Quaternion.Euler(0, Random.Range(0, 360), 0), Vector3.one);
+                    combine.Add(comb);
+
+                    //destroy the individual mesh
+                    GameObject.Destroy(childgo);
+                    */
+
+                    GameObject prefabToSpawn = worldType.hasTrees ? worldType.GetTree() : worldType.GetRock();
+
+                    //copy mesh to the combine list
+                    Mesh mesh = prefabToSpawn.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh;
+
+                    if (Random.Range(0, 2) == 1) //change uvmap for randomness
+                        mesh.uv = mesh.uv2;
+
+                    comb.mesh = mesh;
+                    comb.transform = Matrix4x4.TRS(child.transform.localPosition, Quaternion.Euler(0, Random.Range(0, 360), 0), Vector3.one);
+                    combine.Add(comb);
+                }
+                i++;
             }
         }
 

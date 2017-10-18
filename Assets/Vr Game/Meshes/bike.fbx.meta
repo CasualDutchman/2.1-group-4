@@ -1,22 +1,15 @@
 fileFormatVersion: 2
-guid: 397717b4dbfe01641b68060d49b68ba9
-timeCreated: 1507653038
+guid: e68b7cade28831e48b75516891472fef
+timeCreated: 1508348023
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
     100000: //RootNode
-    100002: tree01
-    100004: tree02
     400000: //RootNode
-    400002: tree01
-    400004: tree02
-    2300000: tree01
-    2300002: tree02
-    3300000: tree01
-    3300002: tree02
-    4300000: tree02
-    4300002: tree01
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cylinder.002
   materials:
     importMaterials: 1
     materialName: 0
@@ -44,7 +37,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 2
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
