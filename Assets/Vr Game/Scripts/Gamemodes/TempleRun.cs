@@ -126,8 +126,10 @@ public class TempleRun : GameMode {
 */
 
     void SpawnObjects(GameObject go) {
-        BoxCollider boxcol = go.transform.GetChild(0).GetComponent<BoxCollider>();
+        BoxCollider boxcol = go.transform.GetChild(go.transform.childCount - 1).GetComponent<BoxCollider>();
         int random = Random.Range(0, 7);
+
+        Transform parent = go.transform.Find("rocks");
 
         for (int j = 0; j < 2; j++) {
             for (int i = 0; i < 7; i++) {
@@ -136,7 +138,7 @@ public class TempleRun : GameMode {
                     Ray ray = new Ray(rayorigin + Vector3.up * 5, Vector3.down);
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, 30, LayerMask.GetMask("Ground"))) {
-                        GameObject lol = GameObject.Instantiate(world.worldType.GetRock(), go.transform);
+                        GameObject lol = GameObject.Instantiate(world.worldType.GetRock(), parent);
                         lol.transform.position = hit.point;
                         lol.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
                         lol.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", world.texturemap);

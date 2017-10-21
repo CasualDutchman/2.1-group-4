@@ -75,6 +75,11 @@ public class World {
             if (portalMask == LayerMask.NameToLayer("Portal") && needsGenerationIndex < Mathf.FloorToInt(manager.amountOfPanels / 2))
                 activepanels[needsGenerationIndex].SetActive(false);
 
+            if (portalMask == LayerMask.NameToLayer("Portal") && needsGenerationIndex == Mathf.FloorToInt(manager.amountOfPanels / 2))
+                foreach (Transform child in activepanels[needsGenerationIndex].transform) {
+                    child.gameObject.SetActive(false);
+                }
+
             if (needsGenerationIndex == Mathf.FloorToInt(manager.amountOfPanels / 2)) {
 
                 Vector3 difeuler = changedRot - nextSpawnLoc.transform.eulerAngles;
@@ -94,7 +99,7 @@ public class World {
         if (this != manager.prevWorld && needsGenerationIndex >= manager.amountOfPanels) {
             if (Vector3.Distance(bike.position, activepanels[0].transform.position) - 20 >= Vector3.Distance(bike.position, activepanels[manager.amountOfPanels - 1].transform.position) + 20) {
                 GameObject temp = activepanels[0];
-                activelength -= float.Parse(temp.transform.GetChild(0).name);
+                activelength -= float.Parse(temp.transform.GetChild(temp.transform.childCount - 1).name);
                 activepanels.RemoveAt(0);
                 GameObject.Destroy(temp);
                 SpawnPanel();
@@ -149,7 +154,7 @@ public class World {
             go.transform.eulerAngles = nextSpawnLoc.transform.eulerAngles;
         }
 
-        go.transform.localScale = Vector3.one * 3f;
+        //go.transform.localScale = Vector3.one * 3f;
 
         float thislength = go.transform.Find("next").localPosition.z;
         activelength += thislength;
@@ -171,6 +176,8 @@ public class World {
         comb.mesh = go.transform.Find("mesh").GetComponent<MeshFilter>().sharedMesh;
         comb.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one);
         combine.Add(comb);
+
+        GameObject.Destroy(go.transform.Find("mesh").gameObject);
 
         //add trees to spawnlocation specified by the prefab groundpanel
         //this is the same for the rocks and buildings, so no comments there
@@ -194,26 +201,30 @@ public class World {
             foreach (Transform child in go.transform.Find("trees")) {
                 if (randomList.Contains(i)) {
                     //old system, performed badly because of instatiation
-                    /*
+                    
                     //add tree to the world;
-                    GameObject childgo = GameObject.Instantiate(worldType.hasTrees ? worldType.GetTree() : worldType.GetRock(), child);
+                    GameObject childgo = GameObject.Instantiate(worldType.hasTrees ? worldType.GetTree() : worldType.GetRock(), go.transform.Find("trees"));
                     childgo.transform.position = child.position;
                     childgo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
 
+                    childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material = portalMask == LayerMask.NameToLayer("Portal") ? manager.portalMaterial : manager.defaultMaterial;
+                    childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texturemap);
                     //copy mesh to the combine list
-                    Mesh mesh = childgo.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh;
-                    if (Random.Range(0, 2) == 1)
-                        mesh.uv = mesh.uv2;
+                    //Mesh mesh = childgo.transform.GetChild(0).GetComponent<MeshFilter>().mesh;
+                    //if (Random.Range(0, 2) == 1)
+                    //    mesh.uv = mesh.uv2;
 
-                    comb.mesh = mesh;
+                    //comb.mesh = mesh;
                     //comb.transform = Matrix4x4.TRS(child.transform.localPosition, childgo.transform.rotation, childgo.transform.localScale);
-                    comb.transform = Matrix4x4.TRS(child.transform.localPosition, Quaternion.Euler(0, Random.Range(0, 360), 0), Vector3.one);
-                    combine.Add(comb);
+                    //comb.transform = Matrix4x4.TRS(child.transform.localPosition, Quaternion.Euler(0, Random.Range(0, 360), 0), Vector3.one);
+                    //combine.Add(comb);
+
+                    GameObject.Destroy(child.gameObject);
 
                     //destroy the individual mesh
-                    GameObject.Destroy(childgo);
-                    */
-
+                    //GameObject.Destroy(childgo);
+                    
+                    /*
                     GameObject prefabToSpawn = worldType.hasTrees ? worldType.GetTree() : worldType.GetRock();
 
                     //copy mesh to the combine list
@@ -225,6 +236,7 @@ public class World {
                     comb.mesh = mesh;
                     comb.transform = Matrix4x4.TRS(child.transform.localPosition, Quaternion.Euler(0, Random.Range(0, 360), 0), Vector3.one);
                     combine.Add(comb);
+                    */
                 }
                 i++;
             }
@@ -272,12 +284,14 @@ public class World {
             c = go.transform.Find("bounds").GetComponent<BoxCollider>().center;
             s = go.transform.Find("bounds").GetComponent<BoxCollider>().size;
             hasbounds = true;
+
+            GameObject.Destroy(go.transform.Find("bounds").gameObject);
         }
 
         //delete all childs to get rid of unused memory
         int childcount = go.transform.childCount;
         for (int i = 0; i < childcount; i++) {
-            GameObject.Destroy(go.transform.GetChild(i).gameObject);
+            //GameObject.Destroy(go.transform.GetChild(i).gameObject);
         }
 
         //create object to hold the road boundaries

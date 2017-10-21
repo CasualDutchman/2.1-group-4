@@ -33,7 +33,7 @@ public class WorldManager : MonoBehaviour {
     public float speed = 5;
     public int amountOfPanels = 10;
 
-    float percentagespawn = 1f;
+    float percentagespawn = 0.5f;
 
     public float percentageSpawn {
         get {
@@ -98,6 +98,8 @@ public class WorldManager : MonoBehaviour {
                 mr.material = defaultMaterial;
                 mr.material.SetTexture("_MainTex", nextWorld.texturemap);
             }
+
+            ChangeAll(child, defaultMaterial, LayerMask.NameToLayer("Ground"));
         }
 
         for (int i = 0; i < currentWorld.worldObject.transform.childCount; i++) {
@@ -110,16 +112,7 @@ public class WorldManager : MonoBehaviour {
                 mr.material.SetTexture("_MainTex", currentWorld.texturemap);
             }
 
-            foreach (Transform c in child) {
-                if (c.childCount > 0) {
-                    c.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Portal");
-                    MeshRenderer mrc = c.GetChild(0).GetComponent<MeshRenderer>();
-                    if (mrc != null) {
-                        mrc.material = portalMaterial;
-                        mrc.material.SetTexture("_MainTex", currentWorld.texturemap);
-                    }
-                }
-            }
+            ChangeAll(child, portalMaterial, LayerMask.NameToLayer("Portal"));
 
             if (i > currentWorld.portalindex)
                 child.gameObject.SetActive(false);
@@ -127,6 +120,9 @@ public class WorldManager : MonoBehaviour {
 
         normalLight.color = nextWorld.sunColor;
         portalLight.color = currentWorld.sunColor;
+
+        currentSkybox.GetComponent<MeshRenderer>().material.color = nextWorld.sunColor;
+        otherSkybox.GetComponent<MeshRenderer>().material.color = currentWorld.sunColor;
 
         Material temp = normalCamera.GetComponent<Skybox>().material;
         normalCamera.GetComponent<Skybox>().material = portalCamera.GetComponent<Skybox>().material;
@@ -143,6 +139,19 @@ public class WorldManager : MonoBehaviour {
 
         currentGameMode = (GameMode)System.Activator.CreateInstance(System.Type.GetType(currentWorld.availableGamemodes[Random.Range(0, currentWorld.availableGamemodes.Count)]));
         currentGameMode.SetupGame(this);
+    }
+
+    void ChangeAll(Transform parent, Material nextmat, LayerMask mask) {
+        foreach (Transform child in parent) {
+            if (child.GetComponent<MeshRenderer>()) {
+                child.gameObject.layer = mask;
+
+                Texture temp = child.GetComponent<MeshRenderer>().material.GetTexture("_MainTex");
+                child.GetComponent<MeshRenderer>().material = nextmat;
+                child.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", temp);
+            }
+            ChangeAll(child, nextmat, mask);
+        }
     }
 
     public void SetupNewWorld(Vector3 pos, Vector3 euler) {
