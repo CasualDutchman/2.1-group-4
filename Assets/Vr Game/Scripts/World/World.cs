@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class World {
 
-    WorldManager manager;
+    protected WorldManager manager;
 
     public GameObject worldObject;
     public GameObject portalObject;
@@ -17,7 +17,7 @@ public class World {
     //get the length of all active panels (divided by 2 is roughly the middle)
     float activelength;
 
-    Transform bike;
+    public Transform bike;
 
     public string name;
     public Material skyboxMaterial;
@@ -33,13 +33,13 @@ public class World {
     float timer, timer2;
 
     int needsGenerationIndex;
-    Vector3 changedPos, changedRot;
+    protected Vector3 changedPos, changedRot;
 
     public World() {
         name = "New World";
     }
 
-    public void SetupWorld(WorldManager wm, LayerMask mask, Vector3 pos, Vector3 euler) {
+    public virtual void SetupWorld(WorldManager wm, LayerMask mask, Vector3 pos, Vector3 euler) {
         manager = wm;
         portalMask = mask;
         changedPos = pos;
@@ -63,12 +63,12 @@ public class World {
         }
     }
 
-    public void UpdateWorld() {
+    public virtual void UpdateWorld() {
         //move all planes based on the bike's rotation
-        worldObject.transform.Translate(-bike.forward * Time.deltaTime * manager.speed, Space.World);
+        //worldObject.transform.Translate(-bike.forward * Time.deltaTime * manager.speed, Space.World);
 
-        if(portalObject != null)
-            portalObject.transform.Translate(-bike.forward * Time.deltaTime * manager.speed, Space.World);
+        //if(portalObject != null)
+            //portalObject.transform.Translate(-bike.forward * Time.deltaTime * manager.speed, Space.World);
 
         if (needsGenerationIndex < manager.amountOfPanels) {
             SpawnPanel();
@@ -132,7 +132,7 @@ public class World {
             manager.SetGameModespanels(this);
     }
 
-    public void SpawnPortal() {
+    public virtual void SpawnPortal() {
         portalObject = GameObject.Instantiate(manager.portalObject, manager.transform);
         portalObject.transform.position = nextSpawnLoc.transform.position;
         portalObject.transform.rotation = nextSpawnLoc.transform.rotation;

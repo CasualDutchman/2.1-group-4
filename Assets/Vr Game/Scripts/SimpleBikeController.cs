@@ -44,10 +44,14 @@ public class SimpleBikeController : MonoBehaviour {
             }
         }
 
-        if (Input.GetKey(KeyCode.Space)) {
-            manager.speed = 20;
-        } else {
-            manager.speed = 10;
+        transform.Translate(transform.forward * Time.deltaTime * manager.speed, Space.World);
+
+        if (!manager.currentWorld.name.Equals("Tutorial World")) {
+            if (Input.GetKey(KeyCode.Space)) {
+                manager.speed = 20;
+            } else {
+                manager.speed = 10;
+            }
         }
 
         if (!alive) {

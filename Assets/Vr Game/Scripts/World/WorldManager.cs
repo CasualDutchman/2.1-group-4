@@ -44,15 +44,24 @@ public class WorldManager : MonoBehaviour {
     void Start () {
         SetWorlds();
 
+        currentWorld = new TutorialWorld(this, LayerMask.NameToLayer("Ground"), Vector3.zero, Vector3.zero);
+        normalLight.color = currentWorld.sunColor;
+
+        currentGameMode = new TutorialMode();
+        currentGameMode.SetupGame(this);
+
+        /*
         currentWorld = worldList[startWorld].Copy();
         traveledWorlds.Add(startWorld);
         currentWorld.SetupWorld(this, LayerMask.NameToLayer("Ground"), Vector3.zero, Vector3.zero);
         normalLight.color = currentWorld.sunColor;
+        
 
         //this long line will look at the string of the world's possible gamemodes and converts it to a useable compiled piece (e.g. "TempleRun" can be used as the GameMode TempleRun instead of as a string)
         currentGameMode = (GameMode)System.Activator.CreateInstance(System.Type.GetType(currentWorld.availableGamemodes[Random.Range(0, currentWorld.availableGamemodes.Count)]));
         currentGameMode.SetupGame(this);
-        
+        */
+
         worldIndex++;
     }
 	
@@ -74,7 +83,7 @@ public class WorldManager : MonoBehaviour {
             }
         }
 
-        if(currentWorld != null && currentWorld.skyboxMaterial != null){
+        if(currentWorld != null || currentWorld.skyboxMaterial != null){
             currentWorld.UpdateWorld();
         }
 
@@ -82,7 +91,7 @@ public class WorldManager : MonoBehaviour {
             nextWorld.UpdateWorld();
         }
 
-        if (prevWorld != null && prevWorld.skyboxMaterial != null) {
+        if (prevWorld != null && (prevWorld.name.Equals("Tutorial World") || prevWorld.skyboxMaterial != null)) {
             prevWorld.UpdateWorld();
         }
     }
@@ -341,7 +350,7 @@ public class GameMode {
 
             if (playing) {
                 OnPlay();
-                if (timer >= tooLongTime) {
+                if (tooLongTime > 0 && timer >= tooLongTime) {
                     EndGame();
                 }
             }
