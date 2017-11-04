@@ -33,6 +33,7 @@ public class TutorialWorld : World {
         //----------
 
         GameObject go = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        go.GetComponent<MeshRenderer>().material = manager.defaultMaterial;
         go.transform.SetParent(worldObject.transform);
         go.transform.localScale = Vector3.one * 200;
     }
