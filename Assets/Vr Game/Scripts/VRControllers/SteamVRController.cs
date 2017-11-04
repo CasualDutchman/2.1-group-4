@@ -28,19 +28,13 @@ public class SteamVRController : MonoBehaviour {
     private void OnTriggerStay(Collider Col)
     {
         PickUpObject(Col);
-
-        //get the trigger being pulled
-        if (Device.GetHairTriggerDown() && Col.name == "Gun")
-        {
-            FireGun();
-        }
     }
 
     //Function for picking up any object
     private void PickUpObject(Collider Col)
     {
         //get the device input to pickup an object(using the trigger)
-        if (Device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
+        if (Device.GetHairTriggerDown())
         {
             //Get position and transformation of the object picked up
             Col.gameObject.transform.position = trackedObj.transform.position;
@@ -61,13 +55,5 @@ public class SteamVRController : MonoBehaviour {
         }
     }
 
-    private void FireGun()
-    {
-        //Fire ze Gun!
-        GameObject FiredBullet = Instantiate(Bullet);
-        FiredBullet.transform.position = Muzzle.position;
-        FiredBullet.transform.rotation = Muzzle.rotation;
-        FiredBullet.GetComponent<Rigidbody>().velocity = Muzzle.forward * 50;
-        
-    }
+
 }
