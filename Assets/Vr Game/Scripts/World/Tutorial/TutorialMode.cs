@@ -64,6 +64,10 @@ public class TutorialMode : GameMode {
     public override void OnStart() {
         base.OnStart();
 
+        if (Input.GetKeyDown(KeyCode.P)) {
+            EndGame();
+        }
+
         if (!intro) {
             StartSound(audioIntroduction);
             manager.speed = 1;

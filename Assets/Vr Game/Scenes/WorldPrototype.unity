@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 52713266}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -440,7 +440,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294966527
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1089,12 +1089,22 @@ MonoBehaviour:
   otherSkybox: {fileID: 1848448662}
   worldTypes:
   - name: Forest
+    grass:
+    - {fileID: 1392543836477422, guid: 4800b3cea0e02824dbf67e3b6ef8ccc8, type: 2}
+    - {fileID: 1836993898623830, guid: 61598cc97954f6a48aa3dad29d10132b, type: 2}
+    - {fileID: 1664937727163082, guid: 336783b04df78544593053b08f7194ce, type: 2}
     trees:
     - {fileID: 1808890790590652, guid: eedfd297981a6ef44a5f2f7cd98de5ca, type: 2}
     - {fileID: 1651771722538014, guid: 981b3728ebd8ac2429a949ef118e7368, type: 2}
     - {fileID: 1296740234826584, guid: 720cf442de81c2545bb9a2a0b79e2523, type: 2}
     - {fileID: 1296740234826584, guid: f0e6377e105ce6a4bb164c0974ce6156, type: 2}
-    - {fileID: 1296740234826584, guid: 4861b5572d33d2f42b3207519435fe7d, type: 2}
+    - {fileID: 1651771722538014, guid: 981b3728ebd8ac2429a949ef118e7368, type: 2}
+    - {fileID: 1932831129298322, guid: b60aaecdfa3e10541af1efcfbe497fdc, type: 2}
+    - {fileID: 1198309568678710, guid: a3d847c4ac3748a49990891800d6da66, type: 2}
+    - {fileID: 1347212481882358, guid: 629528282474ec046afd6b4c8b20f3b4, type: 2}
+    - {fileID: 1754063321419200, guid: 72aa3e648966f9347a7915fef220e0e6, type: 2}
+    bushes:
+    - {fileID: 0}
     rocks:
     - {fileID: 1580165562310148, guid: 2779a74ed80447847ac337074c94744a, type: 2}
     - {fileID: 1976540488505948, guid: f55d47f539d26414a9df170d3a75eca2, type: 2}
@@ -1112,14 +1122,22 @@ MonoBehaviour:
     - {fileID: 1233177911356114, guid: b0a51016e081e044297c4d33dc568bbf, type: 2}
     - {fileID: 1232213998007860, guid: 40dc70b851a0d3f418d9649317f9e771, type: 2}
     - {fileID: 1002422684167296, guid: 81958c0a64914fb44913083a5a29617c, type: 2}
+    misc:
+    - {fileID: 0}
+    hasGrass: 1
+    hasBushes: 0
     hasTrees: 1
     hasRocks: 1
     hasBuildings: 1
     treeSpawnAsRock: 0
   - name: Desert
+    grass:
+    - {fileID: 0}
     trees:
     - {fileID: 1808890790590652, guid: eedfd297981a6ef44a5f2f7cd98de5ca, type: 2}
     - {fileID: 1651771722538014, guid: 981b3728ebd8ac2429a949ef118e7368, type: 2}
+    bushes:
+    - {fileID: 0}
     rocks:
     - {fileID: 1580165562310148, guid: 2779a74ed80447847ac337074c94744a, type: 2}
     - {fileID: 1976540488505948, guid: f55d47f539d26414a9df170d3a75eca2, type: 2}
@@ -1131,10 +1149,74 @@ MonoBehaviour:
     - {fileID: 1554332375026532, guid: 56e113b494dcd8b4f98ba4255452b746, type: 2}
     - {fileID: 1860720394311260, guid: f15e338b230757d44aca3a550d190536, type: 2}
     - {fileID: 1233177911356114, guid: b0a51016e081e044297c4d33dc568bbf, type: 2}
+    misc:
+    - {fileID: 0}
+    hasGrass: 0
+    hasBushes: 0
     hasTrees: 0
     hasRocks: 1
     hasBuildings: 0
     treeSpawnAsRock: 1
+  - name: grass
+    grass:
+    - {fileID: 1392543836477422, guid: 4800b3cea0e02824dbf67e3b6ef8ccc8, type: 2}
+    - {fileID: 1836993898623830, guid: 61598cc97954f6a48aa3dad29d10132b, type: 2}
+    - {fileID: 1664937727163082, guid: 336783b04df78544593053b08f7194ce, type: 2}
+    trees:
+    - {fileID: 1198309568678710, guid: a3d847c4ac3748a49990891800d6da66, type: 2}
+    - {fileID: 1347212481882358, guid: 629528282474ec046afd6b4c8b20f3b4, type: 2}
+    - {fileID: 1129962401808658, guid: 22f8a09a7db039c438f9cf5f6a2371da, type: 2}
+    - {fileID: 1754063321419200, guid: 72aa3e648966f9347a7915fef220e0e6, type: 2}
+    - {fileID: 1426210137617202, guid: a9505ee91fc24854a981d71c9d60439a, type: 2}
+    - {fileID: 1426210137617202, guid: 00cb5450f1bd52d41b299ce519f25d8e, type: 2}
+    - {fileID: 1426210137617202, guid: 5d0174d46a2bf3f459cde461fcd18813, type: 2}
+    - {fileID: 1426210137617202, guid: 725e60a50d45ffd4ba4d45b3dd69f7a6, type: 2}
+    - {fileID: 1426210137617202, guid: 0095b9f72527c0d45927ab765bd52af1, type: 2}
+    - {fileID: 1426210137617202, guid: b45e6081294032140a00cb3188db14cc, type: 2}
+    bushes:
+    - {fileID: 0}
+    rocks:
+    - {fileID: 0}
+    buildings:
+    - {fileID: 0}
+    groundPanels:
+    - {fileID: 1554332375026532, guid: 56e113b494dcd8b4f98ba4255452b746, type: 2}
+    misc:
+    - {fileID: 0}
+    hasGrass: 1
+    hasBushes: 0
+    hasTrees: 1
+    hasRocks: 0
+    hasBuildings: 0
+    treeSpawnAsRock: 0
+  - name: Snowy
+    grass:
+    - {fileID: 0}
+    trees:
+    - {fileID: 0}
+    bushes:
+    - {fileID: 0}
+    rocks:
+    - {fileID: 1580165562310148, guid: 2779a74ed80447847ac337074c94744a, type: 2}
+    - {fileID: 1281974003673194, guid: 76e46914ad310e149bcb45db68a0acac, type: 2}
+    - {fileID: 1281974003673194, guid: cc527408c733a0340a4c0e722abfaace, type: 2}
+    - {fileID: 1281974003673194, guid: 4618c25efa6794a4fbc98477e06c022e, type: 2}
+    buildings:
+    - {fileID: 0}
+    groundPanels:
+    - {fileID: 1554332375026532, guid: 56e113b494dcd8b4f98ba4255452b746, type: 2}
+    - {fileID: 1860720394311260, guid: f15e338b230757d44aca3a550d190536, type: 2}
+    - {fileID: 1233177911356114, guid: b0a51016e081e044297c4d33dc568bbf, type: 2}
+    - {fileID: 1232213998007860, guid: 40dc70b851a0d3f418d9649317f9e771, type: 2}
+    - {fileID: 1002422684167296, guid: 81958c0a64914fb44913083a5a29617c, type: 2}
+    misc:
+    - {fileID: 0}
+    hasGrass: 0
+    hasBushes: 0
+    hasTrees: 0
+    hasRocks: 1
+    hasBuildings: 0
+    treeSpawnAsRock: 0
   worldList:
   - worldObject: {fileID: 0}
     portalObject: {fileID: 0}
@@ -1147,9 +1229,13 @@ MonoBehaviour:
     texturemap: {fileID: 2800000, guid: cb56181d16ba8da44bd62577d278489b, type: 3}
     worldType:
       name: Forest
+      grass:
+      - {fileID: 0}
       trees:
       - {fileID: 1808890790590652, guid: eedfd297981a6ef44a5f2f7cd98de5ca, type: 2}
       - {fileID: 1651771722538014, guid: 981b3728ebd8ac2429a949ef118e7368, type: 2}
+      bushes:
+      - {fileID: 0}
       rocks:
       - {fileID: 0}
       buildings:
@@ -1157,6 +1243,10 @@ MonoBehaviour:
       groundPanels:
       - {fileID: 0}
       - {fileID: 0}
+      misc:
+      - {fileID: 0}
+      hasGrass: 0
+      hasBushes: 0
       hasTrees: 1
       hasRocks: 1
       hasBuildings: 0
@@ -1179,7 +1269,11 @@ MonoBehaviour:
     texturemap: {fileID: 1449160753}
     worldType:
       name: Desert
+      grass:
+      - {fileID: 0}
       trees:
+      - {fileID: 0}
+      bushes:
       - {fileID: 0}
       rocks:
       - {fileID: 0}
@@ -1187,6 +1281,10 @@ MonoBehaviour:
       - {fileID: 0}
       groundPanels:
       - {fileID: 0}
+      misc:
+      - {fileID: 0}
+      hasGrass: 0
+      hasBushes: 0
       hasTrees: 0
       hasRocks: 0
       hasBuildings: 0
@@ -1210,9 +1308,13 @@ MonoBehaviour:
     texturemap: {fileID: 2800000, guid: cb56181d16ba8da44bd62577d278489b, type: 3}
     worldType:
       name: Forest
+      grass:
+      - {fileID: 0}
       trees:
       - {fileID: 1808890790590652, guid: eedfd297981a6ef44a5f2f7cd98de5ca, type: 2}
       - {fileID: 1651771722538014, guid: 981b3728ebd8ac2429a949ef118e7368, type: 2}
+      bushes:
+      - {fileID: 0}
       rocks:
       - {fileID: 0}
       buildings:
@@ -1220,6 +1322,10 @@ MonoBehaviour:
       groundPanels:
       - {fileID: 0}
       - {fileID: 0}
+      misc:
+      - {fileID: 0}
+      hasGrass: 0
+      hasBushes: 0
       hasTrees: 1
       hasRocks: 1
       hasBuildings: 0
@@ -1242,7 +1348,11 @@ MonoBehaviour:
     texturemap: {fileID: 494079666}
     worldType:
       name: New Worldtype
+      grass:
+      - {fileID: 0}
       trees:
+      - {fileID: 0}
+      bushes:
       - {fileID: 0}
       rocks:
       - {fileID: 0}
@@ -1250,6 +1360,10 @@ MonoBehaviour:
       - {fileID: 0}
       groundPanels:
       - {fileID: 0}
+      misc:
+      - {fileID: 0}
+      hasGrass: 0
+      hasBushes: 0
       hasTrees: 0
       hasRocks: 0
       hasBuildings: 0
@@ -1258,6 +1372,91 @@ MonoBehaviour:
     - TempleRun
     - Race
     typeID: 0
+    portalMask:
+      serializedVersion: 2
+      m_Bits: 0
+    portalindex: 0
+  - worldObject: {fileID: 0}
+    portalObject: {fileID: 0}
+    activepanels: []
+    nextSpawnLoc: {fileID: 0}
+    bike: {fileID: 0}
+    name: grassWorld
+    skyboxMaterial: {fileID: 2100000, guid: 43a26171799afd046b8ee4afed2c018a, type: 2}
+    sunColor: {r: 1, g: 1, b: 1, a: 1}
+    texturemap: {fileID: 1002971469}
+    worldType:
+      name: grass
+      grass:
+      - {fileID: 0}
+      trees:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      bushes:
+      - {fileID: 0}
+      rocks:
+      - {fileID: 0}
+      buildings:
+      - {fileID: 0}
+      groundPanels:
+      - {fileID: 1554332375026532, guid: 56e113b494dcd8b4f98ba4255452b746, type: 2}
+      misc:
+      - {fileID: 0}
+      hasGrass: 0
+      hasBushes: 0
+      hasTrees: 1
+      hasRocks: 0
+      hasBuildings: 0
+      treeSpawnAsRock: 0
+    availableGamemodes:
+    - Race
+    typeID: 2
+    portalMask:
+      serializedVersion: 2
+      m_Bits: 0
+    portalindex: 0
+  - worldObject: {fileID: 0}
+    portalObject: {fileID: 0}
+    activepanels: []
+    nextSpawnLoc: {fileID: 0}
+    bike: {fileID: 0}
+    name: SnowPenguin
+    skyboxMaterial: {fileID: 0}
+    sunColor: {r: 0.8308824, g: 0.8308824, b: 0.8308824, a: 1}
+    texturemap: {fileID: 570547204}
+    worldType:
+      name: Snowy
+      grass:
+      - {fileID: 0}
+      trees:
+      - {fileID: 0}
+      bushes:
+      - {fileID: 0}
+      rocks:
+      - {fileID: 1580165562310148, guid: 2779a74ed80447847ac337074c94744a, type: 2}
+      - {fileID: 1281974003673194, guid: 76e46914ad310e149bcb45db68a0acac, type: 2}
+      - {fileID: 1281974003673194, guid: cc527408c733a0340a4c0e722abfaace, type: 2}
+      - {fileID: 1281974003673194, guid: 4618c25efa6794a4fbc98477e06c022e, type: 2}
+      buildings:
+      - {fileID: 0}
+      groundPanels:
+      - {fileID: 1554332375026532, guid: 56e113b494dcd8b4f98ba4255452b746, type: 2}
+      - {fileID: 1860720394311260, guid: f15e338b230757d44aca3a550d190536, type: 2}
+      - {fileID: 1233177911356114, guid: b0a51016e081e044297c4d33dc568bbf, type: 2}
+      - {fileID: 1232213998007860, guid: 40dc70b851a0d3f418d9649317f9e771, type: 2}
+      - {fileID: 1002422684167296, guid: 81958c0a64914fb44913083a5a29617c, type: 2}
+      misc:
+      - {fileID: 0}
+      hasGrass: 0
+      hasBushes: 0
+      hasTrees: 0
+      hasRocks: 1
+      hasBuildings: 0
+      treeSpawnAsRock: 0
+    availableGamemodes:
+    - PenguinHitter
+    typeID: 3
     portalMask:
       serializedVersion: 2
       m_Bits: 0
@@ -1275,7 +1474,11 @@ MonoBehaviour:
     texturemap: {fileID: 0}
     worldType:
       name: New Worldtype
+      grass:
+      - {fileID: 0}
       trees:
+      - {fileID: 0}
+      bushes:
       - {fileID: 0}
       rocks:
       - {fileID: 0}
@@ -1283,6 +1486,10 @@ MonoBehaviour:
       - {fileID: 0}
       groundPanels:
       - {fileID: 0}
+      misc:
+      - {fileID: 0}
+      hasGrass: 0
+      hasBushes: 0
       hasTrees: 0
       hasRocks: 0
       hasBuildings: 0
@@ -1305,7 +1512,11 @@ MonoBehaviour:
     texturemap: {fileID: 0}
     worldType:
       name: New Worldtype
+      grass:
+      - {fileID: 0}
       trees:
+      - {fileID: 0}
+      bushes:
       - {fileID: 0}
       rocks:
       - {fileID: 0}
@@ -1313,6 +1524,10 @@ MonoBehaviour:
       - {fileID: 0}
       groundPanels:
       - {fileID: 0}
+      misc:
+      - {fileID: 0}
+      hasGrass: 0
+      hasBushes: 0
       hasTrees: 0
       hasRocks: 0
       hasBuildings: 0
@@ -1327,6 +1542,7 @@ MonoBehaviour:
   startWorld: 0
   speed: 10
   amountOfPanels: 16
+  percentageSpawn: 0.7
 --- !u!4 &292550721
 Transform:
   m_ObjectHideFlags: 0
@@ -2572,6 +2788,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63bb76107a12d8e4faa75380da5ef5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!28 &570547204
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BOOH
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  serializedVersion: 2
+  m_Width: 8
+  m_Height: 8
+  m_CompleteImageSize: 256
+  m_TextureFormat: 4
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  image data: 256
+  _typelessdata: 242821ff363d32ff485142ff5a6653ff6c7a64ff7e8e75ff90a385ffffffffff333333ff474747ff5b5b5bff6b6b6bff7a7a7aff8c8c8cffffffffffffffffffc9c9c9ffc9c9c9ffc9c9c9ffc9c9c9ffffffffffffffffffffffffffffffffffd6d6d6ffd6d6d6ffd6d6d6ffffffffffffffffffffffffffffffffffffffffffe3e3e3ffe3e3e3ffe3e3e3ffe3e3e3fffffffffffffffffffffffffffffffffff2f2f2fff2f2f2fff2f2f2fff2f2f2fff2f2f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff542100ff632700ff843500ffffffffffffffffffffffffffffffffffffffffff
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &594946690
 GameObject:
   m_ObjectHideFlags: 0
@@ -2798,7 +3049,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -3593,6 +3844,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 910162327}
+  - component: {fileID: 910162329}
+  - component: {fileID: 910162328}
+  - component: {fileID: 910162330}
   m_Layer: 0
   m_Name: Others
   m_TagString: Untagged
@@ -3615,6 +3869,45 @@ Transform:
   m_Father: {fileID: 536825203}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &910162328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 910162326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07772cf2f8379e41b4d7ea2de8da566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wm: {fileID: 292550720}
+--- !u!65 &910162329
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 910162326}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6, y: 1, z: 2}
+  m_Center: {x: 0, y: 0.45, z: 0.7}
+--- !u!54 &910162330
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 910162326}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &922035902
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,6 +4010,41 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!28 &1002971469
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BOOH
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  serializedVersion: 2
+  m_Width: 8
+  m_Height: 8
+  m_CompleteImageSize: 256
+  m_TextureFormat: 4
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  image data: 256
+  _typelessdata: 242821ff363d32ff485142ff5a6653ff6c7a64ff7e8e75ff90a385ffffffffff333333ff474747ff5b5b5bff6b6b6bff7a7a7aff8c8c8cffffffffffffffffff491d19ff56221dff662822ff752e27ffffffffffffffffffffffffffffffffff604d0dff755d10ff896e13ffffffffffffffffffffffffffffffffffffffffff485109ff5a660cff67750eff707f0fffffffffffffffffffffffffffffffffff1f3f08ff29540aff32660dff39750fff408210ffffffffffffffffffffffffff073503ff094704ff0c5905ff0e6606ff0f7206ff117f07ff138c08ffffffffff542100ff632700ff843500ffffffffffffffffffffffffffffffffffffffffff
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1001 &1052091857
 Prefab:
   m_ObjectHideFlags: 0
@@ -3955,6 +4283,129 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1073209900}
+--- !u!1 &1101208980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100002, guid: 036ea2f379f03b34ea3d045ed780170b, type: 3}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1101208984}
+  - component: {fileID: 1101208983}
+  - component: {fileID: 1101208982}
+  - component: {fileID: 1101208981}
+  - component: {fileID: 1101208985}
+  m_Layer: 0
+  m_Name: Penguin01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1101208981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1101208980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c78399cb1c00f469859fe8e6ad0e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1841390577}
+  wobble:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: -0.50489044
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.5
+      value: 0.49510956
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1.0028986
+      value: -0.50489044
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!23 &1101208982
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 2300000, guid: 036ea2f379f03b34ea3d045ed780170b,
+    type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1101208980}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 07cae7513da963e4ab0f37342a60cafd, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1101208983
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 3300000, guid: 036ea2f379f03b34ea3d045ed780170b,
+    type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1101208980}
+  m_Mesh: {fileID: 4300006, guid: 036ea2f379f03b34ea3d045ed780170b, type: 3}
+--- !u!4 &1101208984
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400002, guid: 036ea2f379f03b34ea3d045ed780170b, type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1101208980}
+  m_LocalRotation: {x: 0.000001809995, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 28.59}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1101208985
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1101208980}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300006, guid: 036ea2f379f03b34ea3d045ed780170b, type: 3}
 --- !u!1 &1154865887
 GameObject:
   m_ObjectHideFlags: 0
@@ -4050,15 +4501,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4070,15 +4521,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_Layer
@@ -4116,6 +4567,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c8db9b8f09a8dca40b5c6dfe99d1cde4, type: 2}
+    - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
@@ -4141,15 +4596,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4161,15 +4616,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
       propertyPath: m_Layer
@@ -4207,6 +4662,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8bdd8f82ecbe0df4497b7d630d283c3e, type: 2}
+    - target: {fileID: 400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
@@ -4397,7 +4856,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 3e89a34a7a668a04ba8fc8435412e200, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

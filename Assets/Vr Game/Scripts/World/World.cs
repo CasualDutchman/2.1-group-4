@@ -200,79 +200,114 @@ public class World {
             i = 0;
             foreach (Transform child in go.transform.Find("trees")) {
                 if (randomList.Contains(i)) {
-                    //old system, performed badly because of instatiation
-                    
-                    //add tree to the world;
                     GameObject childgo = GameObject.Instantiate(worldType.hasTrees ? worldType.GetTree() : worldType.GetRock(), go.transform.Find("trees"));
                     childgo.transform.position = child.position;
                     childgo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
 
                     childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material = portalMask == LayerMask.NameToLayer("Portal") ? manager.portalMaterial : manager.defaultMaterial;
                     childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texturemap);
-                    //copy mesh to the combine list
-                    //Mesh mesh = childgo.transform.GetChild(0).GetComponent<MeshFilter>().mesh;
-                    //if (Random.Range(0, 2) == 1)
-                    //    mesh.uv = mesh.uv2;
-
-                    //comb.mesh = mesh;
-                    //comb.transform = Matrix4x4.TRS(child.transform.localPosition, childgo.transform.rotation, childgo.transform.localScale);
-                    //comb.transform = Matrix4x4.TRS(child.transform.localPosition, Quaternion.Euler(0, Random.Range(0, 360), 0), Vector3.one);
-                    //combine.Add(comb);
+                    childgo.transform.GetChild(0).gameObject.layer = portalMask;
 
                     GameObject.Destroy(child.gameObject);
+                }
+                i++;
+            }
+        }
 
-                    //destroy the individual mesh
-                    //GameObject.Destroy(childgo);
-                    
-                    /*
-                    GameObject prefabToSpawn = worldType.hasTrees ? worldType.GetTree() : worldType.GetRock();
+        if (go.transform.Find("grass") != null && worldType.hasGrass) {
 
-                    //copy mesh to the combine list
-                    Mesh mesh = prefabToSpawn.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh;
+            List<int> randomList = new List<int>();
+            float tempCount = go.transform.Find("grass").childCount;
+            int afterPercentage = Mathf.FloorToInt(tempCount * manager.percentageSpawn);
 
-                    if (Random.Range(0, 2) == 1) //change uvmap for randomness
-                        mesh.uv = mesh.uv2;
+            int i = 0;
+            foreach (Transform child in go.transform.Find("grass")) {
+                randomList.Add(i);
+                i++;
+            }
 
-                    comb.mesh = mesh;
-                    comb.transform = Matrix4x4.TRS(child.transform.localPosition, Quaternion.Euler(0, Random.Range(0, 360), 0), Vector3.one);
-                    combine.Add(comb);
-                    */
+            for (int k = 0; k < tempCount - afterPercentage; k++) {
+                randomList.RemoveAt(Random.Range(0, randomList.Count - 1));
+            }
+
+            i = 0;
+            foreach (Transform child in go.transform.Find("grass")) {
+                if (randomList.Contains(i)) {
+                    GameObject childgo = GameObject.Instantiate(worldType.GetGrass(), go.transform.Find("grass"));
+                    childgo.transform.position = child.position;
+                    childgo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+
+                    childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material = portalMask == LayerMask.NameToLayer("Portal") ? manager.portalMaterial : manager.defaultMaterial;
+                    childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texturemap);
+                    childgo.transform.GetChild(0).gameObject.layer = portalMask;
+
+                    GameObject.Destroy(child.gameObject);
                 }
                 i++;
             }
         }
 
         if (go.transform.Find("rocks") != null && worldType.hasRocks) {
+            List<int> randomList = new List<int>();
+            float tempCount = go.transform.Find("rocks").childCount;
+            int afterPercentage = Mathf.FloorToInt(tempCount * manager.percentageSpawn);
+
+            int i = 0;
             foreach (Transform child in go.transform.Find("rocks")) {
-                GameObject childgo = GameObject.Instantiate(worldType.GetRock(), child);
-                childgo.transform.position = child.position;
-                childgo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+                randomList.Add(i);
+                i++;
+            }
 
-                Mesh mesh = childgo.transform.GetChild(0).GetComponent<MeshFilter>().mesh;
-                if (Random.Range(0, 2) == 1)
-                    mesh.uv = mesh.uv2;
+            for (int k = 0; k < tempCount - afterPercentage; k++) {
+                randomList.RemoveAt(Random.Range(0, randomList.Count - 1));
+            }
 
-                comb.mesh = childgo.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh;
-                comb.transform = Matrix4x4.TRS(child.transform.localPosition, childgo.transform.rotation, childgo.transform.localScale);
-                combine.Add(comb);
-                GameObject.Destroy(childgo);
+            i = 0;
+            foreach (Transform child in go.transform.Find("rocks")) {
+                if (randomList.Contains(i)) {
+                    GameObject childgo = GameObject.Instantiate(worldType.GetRock(), go.transform.Find("rocks"));
+                    childgo.transform.position = child.position;
+                    childgo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+
+                    childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material = portalMask == LayerMask.NameToLayer("Portal") ? manager.portalMaterial : manager.defaultMaterial;
+                    childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texturemap);
+                    childgo.transform.GetChild(0).gameObject.layer = portalMask;
+
+                    GameObject.Destroy(child.gameObject);
+                }
+                i++;
             }
         }
 
         if (go.transform.Find("buildings") != null && worldType.hasBuildings) {
+            List<int> randomList = new List<int>();
+            float tempCount = go.transform.Find("buildings").childCount;
+            int afterPercentage = Mathf.FloorToInt(tempCount * manager.percentageSpawn);
+
+            int i = 0;
             foreach (Transform child in go.transform.Find("buildings")) {
-                GameObject childgo = GameObject.Instantiate(worldType.GetBuilding(), child);
-                childgo.transform.position = child.position;
-                childgo.transform.eulerAngles = child.eulerAngles;
+                randomList.Add(i);
+                i++;
+            }
 
-                Mesh mesh = childgo.transform.GetChild(0).GetComponent<MeshFilter>().mesh;
-                if (Random.Range(0, 2) == 1)
-                    mesh.uv = mesh.uv2;
+            for (int k = 0; k < tempCount - afterPercentage; k++) {
+                randomList.RemoveAt(Random.Range(0, randomList.Count - 1));
+            }
 
-                comb.mesh = childgo.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh;
-                comb.transform = Matrix4x4.TRS(child.transform.localPosition, childgo.transform.rotation, childgo.transform.localScale);
-                combine.Add(comb);
-                GameObject.Destroy(childgo);
+            i = 0;
+            foreach (Transform child in go.transform.Find("buildings")) {
+                if (randomList.Contains(i)) {
+                    GameObject childgo = GameObject.Instantiate(worldType.GetBuilding(), go.transform.Find("buildings"));
+                    childgo.transform.position = child.position;
+                    //childgo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+
+                    childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material = portalMask == LayerMask.NameToLayer("Portal") ? manager.portalMaterial : manager.defaultMaterial;
+                    childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texturemap);
+                    childgo.transform.GetChild(0).gameObject.layer = portalMask;
+
+                    GameObject.Destroy(child.gameObject);
+                }
+                i++;
             }
         }
 

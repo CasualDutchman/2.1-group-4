@@ -33,13 +33,7 @@ public class WorldManager : MonoBehaviour {
     public float speed = 5;
     public int amountOfPanels = 10;
 
-    float percentagespawn = 0.5f;
-
-    public float percentageSpawn {
-        get {
-            return percentagespawn;
-        }
-    }
+    public float percentageSpawn = 0.7f;
 
     void Start () {
         SetWorlds();
@@ -163,7 +157,7 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
-    public void SetupNewWorld(Vector3 pos, Vector3 euler) {
+    public void SetupNewWorld(Vector3 pos, Vector3 euler, bool isTutorial=false) {
         List<int> templist = new List<int>();
         for (int i = 0; i < worldList.Count; i++) {
             if (!traveledWorlds.Contains(i))
@@ -179,7 +173,7 @@ public class WorldManager : MonoBehaviour {
         int nextWorldIndex = templist[Random.Range(0, templist.Count)];
         traveledWorlds.Add(nextWorldIndex);
 
-        nextWorld = worldList[nextWorldIndex].Copy();
+        nextWorld = worldList[isTutorial ? startWorld : nextWorldIndex].Copy();
         nextWorld.SetupWorld(this, LayerMask.NameToLayer("Portal"), pos, euler);
         portalLight.color = nextWorld.sunColor;
         worldIndex++;
@@ -192,6 +186,12 @@ public class WorldManager : MonoBehaviour {
     //when a player dies
     public void PlayerDies() {
         speed = 0;
+    }
+
+    public void OnHitCallback(Collider other) {
+        if(currentGameMode != null) {
+            currentGameMode.OnHit(other);
+        }
     }
 
     //spawns an example panel for the designer to look how a panel's hierachy NEEDS to be!
@@ -262,11 +262,16 @@ public class WorldManager : MonoBehaviour {
 public class WorldType {
 
     public string name;
+    public List<GameObject> grass;
     public List<GameObject> trees;
+    public List<GameObject> bushes;
     public List<GameObject> rocks;
     public List<GameObject> buildings;
     public List<GameObject> groundPanels;
+    public List<GameObject> misc;
 
+    public bool hasGrass;
+    public bool hasBushes;
     public bool hasTrees;
     public bool hasRocks;
     public bool hasBuildings;
@@ -275,6 +280,10 @@ public class WorldType {
 
     public WorldType() {
         name = "New Worldtype";
+        grass = new List<GameObject>();
+        grass.Add(null);
+        bushes = new List<GameObject>();
+        bushes.Add(null);
         trees = new List<GameObject>();
         trees.Add(null);
         rocks = new List<GameObject>();
@@ -283,11 +292,27 @@ public class WorldType {
         buildings.Add(null);
         groundPanels = new List<GameObject>();
         groundPanels.Add(null);
+        misc = new List<GameObject>();
+        misc.Add(null);
     }
 
     public GameObject GetGroundPanel() {
         if (groundPanels.Count > 0) {
             return groundPanels[Random.Range(0, groundPanels.Count)];
+        }
+        return null;
+    }
+
+    public GameObject GetGrass() {
+        if (hasGrass && grass.Count > 0) {
+            return grass[Random.Range(0, grass.Count)];
+        }
+        return null;
+    }
+
+    public GameObject GetBush() {
+        if (hasBushes && bushes.Count > 0) {
+            return bushes[Random.Range(0, bushes.Count)];
         }
         return null;
     }
@@ -309,6 +334,13 @@ public class WorldType {
     public GameObject GetBuilding() {
         if (hasBuildings && buildings.Count > 0) {
             return buildings[Random.Range(0, buildings.Count)];
+        }
+        return null;
+    }
+
+    public GameObject GetMisc(int i) {
+        if (buildings.Count > 0) {
+            return buildings[i];
         }
         return null;
     }
@@ -390,7 +422,7 @@ public class GameMode {
         world = w;
     }
 
-    public virtual void OnHitTaggedItem(string hittedTag) { }
+    public virtual void OnHit(Collider other) { }
 
     public bool isActive() { return active; }
 }

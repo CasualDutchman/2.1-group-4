@@ -41,11 +41,11 @@ public class TutorialWorld : World {
     public override void SpawnPortal() {
         portalObject = GameObject.Instantiate(manager.portalObject, manager.transform);
         portalObject.transform.position = nextSpawnLoc.transform.position + bike.forward * 70;
-        portalObject.transform.eulerAngles = bike.forward;
+        portalObject.transform.eulerAngles = bike.eulerAngles;
 
         portalindex = manager.amountOfPanels;
 
-        manager.SetupNewWorld(portalObject.transform.position, bike.forward);
+        manager.SetupNewWorld(portalObject.transform.position, bike.eulerAngles, true);
     }
 
     public override void UpdateWorld() {
