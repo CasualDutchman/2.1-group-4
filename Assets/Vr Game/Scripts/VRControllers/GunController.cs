@@ -4,23 +4,17 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    //variables to be able to fire
+    public Transform muzzle = null;
+    public GameObject bullet = null;
 
-    private void FireGun()
+    public void FireGun()
     {
         //Fire ze Gun!
-        GameObject FiredBullet = Instantiate(Bullet);
-        FiredBullet.transform.position = Muzzle.position;
-        FiredBullet.transform.rotation = Muzzle.rotation;
-        FiredBullet.GetComponent<Rigidbody>().velocity = Muzzle.forward * 50;
+        GameObject FiredBullet = Instantiate(bullet);
+        FiredBullet.transform.position = muzzle.position;
+        FiredBullet.transform.rotation = muzzle.rotation;
+        FiredBullet.GetComponent<Rigidbody>().velocity = muzzle.forward * 50;
 
     }
 }
