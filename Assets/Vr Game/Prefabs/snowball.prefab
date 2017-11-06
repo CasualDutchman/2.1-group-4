@@ -9,47 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1730655923466766}
+  m_RootGameObject: {fileID: 1566982160570468}
   m_IsPrefabParent: 1
---- !u!1 &1730655923466766
+--- !u!1 &1566982160570468
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4375496017800344}
-  - component: {fileID: 33709978337176574}
-  - component: {fileID: 65297069139298752}
-  - component: {fileID: 23413993888666934}
-  - component: {fileID: 54756250085205148}
-  - component: {fileID: 114855228042418892}
+  - component: {fileID: 4552173676154886}
+  - component: {fileID: 33659882180997428}
+  - component: {fileID: 23596902684731508}
+  - component: {fileID: 136432325241351764}
+  - component: {fileID: 54379075718802170}
   m_Layer: 0
-  m_Name: Bullet
-  m_TagString: Enemy
+  m_Name: snowball
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4375496017800344
+--- !u!4 &4552173676154886
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1730655923466766}
+  m_GameObject: {fileID: 1566982160570468}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0.047, z: -0.284}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23413993888666934
+--- !u!23 &23596902684731508
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1730655923466766}
+  m_GameObject: {fileID: 1566982160570468}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -57,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7e90f10e44a186a49a00679d068515ed, type: 2}
+  - {fileID: 2100000, guid: 07cae7513da963e4ab0f37342a60cafd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -65,7 +64,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_SelectedEditorRenderState: 3
@@ -76,19 +75,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33709978337176574
+--- !u!33 &33659882180997428
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1730655923466766}
+  m_GameObject: {fileID: 1566982160570468}
   m_Mesh: {fileID: 4300002, guid: 073df5333e962f642a30468d148dd880, type: 3}
---- !u!54 &54756250085205148
+--- !u!54 &54379075718802170
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1730655923466766}
+  m_GameObject: {fileID: 1566982160570468}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -98,26 +97,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65297069139298752
-BoxCollider:
+--- !u!136 &136432325241351764
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1730655923466766}
+  m_GameObject: {fileID: 1566982160570468}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114855228042418892
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1730655923466766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3aea6984094d89f4d9a2bccbbb5d9cb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Radius: 0.00069789984
+  m_Height: 0.0014369693
+  m_Direction: 1
+  m_Center: {x: -0.000003895693, y: 0.0002694426, z: -0.00007284738}

@@ -8,7 +8,7 @@ TagManager:
   - Portal
   - Weapon
   - bounds
-  - Enemy
+  - Bullet
   - bikeMic
   layers:
   - Default

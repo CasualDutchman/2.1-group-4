@@ -8,6 +8,12 @@ public class GunController : MonoBehaviour {
     public Transform muzzle = null;
     public GameObject bullet = null;
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.F)) {
+            FireGun();
+        }
+    }
+
     public void FireGun()
     {
         //Fire ze Gun!

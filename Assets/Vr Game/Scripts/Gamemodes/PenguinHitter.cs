@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class PenguinHitter : GameMode {
 
-    float travelled;
+    bool didSpawn;
+
+    GameObject penguinPrefab;
+
+    GameObject lastSpawned;
 
     public override void SetupGame(WorldManager wm) {
         base.SetupGame(wm);
-        Debug.Log("Race");
+        Debug.Log("SnowWorld");
         started = true;
 
-        startTime = 10;
+        startTime = 4;
         endTime = 10;
 
         tooLongTime = 5;
+
+        penguinPrefab = Resources.Load<GameObject>("penguingame/Penguin01");
     }
 
     public override void OnStart() {
@@ -24,24 +30,32 @@ public class PenguinHitter : GameMode {
     public override void OnPlay() {
         base.OnPlay();
 
-        travelled += Time.deltaTime * manager.speed;
-
-        if (travelled >= 100) {
-            if (timer < 101) {
-                Debug.Log("You won the race!");
-                EndGame();
+        if (!didSpawn) {
+            for (int i = world.activepanels.Count - 3; i < world.activepanels.Count; i++) {
+                SpawnPenguin(world.activepanels[i].transform);
+                lastSpawned = world.activepanels[i];
             }
+            didSpawn = true;
+        }
+
+        if (lastSpawned != world.activepanels[world.activepanels.Count - 1]) {
+            SpawnPenguin(world.activepanels[world.activepanels.Count - 1].transform);
+            lastSpawned = world.activepanels[world.activepanels.Count - 1];
         }
     }
 
     public override void OnEnd() {
         base.OnEnd();
-        if (travelled < 100) {
-            Debug.Log("You lost the race!");
-        }
+        
     }
 
     public override void OnHit(Collider other) {
         Debug.Log(other.name);
+    }
+
+    void SpawnPenguin(Transform trans) {
+        GameObject go = GameObject.Instantiate(penguinPrefab, manager.currentWorld.worldObject.transform);
+        go.GetComponent<Penguin>().target = manager.currentWorld.bike;
+        go.transform.position = trans.position;
     }
 }
