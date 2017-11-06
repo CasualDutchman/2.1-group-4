@@ -9,10 +9,8 @@ public class SteamVRController : MonoBehaviour {
     SteamVR_Controller.Device Device;
     SteamVR_TrackedObject trackedObj;
 
-    public Transform Muzzle;
-    public GameObject Bullet;
-
-    float timer;
+    //bool to check if an object is allready being held
+    bool holdingObject;
 
 	void Awake ()
     {
@@ -27,21 +25,47 @@ public class SteamVRController : MonoBehaviour {
 
     private void OnTriggerStay(Collider Col)
     {
-        PickUpObject(Col);
+        
+        InteractWithObject(Col);
+    }
 
-        //get the trigger being pulled
-        if (Device.GetHairTriggerDown() && Col.name == "Gun")
+
+    //Function for picking up any object
+    private void InteractWithObject(Collider Col)
+    {
+        //If you are holding an object, do the primary object action
+        if(Device.GetHairTriggerDown() && holdingObject)
         {
-            FireGun();
+            PrimaryObjectAction(Col);
+        }
+
+        //get the device input to pickup an object(using the trigger)
+        if (Device.GetHairTriggerDown() && !holdingObject)
+        {
+            PickupObject(Col);
+        }
+
+        //Get input from device to drop object (The grip button)
+        if (Device.GetPressDown(SteamVR_Controller.ButtonMask.Grip) && holdingObject)
+        {
+            DropObject(Col);
         }
     }
 
-    //Function for picking up any object
-    private void PickUpObject(Collider Col)
+    //When pulling the trigger, fire!
+    private void PrimaryObjectAction(Collider Col)
     {
-        //get the device input to pickup an object(using the trigger)
-        if (Device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
+        //fire the gun
+        if (Col.tag == "Weapon" && holdingObject)
         {
+            Col.GetComponent<GunController>().FireGun();
+        }
+
+    }
+
+    private void PickupObject(Collider Col)
+    {
+
             //Get position and transformation of the object picked up
             Col.gameObject.transform.position = trackedObj.transform.position;
             Col.gameObject.transform.rotation = trackedObj.transform.rotation;
@@ -51,23 +75,17 @@ public class SteamVRController : MonoBehaviour {
 
             //Set the parent of the object to the SteamVR controller to make transformation easier
             Col.gameObject.transform.SetParent(gameObject.transform);
-        }
 
-        //Get input from device to drop object (The grip button)
-        if (Device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
-        {
-            //Set the parent of the object as the player
-            Col.gameObject.transform.SetParent(gameObject.transform.parent);
-        }
+            holdingObject = true;
+        
     }
 
-    private void FireGun()
+    private void DropObject(Collider Col)
     {
-        //Fire ze Gun!
-        GameObject FiredBullet = Instantiate(Bullet);
-        FiredBullet.transform.position = Muzzle.position;
-        FiredBullet.transform.rotation = Muzzle.rotation;
-        FiredBullet.GetComponent<Rigidbody>().velocity = Muzzle.forward * 50;
-        
+
+            //Set the parent of the object as the player
+            Col.gameObject.transform.SetParent(gameObject.transform.parent);
+
+            holdingObject = false;
     }
 }

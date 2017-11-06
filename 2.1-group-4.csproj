@@ -187,6 +187,7 @@
     <Compile Include="Assets\Vr Game\Scripts\Protocol\LodeProtocol.cs" />
     <Compile Include="Assets\Vr Game\Scripts\Protocol\PlayerVehicle.cs" />
     <Compile Include="Assets\Vr Game\Scripts\SimpleBikeController.cs" />
+    <Compile Include="Assets\Vr Game\Scripts\VRControllers\GunController.cs" />
     <Compile Include="Assets\Vr Game\Scripts\VRControllers\SteamVRController.cs" />
     <Compile Include="Assets\Vr Game\Scripts\World\World.cs" />
     <Compile Include="Assets\Vr Game\Scripts\World\WorldManager.cs" />
