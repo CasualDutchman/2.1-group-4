@@ -22,7 +22,7 @@ public class MusicVisualizer : MonoBehaviour {
         audioSource.GetOutputData(samples, 0);
 
         for (int i = 0; i < samples.Length; i++) {
-            lineRenderer.SetPosition(i, new Vector3(-0.1f + (i * (0.2f / samples.Length)), Mathf.Clamp(samples[i] / (musicSelected ? 4.0f : 1.0f), -0.1f, 0.1f), 0));
+            lineRenderer.SetPosition(i, new Vector3(-0.1f + (i * (0.2f / samples.Length)), Mathf.Clamp(samples[i] / (musicSelected ? 4.0f : 1.0f), -0.06f, 0.06f), 0));
         }
     }
 }

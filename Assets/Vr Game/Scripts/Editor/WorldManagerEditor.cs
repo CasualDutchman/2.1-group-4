@@ -94,19 +94,6 @@ public class WorldManagerEditor : Editor {
                             }
                             GUILayout.EndHorizontal();
 
-                            GUILayout.BeginHorizontal(); // displays the label 'Skybox' and a ObjectField to pick a material for the skybox
-                            {
-                                EditorGUILayout.LabelField(new GUIContent("Skybox", "The world's skybox for it's skybox (duh) and for portals"));
-
-                                EditorGUI.BeginChangeCheck();
-                                Material tempmat = (Material)EditorGUILayout.ObjectField(manager.worldList[i].skyboxMaterial, typeof(Material), false, GUILayout.ExpandWidth(false));
-                                if (EditorGUI.EndChangeCheck()) {
-                                    Undo.RecordObject(manager, "changed skybox");
-                                    manager.worldList[i].skyboxMaterial = tempmat;
-                                }
-
-                            }
-                            GUILayout.EndHorizontal();
                             GUILayout.BeginHorizontal(); // displays the label 'Sun Color' and a Colorfield to pick a color for the sun
                             {
                                 EditorGUILayout.LabelField(new GUIContent("Sun Color", "The color of the world's sun"));
@@ -204,7 +191,7 @@ public class WorldManagerEditor : Editor {
                                     EditorGUILayout.LabelField("Place rocks on tree spawn points");
 
                                     EditorGUI.BeginChangeCheck();
-                                    bool tempb = EditorGUILayout.Toggle("", manager.worldTypes[i].treeSpawnAsRock, GUILayout.Width(2000));
+                                    bool tempb = EditorGUILayout.Toggle("", manager.worldTypes[i].treeSpawnAsRock);
                                     if (EditorGUI.EndChangeCheck()) {
                                         Undo.RecordObject(manager, "worldtype - change pref");
                                         manager.worldTypes[i].treeSpawnAsRock = tempb;
@@ -261,6 +248,98 @@ public class WorldManagerEditor : Editor {
                                 }
                                 GUILayout.EndVertical();
                                 //end trees
+                                //bushes
+                                GUILayout.BeginVertical(); //displays a label and starts the togglegroup, everything in this group can be shown or not, based on the toggle
+                                {
+                                    EditorGUI.BeginChangeCheck();
+                                    bool tempb2 = EditorGUILayout.BeginToggleGroup("Bushes", manager.worldTypes[i].hasBushes);
+                                    if (EditorGUI.EndChangeCheck()) {
+                                        Undo.RecordObject(manager, "worldtype - add bush");
+                                        manager.worldTypes[i].hasBushes = tempb2;
+                                    }
+
+                                    if (manager.worldTypes[i].hasBushes) {
+                                        GUILayout.BeginHorizontal(); // displays a list of objects and buttons to add to or remove from the list
+                                        {
+                                            GUILayout.BeginVertical(); // displays a list to place rocks
+                                            {
+                                                for (int j = 0; j < manager.worldTypes[i].bushes.Count; j++) {
+                                                    EditorGUI.BeginChangeCheck();
+                                                    GameObject tempgo1 = (GameObject)EditorGUILayout.ObjectField(manager.worldTypes[i].bushes[j], typeof(GameObject), false);
+                                                    if (EditorGUI.EndChangeCheck()) {
+                                                        Undo.RecordObject(manager, "worldtype - add bush");
+                                                        manager.worldTypes[i].bushes[j] = tempgo1;
+                                                    }
+                                                }
+                                            }
+                                            GUILayout.EndVertical();
+
+                                            //buttons
+                                            if (GUILayout.Button(new GUIContent("+", "Add to list"), EditorStyles.miniButtonLeft, GUILayout.MaxWidth(20)))
+                                                if (manager.worldTypes[i].bushes.Count < 10) {
+                                                    Undo.RecordObject(manager, "worldtype - add bush");
+                                                    manager.worldTypes[i].bushes.Add(null);
+                                                }
+                                            if (GUILayout.Button(new GUIContent("-", "Remove last"), EditorStyles.miniButtonRight, GUILayout.MaxWidth(20))) {
+                                                if (manager.worldTypes[i].bushes.Count > 1) {
+                                                    Undo.RecordObject(manager, "worldtype - remove bush");
+                                                    manager.worldTypes[i].bushes.RemoveAt(manager.worldTypes[i].bushes.Count - 1);
+                                                }
+                                            }
+                                        }
+                                        GUILayout.EndHorizontal();
+                                        EditorGUILayout.Space();
+                                    }
+                                    EditorGUILayout.EndToggleGroup(); // ends the togglegroup
+                                }
+                                GUILayout.EndVertical();
+                                //end bushes
+                                //grass
+                                GUILayout.BeginVertical(); //displays a label and starts the togglegroup, everything in this group can be shown or not, based on the toggle
+                                {
+                                    EditorGUI.BeginChangeCheck();
+                                    bool tempb2 = EditorGUILayout.BeginToggleGroup("Grass", manager.worldTypes[i].hasGrass);
+                                    if (EditorGUI.EndChangeCheck()) {
+                                        Undo.RecordObject(manager, "worldtype - add grass");
+                                        manager.worldTypes[i].hasGrass = tempb2;
+                                    }
+
+                                    if (manager.worldTypes[i].hasGrass) {
+                                        GUILayout.BeginHorizontal(); // displays a list of objects and buttons to add to or remove from the list
+                                        {
+                                            GUILayout.BeginVertical(); // displays a list to place rocks
+                                            {
+                                                for (int j = 0; j < manager.worldTypes[i].grass.Count; j++) {
+                                                    EditorGUI.BeginChangeCheck();
+                                                    GameObject tempgo1 = (GameObject)EditorGUILayout.ObjectField(manager.worldTypes[i].grass[j], typeof(GameObject), false);
+                                                    if (EditorGUI.EndChangeCheck()) {
+                                                        Undo.RecordObject(manager, "worldtype - add grass");
+                                                        manager.worldTypes[i].grass[j] = tempgo1;
+                                                    }
+                                                }
+                                            }
+                                            GUILayout.EndVertical();
+
+                                            //buttons
+                                            if (GUILayout.Button(new GUIContent("+", "Add to list"), EditorStyles.miniButtonLeft, GUILayout.MaxWidth(20)))
+                                                if (manager.worldTypes[i].grass.Count < 10) {
+                                                    Undo.RecordObject(manager, "worldtype - add rock");
+                                                    manager.worldTypes[i].grass.Add(null);
+                                                }
+                                            if (GUILayout.Button(new GUIContent("-", "Remove last"), EditorStyles.miniButtonRight, GUILayout.MaxWidth(20))) {
+                                                if (manager.worldTypes[i].grass.Count > 1) {
+                                                    Undo.RecordObject(manager, "worldtype - remove rock");
+                                                    manager.worldTypes[i].grass.RemoveAt(manager.worldTypes[i].grass.Count - 1);
+                                                }
+                                            }
+                                        }
+                                        GUILayout.EndHorizontal();
+                                        EditorGUILayout.Space();
+                                    }
+                                    EditorGUILayout.EndToggleGroup(); // ends the togglegroup
+                                }
+                                GUILayout.EndVertical();
+                                //end grass
                                 //rocks
                                 GUILayout.BeginVertical(); //displays a label and starts the togglegroup, everything in this group can be shown or not, based on the toggle
                                 {
@@ -428,6 +507,8 @@ public class WorldManagerEditor : Editor {
         manager.speed = EditorGUILayout.Slider("Speed", manager.speed, 1.0f, 25.0f); //the speed of the bike
 
         manager.amountOfPanels = Mathf.FloorToInt(EditorGUILayout.Slider("Max Panels", manager.amountOfPanels, 6, 35.0f)); //maximum panels allowed in the world
+
+        manager.percentageSpawn = EditorGUILayout.Slider("World Spawnrates", manager.percentageSpawn, 0.0f, 1.0f); //the speed of the bike
 
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider); //line
 

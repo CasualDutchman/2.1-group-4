@@ -33,26 +33,29 @@ public class WorldManager : MonoBehaviour {
     public float speed = 5;
     public int amountOfPanels = 10;
 
-    float percentagespawn = 1f;
-
-    public float percentageSpawn {
-        get {
-            return percentagespawn;
-        }
-    }
+    public float percentageSpawn = 0.7f;
 
     void Start () {
         SetWorlds();
 
+        currentWorld = new TutorialWorld(this, LayerMask.NameToLayer("Ground"), Vector3.zero, Vector3.zero);
+        normalLight.color = currentWorld.sunColor;
+
+        currentGameMode = new TutorialMode();
+        currentGameMode.SetupGame(this);
+
+        /*
         currentWorld = worldList[startWorld].Copy();
         traveledWorlds.Add(startWorld);
         currentWorld.SetupWorld(this, LayerMask.NameToLayer("Ground"), Vector3.zero, Vector3.zero);
         normalLight.color = currentWorld.sunColor;
+        
 
         //this long line will look at the string of the world's possible gamemodes and converts it to a useable compiled piece (e.g. "TempleRun" can be used as the GameMode TempleRun instead of as a string)
         currentGameMode = (GameMode)System.Activator.CreateInstance(System.Type.GetType(currentWorld.availableGamemodes[Random.Range(0, currentWorld.availableGamemodes.Count)]));
         currentGameMode.SetupGame(this);
-        
+        */
+
         worldIndex++;
     }
 	
@@ -74,7 +77,7 @@ public class WorldManager : MonoBehaviour {
             }
         }
 
-        if(currentWorld != null && currentWorld.skyboxMaterial != null){
+        if(currentWorld != null || currentWorld.skyboxMaterial != null){
             currentWorld.UpdateWorld();
         }
 
@@ -82,7 +85,7 @@ public class WorldManager : MonoBehaviour {
             nextWorld.UpdateWorld();
         }
 
-        if (prevWorld != null && prevWorld.skyboxMaterial != null) {
+        if (prevWorld != null && (prevWorld.name.Equals("Tutorial World") || prevWorld.skyboxMaterial != null)) {
             prevWorld.UpdateWorld();
         }
     }
@@ -98,6 +101,8 @@ public class WorldManager : MonoBehaviour {
                 mr.material = defaultMaterial;
                 mr.material.SetTexture("_MainTex", nextWorld.texturemap);
             }
+
+            ChangeAll(child, defaultMaterial, LayerMask.NameToLayer("Ground"));
         }
 
         for (int i = 0; i < currentWorld.worldObject.transform.childCount; i++) {
@@ -110,16 +115,7 @@ public class WorldManager : MonoBehaviour {
                 mr.material.SetTexture("_MainTex", currentWorld.texturemap);
             }
 
-            foreach (Transform c in child) {
-                if (c.childCount > 0) {
-                    c.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Portal");
-                    MeshRenderer mrc = c.GetChild(0).GetComponent<MeshRenderer>();
-                    if (mrc != null) {
-                        mrc.material = portalMaterial;
-                        mrc.material.SetTexture("_MainTex", currentWorld.texturemap);
-                    }
-                }
-            }
+            ChangeAll(child, portalMaterial, LayerMask.NameToLayer("Portal"));
 
             if (i > currentWorld.portalindex)
                 child.gameObject.SetActive(false);
@@ -127,6 +123,9 @@ public class WorldManager : MonoBehaviour {
 
         normalLight.color = nextWorld.sunColor;
         portalLight.color = currentWorld.sunColor;
+
+        currentSkybox.GetComponent<MeshRenderer>().material.color = nextWorld.sunColor;
+        otherSkybox.GetComponent<MeshRenderer>().material.color = currentWorld.sunColor;
 
         Material temp = normalCamera.GetComponent<Skybox>().material;
         normalCamera.GetComponent<Skybox>().material = portalCamera.GetComponent<Skybox>().material;
@@ -145,7 +144,20 @@ public class WorldManager : MonoBehaviour {
         currentGameMode.SetupGame(this);
     }
 
-    public void SetupNewWorld(Vector3 pos, Vector3 euler) {
+    void ChangeAll(Transform parent, Material nextmat, LayerMask mask) {
+        foreach (Transform child in parent) {
+            if (child.GetComponent<MeshRenderer>()) {
+                child.gameObject.layer = mask;
+
+                Texture temp = child.GetComponent<MeshRenderer>().material.GetTexture("_MainTex");
+                child.GetComponent<MeshRenderer>().material = nextmat;
+                child.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", temp);
+            }
+            ChangeAll(child, nextmat, mask);
+        }
+    }
+
+    public void SetupNewWorld(Vector3 pos, Vector3 euler, bool isTutorial=false) {
         List<int> templist = new List<int>();
         for (int i = 0; i < worldList.Count; i++) {
             if (!traveledWorlds.Contains(i))
@@ -161,7 +173,7 @@ public class WorldManager : MonoBehaviour {
         int nextWorldIndex = templist[Random.Range(0, templist.Count)];
         traveledWorlds.Add(nextWorldIndex);
 
-        nextWorld = worldList[nextWorldIndex].Copy();
+        nextWorld = worldList[isTutorial ? startWorld : nextWorldIndex].Copy();
         nextWorld.SetupWorld(this, LayerMask.NameToLayer("Portal"), pos, euler);
         portalLight.color = nextWorld.sunColor;
         worldIndex++;
@@ -174,6 +186,12 @@ public class WorldManager : MonoBehaviour {
     //when a player dies
     public void PlayerDies() {
         speed = 0;
+    }
+
+    public void OnHitCallback(Collider other) {
+        if(currentGameMode != null) {
+            currentGameMode.OnHit(other);
+        }
     }
 
     //spawns an example panel for the designer to look how a panel's hierachy NEEDS to be!
@@ -244,11 +262,16 @@ public class WorldManager : MonoBehaviour {
 public class WorldType {
 
     public string name;
+    public List<GameObject> grass;
     public List<GameObject> trees;
+    public List<GameObject> bushes;
     public List<GameObject> rocks;
     public List<GameObject> buildings;
     public List<GameObject> groundPanels;
+    public List<GameObject> misc;
 
+    public bool hasGrass;
+    public bool hasBushes;
     public bool hasTrees;
     public bool hasRocks;
     public bool hasBuildings;
@@ -257,6 +280,10 @@ public class WorldType {
 
     public WorldType() {
         name = "New Worldtype";
+        grass = new List<GameObject>();
+        grass.Add(null);
+        bushes = new List<GameObject>();
+        bushes.Add(null);
         trees = new List<GameObject>();
         trees.Add(null);
         rocks = new List<GameObject>();
@@ -265,11 +292,27 @@ public class WorldType {
         buildings.Add(null);
         groundPanels = new List<GameObject>();
         groundPanels.Add(null);
+        misc = new List<GameObject>();
+        misc.Add(null);
     }
 
     public GameObject GetGroundPanel() {
         if (groundPanels.Count > 0) {
             return groundPanels[Random.Range(0, groundPanels.Count)];
+        }
+        return null;
+    }
+
+    public GameObject GetGrass() {
+        if (hasGrass && grass.Count > 0) {
+            return grass[Random.Range(0, grass.Count)];
+        }
+        return null;
+    }
+
+    public GameObject GetBush() {
+        if (hasBushes && bushes.Count > 0) {
+            return bushes[Random.Range(0, bushes.Count)];
         }
         return null;
     }
@@ -291,6 +334,13 @@ public class WorldType {
     public GameObject GetBuilding() {
         if (hasBuildings && buildings.Count > 0) {
             return buildings[Random.Range(0, buildings.Count)];
+        }
+        return null;
+    }
+
+    public GameObject GetMisc(int i) {
+        if (buildings.Count > 0) {
+            return buildings[i];
         }
         return null;
     }
@@ -332,7 +382,7 @@ public class GameMode {
 
             if (playing) {
                 OnPlay();
-                if (timer >= tooLongTime) {
+                if (tooLongTime > 0 && timer >= tooLongTime) {
                     EndGame();
                 }
             }
@@ -372,7 +422,7 @@ public class GameMode {
         world = w;
     }
 
-    public virtual void OnHitTaggedItem(string hittedTag) { }
+    public virtual void OnHit(Collider other) { }
 
     public bool isActive() { return active; }
 }

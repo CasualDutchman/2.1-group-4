@@ -8,6 +8,8 @@ public class SimpleBikeController : MonoBehaviour {
 
     public WorldManager manager;
 
+    public Transform steering;
+
     bool alive = true;
     float timer;
 
@@ -24,18 +26,32 @@ public class SimpleBikeController : MonoBehaviour {
         rotY += Input.GetAxis("Horizontal");
         transform.eulerAngles = new Vector3(0, rotY, 0);
 
-        Ray ray = new Ray(transform.position + transform.up * 4, Vector3.down);
+        steering.localEulerAngles = new Vector3(0, Input.GetAxis("Horizontal") * 20, 7);
+
+        Ray ray = new Ray(transform.position + transform.up * 4 + (transform.forward * 1.3f), Vector3.down);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 11, LayerMask.GetMask("Ground"))) {
             if (hit.collider != null) {
-                transform.position = hit.point;
+                transform.GetChild(0).LookAt(hit.point);
             }
         }
 
-        if (Input.GetKey(KeyCode.Space)) {
-            manager.speed = 50;
-        } else {
-            manager.speed = 25;
+        Ray ray2 = new Ray(transform.position + transform.up * 4, Vector3.down);
+        RaycastHit hit2;
+        if (Physics.Raycast(ray2, out hit2, 11, LayerMask.GetMask("Ground"))) {
+            if (hit2.collider != null) {
+                transform.position = hit2.point;
+            }
+        }
+
+        transform.Translate(transform.forward * Time.deltaTime * manager.speed, Space.World);
+
+        if (!manager.currentWorld.name.Equals("Tutorial World")) {
+            if (Input.GetKey(KeyCode.Space)) {
+                manager.speed = 20;
+            } else {
+                manager.speed = 10;
+            }
         }
 
         if (!alive) {

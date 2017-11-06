@@ -9,6 +9,7 @@ TagManager:
   - Weapon
   - bounds
   - Enemy
+  - bikeMic
   layers:
   - Default
   - TransparentFX
