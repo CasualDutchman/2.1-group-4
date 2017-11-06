@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 52713266}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1424,7 +1424,7 @@ MonoBehaviour:
     name: SnowPenguin
     skyboxMaterial: {fileID: 0}
     sunColor: {r: 0.8308824, g: 0.8308824, b: 0.8308824, a: 1}
-    texturemap: {fileID: 570547204}
+    texturemap: {fileID: 1232211348}
     worldType:
       name: Snowy
       grass:
@@ -2788,41 +2788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63bb76107a12d8e4faa75380da5ef5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!28 &570547204
-Texture2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: BOOH
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  serializedVersion: 2
-  m_Width: 8
-  m_Height: 8
-  m_CompleteImageSize: 256
-  m_TextureFormat: 4
-  m_MipCount: 1
-  m_IsReadable: 1
-  m_AlphaIsTransparency: 0
-  m_ImageCount: 1
-  m_TextureDimension: 2
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 0
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_LightmapFormat: 0
-  m_ColorSpace: 1
-  image data: 256
-  _typelessdata: 242821ff363d32ff485142ff5a6653ff6c7a64ff7e8e75ff90a385ffffffffff333333ff474747ff5b5b5bff6b6b6bff7a7a7aff8c8c8cffffffffffffffffffc9c9c9ffc9c9c9ffc9c9c9ffc9c9c9ffffffffffffffffffffffffffffffffffd6d6d6ffd6d6d6ffd6d6d6ffffffffffffffffffffffffffffffffffffffffffe3e3e3ffe3e3e3ffe3e3e3ffe3e3e3fffffffffffffffffffffffffffffffffff2f2f2fff2f2f2fff2f2f2fff2f2f2fff2f2f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff542100ff632700ff843500ffffffffffffffffffffffffffffffffffffffffff
-  m_StreamData:
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &594946690
 GameObject:
   m_ObjectHideFlags: 0
@@ -4295,6 +4260,7 @@ GameObject:
   - component: {fileID: 1101208982}
   - component: {fileID: 1101208981}
   - component: {fileID: 1101208985}
+  - component: {fileID: 1101208986}
   m_Layer: 0
   m_Name: Penguin01
   m_TagString: Untagged
@@ -4406,6 +4372,21 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300006, guid: 036ea2f379f03b34ea3d045ed780170b, type: 3}
+--- !u!54 &1101208986
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1101208980}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1154865887
 GameObject:
   m_ObjectHideFlags: 0
@@ -4670,6 +4651,41 @@ Prefab:
     - {fileID: 6400000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 963d1a910cf76054fbf60163d4b6c0d4, type: 3}
   m_IsPrefabParent: 0
+--- !u!28 &1232211348
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BOOH
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  serializedVersion: 2
+  m_Width: 8
+  m_Height: 8
+  m_CompleteImageSize: 256
+  m_TextureFormat: 4
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  image data: 256
+  _typelessdata: 242821ff363d32ff485142ff5a6653ff6c7a64ff7e8e75ff90a385ffffffffff333333ff474747ff5b5b5bff6b6b6bff7a7a7aff8c8c8cffffffffffffffffffc9c9c9ffc9c9c9ffc9c9c9ffc9c9c9ffffffffffffffffffffffffffffffffffd6d6d6ffd6d6d6ffd6d6d6ffffffffffffffffffffffffffffffffffffffffffe3e3e3ffe3e3e3ffe3e3e3ffe3e3e3fffffffffffffffffffffffffffffffffff2f2f2fff2f2f2fff2f2f2fff2f2f2fff2f2f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff542100ff632700ff843500ffffffffffffffffffffffffffffffffffffffffff
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1237111194
 GameObject:
   m_ObjectHideFlags: 0
