@@ -64,10 +64,10 @@ public class PenguinHitter : GameMode {
             manager.gunObject.SetActive(true);
         }
 
-        if(musicTimer < 10.1f)
+        if(musicTimer < 14.1f)
             musicTimer += Time.deltaTime;
 
-        if (musicTimer >= 10.0f) {
+        if (musicTimer >= 14.0f) {
             manager.musicSource.clip = music;
             if(!manager.musicSource.isPlaying)
                 manager.musicSource.Play();
