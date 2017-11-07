@@ -11,18 +11,22 @@ public class PenguinHitter : GameMode {
 
     GameObject lastSpawned;
 
+    private AudioClip music;
+
     private AudioClip audioIntroduction;
     private AudioClip audioEndGood;
     private AudioClip audioEndBad;
 
     private AudioClip oNo;
 
-    private bool goodEnding;
+    private bool goodEnding = true;
 
     private int hitCounter;
     private int hitLimit = 5;
     private int score;
     private int scoreMax = 20;
+
+    float musicTimer;
 
     public PenguinHitter() {
         audioIntroduction = Resources.Load<AudioClip>("penguingame/audio/introduction");
@@ -30,6 +34,7 @@ public class PenguinHitter : GameMode {
         audioEndBad = Resources.Load<AudioClip>("penguingame/audio/end-bad");
         penguinPrefab = Resources.Load<GameObject>("penguingame/Penguin01");
 
+        music = Resources.Load<AudioClip>("Penguins");
         oNo = Resources.Load<AudioClip>("ono");
     }
 
@@ -47,7 +52,7 @@ public class PenguinHitter : GameMode {
         base.OnStart();
 
         if (!intro) {
-            StartSound(audioIntroduction);
+            ForceStartSound(audioIntroduction);
             intro = true;
         } 
     }
@@ -57,6 +62,15 @@ public class PenguinHitter : GameMode {
 
         if (intro && timer >= 2 && !manager.gunObject.activeSelf) {
             manager.gunObject.SetActive(true);
+        }
+
+        if(musicTimer < 10.1f)
+            musicTimer += Time.deltaTime;
+
+        if (musicTimer >= 10.0f) {
+            manager.musicSource.clip = music;
+            if(!manager.musicSource.isPlaying)
+                manager.musicSource.Play();
         }
 
         if (!didSpawn) {
@@ -76,10 +90,10 @@ public class PenguinHitter : GameMode {
     public override void OnEnd() {
         base.OnEnd();
         if (goodEnding) {
-            StartSound(audioEndGood);
+            ForceStartSound(audioEndGood);
         }
         else {
-            StartSound(audioEndBad);
+            ForceStartSound(audioEndBad);
         }
     }
 
@@ -118,5 +132,6 @@ public class PenguinHitter : GameMode {
         GameObject go = GameObject.Instantiate(penguinPrefab, manager.currentWorld.worldObject.transform);
         go.GetComponent<Penguin>().target = manager.currentWorld.bike;
         go.transform.position = trans.position + new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+        go.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", manager.colorPalette);
     }
 }

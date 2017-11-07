@@ -8,6 +8,8 @@ public class ProfileManager : MonoBehaviour
 
     public static ProfileManager profileManager;
 
+    public WorldManager manager;
+
     //Values for the actual storing of the data
     //Number of the save profile
    
@@ -79,6 +81,6 @@ public class ProfileManager : MonoBehaviour
     public void SetGameDifficulty(int gamingDifficulty) {gameDifficulty = gamingDifficulty; }
     public void SetBikingDifficulty(int bikeDifficulty) {bikingDifficulty = bikeDifficulty; }
     public void SetHandDominance(int dominantHand) {handDominance = dominantHand; }
-    public void SetAttentionSpan(int attention) {attentionSpan = attention; }
+    public void SetAttentionSpan(int attention) {attentionSpan = attention; manager.percentageSpawn = attentionSpan; }
 
 }

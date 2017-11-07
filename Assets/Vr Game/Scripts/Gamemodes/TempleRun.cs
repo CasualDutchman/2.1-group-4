@@ -22,11 +22,15 @@ public class TempleRun : GameMode {
     private int hitCounter;
     private int hitLimit = 8;
 
+    private AudioClip music;
+    float musicTimer;
+
     public TempleRun() {
         audioIntroduction = Resources.Load<AudioClip>("templerun/audio/intro");
         audioEndGood = Resources.Load<AudioClip>("templerun/audio/end-good");
         audioEndBad = Resources.Load<AudioClip>("templerun/audio/end-bad");
 
+        music = Resources.Load<AudioClip>("Desert");
         oNo = Resources.Load<AudioClip>("ono");
     }
 
@@ -42,11 +46,20 @@ public class TempleRun : GameMode {
 
     public override void OnStart() {
         base.OnStart();
-        StartSound(audioIntroduction);
+        ForceStartSound(audioIntroduction);
     }
 
     public override void OnPlay() {
         base.OnPlay();
+        if (musicTimer < 8.1f)
+            musicTimer += Time.deltaTime;
+
+        if (musicTimer >= 8f) {
+            manager.musicSource.clip = music;
+            if (!manager.musicSource.isPlaying)
+                manager.musicSource.Play();
+        }
+
         if (!didSpawn) {
             for (int i = world.activepanels.Count - 5; i < world.activepanels.Count; i++) {
                 SpawnObjects(world.activepanels[i]);
@@ -64,9 +77,9 @@ public class TempleRun : GameMode {
     public override void OnEnd() {
         base.OnEnd();
         if (goodEnding) {
-            StartSound(audioEndGood);
+            ForceStartSound(audioEndGood);
         } else {
-            StartSound(audioEndBad);
+            ForceStartSound(audioEndBad);
         }
     }
 
@@ -89,18 +102,16 @@ public class TempleRun : GameMode {
 
         Transform parent = go.transform.Find("rocks");
 
-        for (int j = 0; j < 2; j++) {
-            for (int i = 0; i < 7; i++) {
-                if (i != random) {
-                    Vector3 rayorigin = go.transform.TransformPoint(boxcol.center + (new Vector3(-6 + (i * 2), 0, -5 + (j * 19))));
-                    Ray ray = new Ray(rayorigin + Vector3.up * 5, Vector3.down);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 30, LayerMask.GetMask("Ground"))) {
-                        GameObject lol = GameObject.Instantiate(world.worldType.GetRock(), parent);
-                        lol.transform.position = hit.point;
-                        lol.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
-                        lol.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", world.texturemap);
-                    }
+        for (int i = 0; i < 7; i++) {
+            if (i != random) {
+                Vector3 rayorigin = go.transform.TransformPoint(boxcol.center + (new Vector3(-6 + (i * 2), 0, -5)));
+                Ray ray = new Ray(rayorigin + Vector3.up * 5, Vector3.down);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 30, LayerMask.GetMask("Ground"))) {
+                    GameObject lol = GameObject.Instantiate(world.worldType.GetRock(), parent);
+                    lol.transform.position = hit.point;
+                    lol.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+                    lol.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", world.texturemap);
                 }
             }
         }

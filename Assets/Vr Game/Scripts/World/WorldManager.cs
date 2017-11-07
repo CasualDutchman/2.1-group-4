@@ -11,6 +11,8 @@ public class WorldManager : MonoBehaviour {
     public GameObject gunObject, controllerObject;
     public GameObject currentSkybox, otherSkybox;
     public GameObject startText;
+    public Texture colorPalette;
+    public AudioSource musicSource;
     //-------
 
     //list of all possible worlds and worldtype
@@ -69,6 +71,11 @@ public class WorldManager : MonoBehaviour {
     }
 
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (started) {
             currentGameMode.UpdateGame();
 
@@ -97,6 +104,8 @@ public class WorldManager : MonoBehaviour {
 
     //function what happens when the player goes through the portal
     public void ChangeWorlds() {
+        musicSource.Stop();
+
         if (gunObject.activeSelf) {
             controllerObject.GetComponent<SteamVRController>().ForceDrop();
             gunObject.SetActive(false);
@@ -181,6 +190,10 @@ public class WorldManager : MonoBehaviour {
 
         int nextWorldIndex = templist[Random.Range(0, templist.Count)];
         traveledWorlds.Add(nextWorldIndex);
+
+        int[] intlist = new int[] { 2, 0, 1 };
+        if (worldIndex <= 2)
+            nextWorldIndex = intlist[worldIndex];
 
         nextWorld = worldList[isTutorial ? startWorld : nextWorldIndex].Copy();
         nextWorld.SetupWorld(this, LayerMask.NameToLayer("Portal"), pos, euler);
@@ -435,9 +448,15 @@ public class GameMode {
 
     //start a sound on the audiocource of the bike
     protected void StartSound(AudioClip clip) {
-        bikeMic.clip = clip;
         if (!bikeMic.isPlaying) {
+            bikeMic.clip = clip;
             bikeMic.Play();
         }
+    }
+
+    protected void ForceStartSound(AudioClip clip) {
+        bikeMic.clip = clip;
+        if (!bikeMic.isPlaying)
+            bikeMic.Play();
     }
 }

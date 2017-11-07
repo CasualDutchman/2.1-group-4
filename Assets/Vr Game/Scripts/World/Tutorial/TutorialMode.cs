@@ -70,7 +70,7 @@ public class TutorialMode : GameMode {
         }
 
         if (!intro) {
-            StartSound(audioIntroduction);
+            ForceStartSound(audioIntroduction);
             manager.speed = 1;
             intro = true;
         }
@@ -84,7 +84,7 @@ public class TutorialMode : GameMode {
         }
 
         if (!explainedSteering) {
-            StartSound(audioExplainSteering);
+            ForceStartSound(audioExplainSteering);
 
             audiotimer += Time.deltaTime;
             if (audiotimer >= audioExplainSteering.length - 1) {
@@ -98,7 +98,7 @@ public class TutorialMode : GameMode {
         }
 
         if (steertimer > 2 && !explainedAvoiding) {
-            StartSound(audioExplainAvoiding);
+            ForceStartSound(audioExplainAvoiding);
 
             audiotimer += Time.deltaTime;
             if (audiotimer >= audioExplainAvoiding.length - 1) {
@@ -122,7 +122,7 @@ public class TutorialMode : GameMode {
         }
 
         if (!explainedShooting && avoidingSpawned) {
-            StartSound(audioExplainShooting);
+            ForceStartSound(audioExplainShooting);
 
             audiotimer += Time.deltaTime;
             if(audiotimer >= 2 && !manager.gunObject.activeSelf) {
@@ -168,7 +168,7 @@ public class TutorialMode : GameMode {
 
     public override void OnEnd() {
         if (!end) {
-            StartSound(audioEnd);
+            ForceStartSound(audioEnd);
             end = true;
         }
         manager.speed = 10;

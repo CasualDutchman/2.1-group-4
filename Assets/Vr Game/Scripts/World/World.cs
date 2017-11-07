@@ -220,6 +220,9 @@ public class World {
                     childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texturemap);
                     childgo.transform.GetChild(0).gameObject.layer = portalMask;
 
+                    if(childgo.GetComponent<BoxCollider>())
+                        GameObject.Destroy(childgo.GetComponent<BoxCollider>());
+
                     GameObject.Destroy(child.gameObject);
                 }
                 i++;
@@ -284,6 +287,8 @@ public class World {
                     childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material = portalMask == LayerMask.NameToLayer("Portal") ? manager.portalMaterial : manager.defaultMaterial;
                     childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texturemap);
                     childgo.transform.GetChild(0).gameObject.layer = portalMask;
+
+                    GameObject.Destroy(childgo.GetComponent<BoxCollider>());
 
                     GameObject.Destroy(child.gameObject);
                 }

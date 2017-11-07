@@ -7,9 +7,14 @@ public class Race : GameMode {
     private AudioClip audioIntroduction;
     private AudioClip audioEnd;
 
+    private AudioClip music;
+    float musicTimer;
+
     public Race() {
         audioIntroduction = Resources.Load<AudioClip>("relax/audio/intro");
         audioEnd = Resources.Load<AudioClip>("relax/audio/end");
+
+        music = Resources.Load<AudioClip>("Forest");
     }
 
     public override void SetupGame(WorldManager wm) {
@@ -24,17 +29,24 @@ public class Race : GameMode {
 
     public override void OnStart() {
         base.OnStart();
-        Debug.Log(1);
-        StartSound(audioIntroduction);
+        ForceStartSound(audioIntroduction);
     }
 
     public override void OnPlay() {
         base.OnPlay();
 
+        if (musicTimer < 2.1f)
+            musicTimer += Time.deltaTime;
+
+        if (musicTimer >= 2f) {
+            manager.musicSource.clip = music;
+            if (!manager.musicSource.isPlaying)
+                manager.musicSource.Play();
+        }
     }
 
     public override void OnEnd() {
         base.OnEnd();
-        StartSound(audioEnd);
+        ForceStartSound(audioEnd);
     }
 }
