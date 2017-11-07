@@ -15,7 +15,6 @@ public class TutorialWorld : World {
     }
 
 	public override void SetupWorld(WorldManager wm, LayerMask mask, Vector3 pos, Vector3 euler) {
-        Debug.Log("Setup First World");
         manager = wm;
         portalMask = mask;
         changedPos = pos;
@@ -29,6 +28,9 @@ public class TutorialWorld : World {
         nextSpawnLoc = new GameObject("next spawn");
         nextSpawnLoc.transform.SetParent(worldObject.transform);
         nextSpawnLoc.transform.position = new Vector3(0, 0, 100);
+        
+        manager.otherSkybox.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.white);
+        manager.currentSkybox.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.white);
 
         //----------
 
@@ -38,7 +40,7 @@ public class TutorialWorld : World {
         go.transform.localScale = Vector3.one * 200;
     }
 
-    public override void SpawnPortal() {
+    public override void SpawnPortal(bool b) {
         portalObject = GameObject.Instantiate(manager.portalObject, manager.transform);
         portalObject.transform.position = nextSpawnLoc.transform.position + bike.forward * 70;
         portalObject.transform.eulerAngles = bike.eulerAngles;
@@ -61,8 +63,6 @@ public class TutorialWorld : World {
                     portalObject.transform.GetChild(0).localScale = new Vector3(Mathf.Clamp(timer2 / 2, 0, 2), 1, 1);
             }
         } else {
-            Debug.Log("go");
-
             timer += Time.deltaTime;
 
             if (timer >= 3) {

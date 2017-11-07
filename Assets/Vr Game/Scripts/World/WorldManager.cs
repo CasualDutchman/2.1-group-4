@@ -4,57 +4,47 @@ using UnityEngine;
 
 public class WorldManager : MonoBehaviour {
 
-    //holds the default material for the combined mesh, only accesable in debugmode
+    //can only add objects in Debug Mode. only for demo
     public Material defaultMaterial, portalMaterial;
     public GameObject portalObject;
-    public GameObject normalCamera, portalCamera;
     public Light normalLight, portalLight;
-
+    public GameObject gunObject, controllerObject;
     public GameObject currentSkybox, otherSkybox;
+    //-------
 
     //list of all possible worlds and worldtype
     public List<WorldType> worldTypes = new List<WorldType>();
     public List<World> worldList = new List<World>();
 
-    public int worldIndex = 0;
-    public World currentWorld;
+    public int worldIndex = 0; //how many world have we been to
+
+    public World currentWorld; //current world || previous and next world for portal
     World nextWorld = null;
     public World prevWorld = null;
+
     GameMode currentGameMode;
 
     Transform bike;
 
     public bool hasPortal;
 
-    List<int> traveledWorlds = new List<int>();
+    List<int> traveledWorlds = new List<int>(); // where have we already been
 
     //these variables are shown in the inspector, information on hover over
     public int startWorld;
     public float speed = 5;
     public int amountOfPanels = 10;
 
-    public float percentageSpawn = 0.7f;
+    public float percentageSpawn = 0.7f; // how many to spawn on panels (0 - 1)
 
     void Start () {
         SetWorlds();
 
-        currentWorld = new TutorialWorld(this, LayerMask.NameToLayer("Ground"), Vector3.zero, Vector3.zero);
+        currentWorld = new TutorialWorld(this, LayerMask.NameToLayer("Ground"), Vector3.zero, Vector3.zero); // create first world
         normalLight.color = currentWorld.sunColor;
 
-        currentGameMode = new TutorialMode();
+        currentGameMode = new TutorialMode(); //first gamemode
         currentGameMode.SetupGame(this);
-
-        /*
-        currentWorld = worldList[startWorld].Copy();
-        traveledWorlds.Add(startWorld);
-        currentWorld.SetupWorld(this, LayerMask.NameToLayer("Ground"), Vector3.zero, Vector3.zero);
-        normalLight.color = currentWorld.sunColor;
-        
-
-        //this long line will look at the string of the world's possible gamemodes and converts it to a useable compiled piece (e.g. "TempleRun" can be used as the GameMode TempleRun instead of as a string)
-        currentGameMode = (GameMode)System.Activator.CreateInstance(System.Type.GetType(currentWorld.availableGamemodes[Random.Range(0, currentWorld.availableGamemodes.Count)]));
-        currentGameMode.SetupGame(this);
-        */
 
         worldIndex++;
     }
@@ -71,27 +61,33 @@ public class WorldManager : MonoBehaviour {
 
         if (!currentGameMode.isActive()) {
             if (!hasPortal) {
-                currentWorld.SpawnPortal();
-                portalCamera.GetComponent<Skybox>().material = nextWorld.skyboxMaterial;
+                currentWorld.SpawnPortal(currentGameMode.quickPortal);
                 hasPortal = true;
             }
         }
 
-        if(currentWorld != null || currentWorld.skyboxMaterial != null){
+        //only update the world if it is available
+
+        if(currentWorld != null && currentWorld.IsOn()){
             currentWorld.UpdateWorld();
         }
 
-        if (nextWorld != null && nextWorld.skyboxMaterial != null) {
+        if (nextWorld != null && nextWorld.IsOn()) {
             nextWorld.UpdateWorld();
         }
 
-        if (prevWorld != null && (prevWorld.name.Equals("Tutorial World") || prevWorld.skyboxMaterial != null)) {
+        if (prevWorld != null && prevWorld.IsOn()) {
             prevWorld.UpdateWorld();
         }
     }
 
     //function what happens when the player goes through the portal
     public void ChangeWorlds() {
+        if (gunObject.activeSelf) {
+            controllerObject.GetComponent<SteamVRController>().ForceDrop();
+            gunObject.SetActive(false);
+        }
+
         foreach (Transform child in nextWorld.worldObject.transform) {
             child.gameObject.layer = LayerMask.NameToLayer("Ground");
             child.gameObject.SetActive(true);
@@ -100,6 +96,7 @@ public class WorldManager : MonoBehaviour {
             if (mr != null) {
                 mr.material = defaultMaterial;
                 mr.material.SetTexture("_MainTex", nextWorld.texturemap);
+                mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             }
 
             ChangeAll(child, defaultMaterial, LayerMask.NameToLayer("Ground"));
@@ -127,10 +124,6 @@ public class WorldManager : MonoBehaviour {
         currentSkybox.GetComponent<MeshRenderer>().material.color = nextWorld.sunColor;
         otherSkybox.GetComponent<MeshRenderer>().material.color = currentWorld.sunColor;
 
-        Material temp = normalCamera.GetComponent<Skybox>().material;
-        normalCamera.GetComponent<Skybox>().material = portalCamera.GetComponent<Skybox>().material;
-        portalCamera.GetComponent<Skybox>().material = temp;
-
         currentWorld.portalObject.transform.GetChild(0).localPosition = new Vector3(0, 0, -0.3f);
         currentWorld.portalObject.transform.GetChild(0).localEulerAngles = new Vector3(0, 180, 0);
 
@@ -144,6 +137,7 @@ public class WorldManager : MonoBehaviour {
         currentGameMode.SetupGame(this);
     }
 
+    //repeats itself, to fix objects when chaning worlds
     void ChangeAll(Transform parent, Material nextmat, LayerMask mask) {
         foreach (Transform child in parent) {
             if (child.GetComponent<MeshRenderer>()) {
@@ -157,6 +151,7 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    //create a new worl
     public void SetupNewWorld(Vector3 pos, Vector3 euler, bool isTutorial=false) {
         List<int> templist = new List<int>();
         for (int i = 0; i < worldList.Count; i++) {
@@ -179,6 +174,7 @@ public class WorldManager : MonoBehaviour {
         worldIndex++;
     }
 
+    //give the spawned panels list to the gamemode
     public void SetGameModespanels( World w) {
         currentGameMode.SetPanels(w);
     }
@@ -188,45 +184,22 @@ public class WorldManager : MonoBehaviour {
         speed = 0;
     }
 
+    //callback to add score to gamemode
+    public void AddScore() {
+        currentGameMode.Score();
+    }
+
+    //callback for hitting the bike
     public void OnHitCallback(Collider other) {
         if(currentGameMode != null) {
             currentGameMode.OnHit(other);
         }
     }
 
-    //spawns an example panel for the designer to look how a panel's hierachy NEEDS to be!
-    [ContextMenu("Create Example")]
-    public void CreateExampleGroundPlane() {
-        GameObject parent = new GameObject("[parent, names not in brackets cannot be changed]");
-        GameObject mesh = new GameObject("mesh [add mesh of panel]");
-        mesh.transform.SetParent(parent.transform);
-
-        GameObject next = new GameObject("next [place where mesh ends]");
-        next.transform.SetParent(parent.transform);
-
-        GameObject bounds = new GameObject("bounds [change boxcollider to define path]");
-        bounds.transform.SetParent(parent.transform);
-
-        GameObject trees = new GameObject("trees [parent for tree spawns]");
-        trees.transform.SetParent(parent.transform);
-
-        GameObject treeexample = new GameObject("[example spawnpoint for tree]");
-        treeexample.transform.SetParent(trees.transform);
-
-        GameObject rocks = new GameObject("rocks [parent for rock spawns]");
-        rocks.transform.SetParent(parent.transform);
-
-        GameObject rockexample = new GameObject("[example spawnpoint for rock]");
-        rockexample.transform.SetParent(rocks.transform);
-
-        GameObject buildings = new GameObject("buildings [parent for building spawns]");
-        buildings.transform.SetParent(parent.transform);
-
-        GameObject buildingexample = new GameObject("[example spawnpoint for building]");
-        buildingexample.transform.SetParent(buildings.transform);
-    }
-
     #region EditorFunctions
+    /*
+     * All these functions are needed to add, remove and change in the custom editor
+     */
     public void AddWorld() {
         worldList.Add(new World());
     }
@@ -262,6 +235,8 @@ public class WorldManager : MonoBehaviour {
 public class WorldType {
 
     public string name;
+
+    //list of all the prefabs that can be spawned
     public List<GameObject> grass;
     public List<GameObject> trees;
     public List<GameObject> bushes;
@@ -270,18 +245,22 @@ public class WorldType {
     public List<GameObject> groundPanels;
     public List<GameObject> misc;
 
+    //does it have prefabs or not
     public bool hasGrass;
     public bool hasBushes;
     public bool hasTrees;
     public bool hasRocks;
     public bool hasBuildings;
 
+    //toggle to spawn rocks on the spawnpoint of trees
     public bool treeSpawnAsRock;
 
     public WorldType() {
         name = "New Worldtype";
+
         grass = new List<GameObject>();
-        grass.Add(null);
+        grass.Add(null);//it needs at least 1 to avoid nullpointer
+
         bushes = new List<GameObject>();
         bushes.Add(null);
         trees = new List<GameObject>();
@@ -296,7 +275,7 @@ public class WorldType {
         misc.Add(null);
     }
 
-    public GameObject GetGroundPanel() {
+    public GameObject GetGroundPanel() { // get a random object from the list, applies to all lists, but misc 
         if (groundPanels.Count > 0) {
             return groundPanels[Random.Range(0, groundPanels.Count)];
         }
@@ -349,6 +328,8 @@ public class WorldType {
 [System.Serializable]
 public class GameMode {
 
+    protected AudioSource bikeMic; //audiosource for all narrator audio
+
     protected bool active = true;
     protected bool started = false;//true when gamemode is starting up
     protected bool playing = false;//true when gamemode is playing
@@ -363,11 +344,18 @@ public class GameMode {
 
     protected float timer;
 
+    public bool quickPortal = false; // spawn a portal right in front of the player, for quick getaway
+
     public virtual void SetupGame(WorldManager wm) {
         manager = wm;
+        bikeMic = GameObject.FindGameObjectWithTag("bikeMic").GetComponent<AudioSource>();
     }
 
-    public virtual void UpdateGame() {
+    /*  expendable system
+     *  has a start, play and end
+     *  all on timers
+     */
+    public virtual void UpdateGame() { 
         if (active) {
             timer += Time.deltaTime;
 
@@ -397,7 +385,9 @@ public class GameMode {
         }
     }
 
+    //call when game is over and new world needs to be spawned
     protected void EndGame() {
+        started = false;
         playing = false;
         ending = true;
         timer = 0;
@@ -418,11 +408,22 @@ public class GameMode {
     /// </summary>
     public virtual void OnEnd() { }
 
+    public virtual void Score() { }
+
     public void SetPanels(World w) {
         world = w;
     }
 
+    //called whenever it hits something
     public virtual void OnHit(Collider other) { }
 
     public bool isActive() { return active; }
+
+    //start a sound on the audiocource of the bike
+    protected void StartSound(AudioClip clip) {
+        bikeMic.clip = clip;
+        if (!bikeMic.isPlaying) {
+            bikeMic.Play();
+        }
+    }
 }

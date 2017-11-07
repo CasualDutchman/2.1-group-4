@@ -23,4 +23,8 @@ public class GunController : MonoBehaviour {
         FiredBullet.GetComponent<Rigidbody>().velocity = muzzle.forward * 50;
 
     }
+
+    public void ShowHide(bool show) {
+        gameObject.SetActive(show);
+    }
 }

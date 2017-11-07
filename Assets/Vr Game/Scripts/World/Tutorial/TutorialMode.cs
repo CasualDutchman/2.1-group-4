@@ -10,17 +10,18 @@ public class TutorialMode : GameMode {
     private bool explainedSteering;
     private bool explainedAvoiding;
     private bool explainedShooting;
+    private bool end;
 
     private bool avoidingSpawned;
     private bool shootingSpawned;
-
-    private AudioSource bikeMic;
 
     private AudioClip audioIntroduction;
     private AudioClip audioExplainSteering;
     private AudioClip audioExplainAvoiding;
     private AudioClip audioExplainShooting;
     private AudioClip audioEnd;
+
+    private AudioClip oNo;
 
     private GameObject avoidObstacle;
     private GameObject shootObstacle;
@@ -32,14 +33,13 @@ public class TutorialMode : GameMode {
 
     float steertimer;
     float avoidtimer;
+    float gunSpawntimer;
 
     int i;
 
     TutorialShoot shooterTutorial;
 
     public TutorialMode() {
-        bikeMic = GameObject.FindGameObjectWithTag("bikeMic").GetComponent<AudioSource>();
-
         avoidObstacle = Resources.Load<GameObject>("tutorial/objects/avoid");
         shootObstacle = Resources.Load<GameObject>("tutorial/objects/targets");
 
@@ -48,11 +48,12 @@ public class TutorialMode : GameMode {
         audioExplainAvoiding = Resources.Load<AudioClip>("tutorial/audio/explainavoid");
         audioExplainShooting = Resources.Load<AudioClip>("tutorial/audio/explainshoot");
         audioEnd = Resources.Load<AudioClip>("tutorial/audio/end");
+
+        oNo = Resources.Load<AudioClip>("ono");
     }
 
     public override void SetupGame(WorldManager wm) {
         base.SetupGame(wm);
-        Debug.Log("Tutorial");
 
         started = true;
         startTime = 14f;
@@ -93,9 +94,7 @@ public class TutorialMode : GameMode {
         } 
 
         if (explainedSteering && !explainedAvoiding) {
-            if (Input.GetButton("Horizontal")) {
-                steertimer += Time.deltaTime;
-            }
+            steertimer += Time.deltaTime * Mathf.Abs(Input.GetAxis("Horizontal2"));
         }
 
         if (steertimer > 2 && !explainedAvoiding) {
@@ -126,6 +125,10 @@ public class TutorialMode : GameMode {
             StartSound(audioExplainShooting);
 
             audiotimer += Time.deltaTime;
+            if(audiotimer >= 2 && !manager.gunObject.activeSelf) {
+                manager.gunObject.SetActive(true);
+            }
+
             if (audiotimer >= audioExplainShooting.length - 1) {
                 explainedShooting = true;
                 audiotimer = 0;
@@ -148,6 +151,8 @@ public class TutorialMode : GameMode {
 
             if (shooterTutorial.AllTargetsDead()) {
                 EndGame();
+                manager.controllerObject.GetComponent<SteamVRController>().ForceDrop();
+                manager.gunObject.SetActive(false);
             }
         }
 
@@ -156,15 +161,17 @@ public class TutorialMode : GameMode {
         }
     }
 
-    public override void OnEnd() {
-        StartSound(audioEnd);
-        manager.speed = 10;
-        base.OnEnd();
+    public override void OnHit(Collider other) {
+        if (other.tag.Equals("Enemy") || other.tag.Equals("Rock"))
+            StartSound(oNo);
     }
 
-    void StartSound(AudioClip clip) {
-        bikeMic.clip = clip;
-        if (!bikeMic.isPlaying)
-            bikeMic.Play();
+    public override void OnEnd() {
+        if (!end) {
+            StartSound(audioEnd);
+            end = true;
+        }
+        manager.speed = 10;
+        base.OnEnd();
     }
 }

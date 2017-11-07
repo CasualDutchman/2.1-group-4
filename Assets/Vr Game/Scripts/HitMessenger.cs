@@ -6,6 +6,7 @@ public class HitMessenger : MonoBehaviour {
 
     public WorldManager wm;
 
+    //add a callback for the Gamemode
 	void OnTriggerEnter(Collider col) {
         wm.OnHitCallback(col);
     }

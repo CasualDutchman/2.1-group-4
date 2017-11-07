@@ -23,10 +23,10 @@ public class SimpleBikeController : MonoBehaviour {
 	}
 	
 	void Update () {
-        rotY += Input.GetAxis("Horizontal");
+        rotY += Input.GetAxis("Horizontal2");
         transform.eulerAngles = new Vector3(0, rotY, 0);
 
-        steering.localEulerAngles = new Vector3(0, Input.GetAxis("Horizontal") * 20, 7);
+        steering.localEulerAngles = new Vector3(0, Input.GetAxis("Horizontal2") * 20, 7);
 
         Ray ray = new Ray(transform.position + transform.up * 4 + (transform.forward * 1.3f), Vector3.down);
         RaycastHit hit;

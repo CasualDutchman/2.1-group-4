@@ -4,69 +4,37 @@ using UnityEngine;
 
 public class Race : GameMode {
 
-    float travelled;
+    private AudioClip audioIntroduction;
+    private AudioClip audioEnd;
+
+    public Race() {
+        audioIntroduction = Resources.Load<AudioClip>("relax/audio/intro");
+        audioEnd = Resources.Load<AudioClip>("relax/audio/end");
+    }
 
     public override void SetupGame(WorldManager wm) {
         base.SetupGame(wm);
-        Debug.Log("Race");
         started = true;
 
-        startTime = 10;
-        endTime = 10;
+        startTime = 5;
+        endTime = 0;
 
-        tooLongTime = 5;
+        tooLongTime = 30;
     }
 
     public override void OnStart() {
         base.OnStart();
+        Debug.Log(1);
+        StartSound(audioIntroduction);
     }
 
     public override void OnPlay() {
         base.OnPlay();
 
-        travelled += Time.deltaTime * manager.speed;
-
-        if (travelled >= 100) {
-            if (timer < 101) {
-                Debug.Log("You won the race!");
-                EndGame();
-            }
-        }
     }
 
     public override void OnEnd() {
         base.OnEnd();
-        if(travelled < 100) {
-            Debug.Log("You lost the race!");
-        }
+        StartSound(audioEnd);
     }
-
-    /*
-    public override void UpdateGame() {
-        if (active) {
-            timer += Time.deltaTime;
-            if (!started && timer >= 2) {
-                started = true;
-                timer = 0;
-            }
-
-            if (started) {
-                Debug.Log("I am playing: Race");
-
-                travelled += Time.deltaTime * manager.speed;
-
-                if (travelled >= 100) {
-                    if (timer < 101) {
-                        Debug.Log("You Won the race!");
-                        active = false;
-                    }
-                }
-                if(timer >= 101 && travelled < 100) {
-                    Debug.Log("You lost the race!");
-                    active = false;
-                }
-            }
-        }
-    }
-    */
 }
