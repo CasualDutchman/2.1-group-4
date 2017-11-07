@@ -10,6 +10,7 @@ public class WorldManager : MonoBehaviour {
     public Light normalLight, portalLight;
     public GameObject gunObject, controllerObject;
     public GameObject currentSkybox, otherSkybox;
+    public GameObject startText;
     //-------
 
     //list of all possible worlds and worldtype
@@ -32,10 +33,13 @@ public class WorldManager : MonoBehaviour {
 
     //these variables are shown in the inspector, information on hover over
     public int startWorld;
-    public float speed = 5;
+    public float speed = 0;
     public int amountOfPanels = 10;
 
     public float percentageSpawn = 0.7f; // how many to spawn on panels (0 - 1)
+
+    public bool started = false; // when this is true, everything will begin. false only at start of game
+
 
     void Start () {
         SetWorlds();
@@ -44,11 +48,19 @@ public class WorldManager : MonoBehaviour {
         normalLight.color = currentWorld.sunColor;
 
         currentGameMode = new TutorialMode(); //first gamemode
-        currentGameMode.SetupGame(this);
 
         worldIndex++;
     }
 	
+    public void StartWholeGame() {
+        started = true;
+
+        currentGameMode.SetupGame(this);
+
+        Destroy(startText);
+        speed = 2;
+    }
+
     //this function adds the needed worldtype to the world. Without this function changes in the worldtype's list will not reflect on the world's worldtype and result in errors
     void SetWorlds() {
         foreach(World w in worldList) {
@@ -57,27 +69,29 @@ public class WorldManager : MonoBehaviour {
     }
 
 	void Update () {
-        currentGameMode.UpdateGame();
+        if (started) {
+            currentGameMode.UpdateGame();
 
-        if (!currentGameMode.isActive()) {
-            if (!hasPortal) {
-                currentWorld.SpawnPortal(currentGameMode.quickPortal);
-                hasPortal = true;
+            if (!currentGameMode.isActive()) {
+                if (!hasPortal) {
+                    currentWorld.SpawnPortal(currentGameMode.quickPortal);
+                    hasPortal = true;
+                }
             }
-        }
 
-        //only update the world if it is available
+            //only update the world if it is available
 
-        if(currentWorld != null && currentWorld.IsOn()){
-            currentWorld.UpdateWorld();
-        }
+            if (currentWorld != null && currentWorld.IsOn()) {
+                currentWorld.UpdateWorld();
+            }
 
-        if (nextWorld != null && nextWorld.IsOn()) {
-            nextWorld.UpdateWorld();
-        }
+            if (nextWorld != null && nextWorld.IsOn()) {
+                nextWorld.UpdateWorld();
+            }
 
-        if (prevWorld != null && prevWorld.IsOn()) {
-            prevWorld.UpdateWorld();
+            if (prevWorld != null && prevWorld.IsOn()) {
+                prevWorld.UpdateWorld();
+            }
         }
     }
 

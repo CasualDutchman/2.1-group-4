@@ -12,6 +12,7 @@ TagManager:
   - bikeMic
   - Enemy
   - Crystal
+  - BikeBell
   layers:
   - Default
   - TransparentFX

@@ -504,7 +504,7 @@ public class WorldManagerEditor : Editor {
         }
         manager.startWorld = EditorGUILayout.IntPopup("Start World ", manager.startWorld, names, sizes); //which world will be started with
 
-        manager.speed = EditorGUILayout.Slider("Speed", manager.speed, 1.0f, 25.0f); //the speed of the bike
+        manager.speed = EditorGUILayout.Slider("Speed", manager.speed, 0.0f, 25.0f); //the speed of the bike
 
         manager.amountOfPanels = Mathf.FloorToInt(EditorGUILayout.Slider("Max Panels", manager.amountOfPanels, 6, 35.0f)); //maximum panels allowed in the world
 

@@ -45,7 +45,11 @@ public class SteamVRController : MonoBehaviour {
         {
             if (Device.GetHairTriggerDown() && inHighlightedArea)
             {
-                PickupObject(highlightedObject);
+                if(highlightedObject.tag.Equals("Weapon"))
+                    PickupObject(highlightedObject);
+
+                if (highlightedObject.tag.Equals("BikeBell"))
+                    highlightedObject.GetComponent<BikeBell>().RingRing();
             }
         }
     }

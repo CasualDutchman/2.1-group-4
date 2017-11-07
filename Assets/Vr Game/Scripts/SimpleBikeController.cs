@@ -23,52 +23,54 @@ public class SimpleBikeController : MonoBehaviour {
 	}
 	
 	void Update () {
-        rotY += Input.GetAxis("Horizontal2");
-        transform.eulerAngles = new Vector3(0, rotY, 0);
+        if (manager.started) {
+            rotY += Input.GetAxis("Horizontal2");
+            transform.eulerAngles = new Vector3(0, rotY, 0);
 
-        steering.localEulerAngles = new Vector3(0, Input.GetAxis("Horizontal2") * 20, 7);
+            steering.localEulerAngles = new Vector3(0, Input.GetAxis("Horizontal2") * 20, 7);
 
-        Ray ray = new Ray(transform.position + transform.up * 4 + (transform.forward * 1.3f), Vector3.down);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 11, LayerMask.GetMask("Ground"))) {
-            if (hit.collider != null) {
-                transform.GetChild(0).LookAt(hit.point);
+            Ray ray = new Ray(transform.position + transform.up * 4 + (transform.forward * 1.3f), Vector3.down);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 11, LayerMask.GetMask("Ground"))) {
+                if (hit.collider != null) {
+                    transform.GetChild(0).LookAt(hit.point);
+                }
             }
-        }
 
-        Ray ray2 = new Ray(transform.position + transform.up * 4, Vector3.down);
-        RaycastHit hit2;
-        if (Physics.Raycast(ray2, out hit2, 11, LayerMask.GetMask("Ground"))) {
-            if (hit2.collider != null) {
-                transform.position = hit2.point;
+            Ray ray2 = new Ray(transform.position + transform.up * 4, Vector3.down);
+            RaycastHit hit2;
+            if (Physics.Raycast(ray2, out hit2, 11, LayerMask.GetMask("Ground"))) {
+                if (hit2.collider != null) {
+                    transform.position = hit2.point;
+                }
             }
-        }
 
-        transform.Translate(transform.forward * Time.deltaTime * manager.speed, Space.World);
+            transform.Translate(transform.forward * Time.deltaTime * manager.speed, Space.World);
 
-        if (!manager.currentWorld.name.Equals("Tutorial World")) {
-            if (Input.GetKey(KeyCode.Space)) {
-                manager.speed = 20;
+            if (!manager.currentWorld.name.Equals("Tutorial World")) {
+                if (Input.GetKey(KeyCode.Space)) {
+                    manager.speed = 20;
+                } else {
+                    manager.speed = 10;
+                }
+            }
+
+            if (!alive) {
+                timer += Time.deltaTime;
+                if (timer >= 2) {
+                    //manager.PlayerDies();
+                    print("If this was a game, you would be dead!");
+                }
             } else {
-                manager.speed = 10;
+                timer = 0;
             }
-        }
 
-        if (!alive) {
-            timer += Time.deltaTime;
-            if (timer >= 2) {
-                //manager.PlayerDies();
-                print("If this was a game, you would be dead!");
-            }
-        }else {
-            timer = 0;
-        }
-
-        if (hitPortal) {
-            hitPortalTimer += Time.deltaTime;
-            if (hitPortalTimer >= 2) {
-                hitPortal = false;
-                hitPortalTimer = 0;
+            if (hitPortal) {
+                hitPortalTimer += Time.deltaTime;
+                if (hitPortalTimer >= 2) {
+                    hitPortal = false;
+                    hitPortalTimer = 0;
+                }
             }
         }
 	}
