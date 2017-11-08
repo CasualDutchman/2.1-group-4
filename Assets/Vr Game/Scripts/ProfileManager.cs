@@ -26,7 +26,7 @@ public class ProfileManager : MonoBehaviour
     int handDominance;
 
     //0 = little, 1 = medium, 2 = a lot
-    int attentionSpan;
+    float attentionSpan;
 
     private void Awake()
     {
@@ -51,7 +51,7 @@ public class ProfileManager : MonoBehaviour
         PlayerPrefs.SetInt(profileNumber + "gameDifficulty", gameDifficulty);
         PlayerPrefs.SetInt(profileNumber + "bikingDificulty", bikingDifficulty);
         PlayerPrefs.SetInt(profileNumber + "handDominance", handDominance);
-        PlayerPrefs.SetInt(profileNumber + "attentionSpan", attentionSpan);
+        PlayerPrefs.SetFloat(profileNumber + "attentionSpan", attentionSpan);
 
         PlayerPrefs.Save();
     }
@@ -64,7 +64,8 @@ public class ProfileManager : MonoBehaviour
         gameDifficulty = PlayerPrefs.GetInt(profileNumber + "gameDifficulty");
         bikingDifficulty = PlayerPrefs.GetInt(profileNumber + "bikingDificulty");
         handDominance = PlayerPrefs.GetInt(profileNumber + "handDominance");
-        attentionSpan = PlayerPrefs.GetInt(profileNumber + "attentionSpan");
+        attentionSpan = PlayerPrefs.GetFloat(profileNumber + "attentionSpan");
+        SetAttentionSpan(attentionSpan);
     }
 
     //Getters for the variables used
@@ -73,7 +74,7 @@ public class ProfileManager : MonoBehaviour
     public int GetGameDifficulty(){return gameDifficulty;}
     public int GetBikingDifficulty(){return bikingDifficulty;}
     public int GetHandDominance(){return handDominance;}
-    public int GetAttentionSpan(){return attentionSpan;}
+    public float GetAttentionSpan(){return attentionSpan;}
 
     //setters for the variables used
     public void SetProfileNumber(int profileNo) {profileNumber = profileNo;}
@@ -81,6 +82,6 @@ public class ProfileManager : MonoBehaviour
     public void SetGameDifficulty(int gamingDifficulty) {gameDifficulty = gamingDifficulty; }
     public void SetBikingDifficulty(int bikeDifficulty) {bikingDifficulty = bikeDifficulty; }
     public void SetHandDominance(int dominantHand) {handDominance = dominantHand; }
-    public void SetAttentionSpan(int attention) {attentionSpan = attention; manager.percentageSpawn = attentionSpan; }
+    public void SetAttentionSpan(float attention) {attentionSpan = attention; manager.percentageSpawn = attentionSpan; }
 
 }

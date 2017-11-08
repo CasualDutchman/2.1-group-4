@@ -29,6 +29,10 @@ public class SteamVRController : MonoBehaviour {
         //assign the device for input
         Device = SteamVR_Controller.Input((int)trackedObj.index);
 
+        if(holdedObject == null) {
+            holding = false;
+        }
+
         if (holding)
         {
             if (Device.GetHairTriggerDown())

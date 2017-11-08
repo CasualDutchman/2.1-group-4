@@ -13,6 +13,7 @@ public class WorldManager : MonoBehaviour {
     public GameObject startText;
     public Texture colorPalette;
     public AudioSource musicSource;
+    public GameObject profileUI;
     //-------
 
     //list of all possible worlds and worldtype
@@ -74,6 +75,10 @@ public class WorldManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.O)) {
+            profileUI.SetActive(!profileUI.activeSelf);
         }
 
         if (started) {

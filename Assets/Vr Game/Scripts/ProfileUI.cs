@@ -32,7 +32,7 @@ public class ProfileUI : MonoBehaviour {
             ProfileManager.profileManager.SetGameDifficulty(Mathf.RoundToInt(gameDifficultySlider.value));
             ProfileManager.profileManager.SetBikingDifficulty(Mathf.RoundToInt(bikeDifficultySlider.value));
             ProfileManager.profileManager.SetHandDominance(handDominanceMenu.value);
-            ProfileManager.profileManager.SetAttentionSpan(Mathf.RoundToInt(attentionSpanSlider.value));
+            ProfileManager.profileManager.SetAttentionSpan(attentionSpanSlider.value);
 
             ProfileManager.profileManager.SavePlayerSettings();
         }
