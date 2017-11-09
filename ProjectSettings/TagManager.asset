@@ -8,8 +8,11 @@ TagManager:
   - Portal
   - Weapon
   - bounds
-  - Enemy
+  - Bullet
   - bikeMic
+  - Enemy
+  - Crystal
+  - BikeBell
   layers:
   - Default
   - TransparentFX

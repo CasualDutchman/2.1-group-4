@@ -172,6 +172,7 @@
     <Compile Include="Assets\Vr Game\Scripts\CameraLooker.cs" />
     <Compile Include="Assets\Vr Game\Scripts\CameraMouseController.cs" />
     <Compile Include="Assets\Vr Game\Scripts\CustomSkybox.cs" />
+    <Compile Include="Assets\Vr Game\Scripts\Gamemodes\PenguinHitter.cs" />
     <Compile Include="Assets\Vr Game\Scripts\Gamemodes\Race.cs" />
     <Compile Include="Assets\Vr Game\Scripts\Gamemodes\TempleRun.cs" />
     <Compile Include="Assets\Vr Game\Scripts\gunproto\Bullet.cs" />
@@ -179,7 +180,9 @@
     <Compile Include="Assets\Vr Game\Scripts\gunproto\Enemy.cs" />
     <Compile Include="Assets\Vr Game\Scripts\gunproto\EnemySpawners.cs" />
     <Compile Include="Assets\Vr Game\Scripts\gunproto\Shooter.cs" />
+    <Compile Include="Assets\Vr Game\Scripts\HitMessenger.cs" />
     <Compile Include="Assets\Vr Game\Scripts\MusicVisualizer.cs" />
+    <Compile Include="Assets\Vr Game\Scripts\Penguin.cs" />
     <Compile Include="Assets\Vr Game\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Vr Game\Scripts\PortalManager.cs" />
     <Compile Include="Assets\Vr Game\Scripts\ProfileManager.cs" />
@@ -188,6 +191,7 @@
     <Compile Include="Assets\Vr Game\Scripts\Protocol\LodeProtocol.cs" />
     <Compile Include="Assets\Vr Game\Scripts\Protocol\PlayerVehicle.cs" />
     <Compile Include="Assets\Vr Game\Scripts\SimpleBikeController.cs" />
+    <Compile Include="Assets\Vr Game\Scripts\VRControllers\GunController.cs" />
     <Compile Include="Assets\Vr Game\Scripts\VRControllers\SteamVRController.cs" />
     <Compile Include="Assets\Vr Game\Scripts\World\Tutorial\TutorialMode.cs" />
     <Compile Include="Assets\Vr Game\Scripts\World\Tutorial\TutorialShoot.cs" />

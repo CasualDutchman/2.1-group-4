@@ -9,8 +9,15 @@ public class SteamVRController : MonoBehaviour {
     SteamVR_Controller.Device Device;
     SteamVR_TrackedObject trackedObj;
 
+    GameObject holdedObject;
+    GameObject highlightedObject;
+
+    public Transform defaultParent;
+
     //bool to check if an object is allready being held
-    bool holdingObject;
+    bool holding;
+
+    bool inHighlightedArea;
 
 	void Awake ()
     {
@@ -21,71 +28,91 @@ public class SteamVRController : MonoBehaviour {
     {
         //assign the device for input
         Device = SteamVR_Controller.Input((int)trackedObj.index);
+
+        if(holdedObject == null) {
+            holding = false;
+        }
+
+        if (holding)
+        {
+            if (Device.GetHairTriggerDown())
+            {
+                PrimaryObjectAction();
+            }
+
+            if (Device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+            {
+                DropObject();
+            }
+        }
+        else
+        {
+            if (Device.GetHairTriggerDown() && inHighlightedArea)
+            {
+                if(highlightedObject.tag.Equals("Weapon"))
+                    PickupObject(highlightedObject);
+
+                if (highlightedObject.tag.Equals("BikeBell"))
+                    highlightedObject.GetComponent<BikeBell>().RingRing();
+            }
+        }
     }
 
     private void OnTriggerStay(Collider Col)
     {
-        
-        InteractWithObject(Col);
+        inHighlightedArea = true;
+        highlightedObject = Col.gameObject;
     }
 
-
-    //Function for picking up any object
-    private void InteractWithObject(Collider Col)
+    private void OnTriggerExit(Collider other)
     {
-        //If you are holding an object, do the primary object action
-        if(Device.GetHairTriggerDown() && holdingObject)
-        {
-            PrimaryObjectAction(Col);
-        }
-
-        //get the device input to pickup an object(using the trigger)
-        if (Device.GetHairTriggerDown() && !holdingObject)
-        {
-            PickupObject(Col);
-        }
-
-        //Get input from device to drop object (The grip button)
-        if (Device.GetPressDown(SteamVR_Controller.ButtonMask.Grip) && holdingObject)
-        {
-            DropObject(Col);
-        }
+        inHighlightedArea = false;
+        highlightedObject = null;
     }
 
     //When pulling the trigger, fire!
-    private void PrimaryObjectAction(Collider Col)
+    private void PrimaryObjectAction()
     {
         //fire the gun
-        if (Col.tag == "Weapon" && holdingObject)
+        if (holdedObject.tag == "Weapon")
         {
-            Col.GetComponent<GunController>().FireGun();
+            holdedObject.GetComponent<GunController>().FireGun();
         }
 
     }
 
-    private void PickupObject(Collider Col)
+    private void PickupObject(GameObject go)
     {
+        holdedObject = go;
 
-            //Get position and transformation of the object picked up
-            Col.gameObject.transform.position = trackedObj.transform.position;
-            Col.gameObject.transform.rotation = trackedObj.transform.rotation;
+        //Get position and transformation of the object picked up
+        holdedObject.transform.position = trackedObj.transform.position;
+        holdedObject.transform.rotation = trackedObj.transform.rotation;
 
-            //Make sure the object is kinematic
-            Col.attachedRigidbody.isKinematic = true;
+        //Set the parent of the object to the SteamVR controller to make transformation easier
+        holdedObject.transform.SetParent(gameObject.transform);
 
-            //Set the parent of the object to the SteamVR controller to make transformation easier
-            Col.gameObject.transform.SetParent(gameObject.transform);
-
-            holdingObject = true;
+        holding = true;
         
     }
 
-    private void DropObject(Collider Col)
+    private void DropObject()
     {
+        resetPosition();
 
-            //Set the parent of the object as the player
-            Col.gameObject.transform.SetParent(gameObject.transform.parent);
+        holdedObject = null;
+        holding = false;
+    }
 
-            holdingObject = false;
+    void resetPosition() {
+        if (holding || holdedObject != null) {
+            holdedObject.transform.SetParent(defaultParent);
+            holdedObject.transform.localPosition = new Vector3(-0.06f, 0.55f, -0.07f);
+            holdedObject.transform.localEulerAngles = new Vector3(0, 0, -50);
+        }
+    }
+
+    public void ForceDrop() {
+        DropObject();
     }
 }

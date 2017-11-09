@@ -20,7 +20,6 @@ public class World {
     public Transform bike;
 
     public string name;
-    public Material skyboxMaterial;
     public Color sunColor;
     public Texture2D texturemap;
     public WorldType worldType;
@@ -39,6 +38,12 @@ public class World {
         name = "New World";
     }
 
+    //simple fix to see if this is actual something. fix for a bug
+    public bool IsOn() {
+        return manager != null;
+    }
+
+    //first to run, initializes the world
     public virtual void SetupWorld(WorldManager wm, LayerMask mask, Vector3 pos, Vector3 euler) {
         manager = wm;
         portalMask = mask;
@@ -55,21 +60,14 @@ public class World {
 
         //set the skybox and sun color to the color specified by the world
         if (portalMask == LayerMask.NameToLayer("Portal")) {
-            manager.portalCamera.GetComponent<Skybox>().material = skyboxMaterial;
             manager.otherSkybox.GetComponent<MeshRenderer>().material.SetColor("_Color", sunColor);
         } else {
-            manager.normalCamera.GetComponent<Skybox>().material = skyboxMaterial;
             manager.currentSkybox.GetComponent<MeshRenderer>().material.SetColor("_Color", sunColor);
         }
     }
 
+    //called every frame
     public virtual void UpdateWorld() {
-        //move all planes based on the bike's rotation
-        //worldObject.transform.Translate(-bike.forward * Time.deltaTime * manager.speed, Space.World);
-
-        //if(portalObject != null)
-            //portalObject.transform.Translate(-bike.forward * Time.deltaTime * manager.speed, Space.World);
-
         if (needsGenerationIndex < manager.amountOfPanels) {
             SpawnPanel();
             if (portalMask == LayerMask.NameToLayer("Portal") && needsGenerationIndex < Mathf.FloorToInt(manager.amountOfPanels / 2))
@@ -132,16 +130,30 @@ public class World {
             manager.SetGameModespanels(this);
     }
 
-    public virtual void SpawnPortal() {
+    //Spawn the portal at the end of the road or close, for a quick getaway
+    public virtual void SpawnPortal(bool quick = false) {
         portalObject = GameObject.Instantiate(manager.portalObject, manager.transform);
-        portalObject.transform.position = nextSpawnLoc.transform.position;
-        portalObject.transform.rotation = nextSpawnLoc.transform.rotation;
+        if (quick) {
+            Ray ray = new Ray(bike.position + bike.forward * 70 + Vector3.up * 8, Vector3.down);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 20, LayerMask.GetMask("Ground"))) {
+                if (hit.collider != null) {
+                    portalObject.transform.position = hit.point;
+                }
+            }
 
+            portalObject.transform.eulerAngles = bike.eulerAngles;
+        } 
+        else {
+            portalObject.transform.position = nextSpawnLoc.transform.position;
+            portalObject.transform.rotation = nextSpawnLoc.transform.rotation;
+        }
         portalindex = manager.amountOfPanels;
 
         manager.SetupNewWorld(portalObject.transform.position, portalObject.transform.eulerAngles);
     }
 
+    //spawn a panel, filled with trees (when present in the worldType) etc
     void SpawnPanel() {
         //spawn panel at the end of the previous panel
         GameObject go = GameObject.Instantiate(worldType.GetGroundPanel(), worldObject.transform);
@@ -208,6 +220,9 @@ public class World {
                     childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texturemap);
                     childgo.transform.GetChild(0).gameObject.layer = portalMask;
 
+                    if(childgo.GetComponent<BoxCollider>())
+                        GameObject.Destroy(childgo.GetComponent<BoxCollider>());
+
                     GameObject.Destroy(child.gameObject);
                 }
                 i++;
@@ -272,6 +287,8 @@ public class World {
                     childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material = portalMask == LayerMask.NameToLayer("Portal") ? manager.portalMaterial : manager.defaultMaterial;
                     childgo.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texturemap);
                     childgo.transform.GetChild(0).gameObject.layer = portalMask;
+
+                    GameObject.Destroy(childgo.GetComponent<BoxCollider>());
 
                     GameObject.Destroy(child.gameObject);
                 }
@@ -338,6 +355,7 @@ public class World {
             BoxCollider box = checkgo.AddComponent<BoxCollider>();
             box.center = c;
             box.size = s;
+            box.isTrigger = true;
         }
 
         //create meshfilter and meshrenderer to hold the combined mesh, this includes all trees, rocks and buildings, if a spawnpoint was present
@@ -350,12 +368,13 @@ public class World {
 
         mr.material = portalMask == LayerMask.NameToLayer("Portal") ? manager.portalMaterial : manager.defaultMaterial;
         mr.material.SetTexture("_MainTex", texturemap);
+        mr.shadowCastingMode = portalMask == LayerMask.NameToLayer("Portal") ? UnityEngine.Rendering.ShadowCastingMode.Off : UnityEngine.Rendering.ShadowCastingMode.On;
     }
 
+    //create a copy of the world. needed a new instance for loading a new world, instead of the same
     public World Copy() {
         World newWorld = new World();
         newWorld.name = name;
-        newWorld.skyboxMaterial = skyboxMaterial;
         newWorld.sunColor = sunColor;
         newWorld.texturemap = texturemap;
         newWorld.worldType = worldType;
