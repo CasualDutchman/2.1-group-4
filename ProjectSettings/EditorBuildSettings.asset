@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
+    path: Assets/Vr Game/Scenes/OlavPrototype.unity
+    guid: ec073bdd612550d40bfe232a75a61b22
+  - enabled: 0
     path: Assets/Vr Game/Scenes/ProfileSystem.unity
     guid: 1d8b83a35424a6e49a0f8c351fd4ce42
   - enabled: 0
-    path: Assets/Vr Game/Scenes/OlavPrototype.unity
-    guid: ec073bdd612550d40bfe232a75a61b22
-  - enabled: 1
     path: Assets/Vr Game/Scenes/WorldPrototype.unity
     guid: 96b7aa4678c492c498234cfb06f94e98
+  - enabled: 1
+    path: Assets/Vr Game/Scenes/Main.unity
+    guid: 42507ebb5895bac40a230288c42f5b8d

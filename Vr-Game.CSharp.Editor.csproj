@@ -149,7 +149,6 @@
     <None Include="Assets\Vr Game\Shader\InPortalShader.shader" />
     <None Include="Assets\Vr Game\Shader\OutPortalShader.shader" />
     <None Include="Assets\Vr Game\Shader\PortalShader.shader" />
-    <None Include="Assets\Vr Game\Shader\WorldUv.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
